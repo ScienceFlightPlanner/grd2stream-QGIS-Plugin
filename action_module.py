@@ -30,31 +30,7 @@ class ActionModule:
     sensor_coverage = "Select Sensor"
 
     geometry_type_for_action = {
-        distance: [QgsWkbTypes.GeometryType.LineGeometry],
-        duration: [QgsWkbTypes.GeometryType.LineGeometry],
-        waypoint_generation: [QgsWkbTypes.GeometryType.LineGeometry],
-        export: [QgsWkbTypes.GeometryType.PointGeometry],
-        tag: [QgsWkbTypes.GeometryType.PointGeometry],
-        reduced_waypoint_selection: [QgsWkbTypes.GeometryType.PointGeometry],
-        reduced_waypoint_generation: [QgsWkbTypes.GeometryType.PointGeometry],
-        reversal: [
-            QgsWkbTypes.GeometryType.PointGeometry,
-            QgsWkbTypes.GeometryType.LineGeometry,
-        ],
-        coverage_lines: [QgsWkbTypes.GeometryType.PolygonGeometry],
         flowline: [QgsMapLayer.RasterLayer],
-        racetrack: [
-            QgsWkbTypes.GeometryType.PointGeometry,
-            QgsWkbTypes.GeometryType.LineGeometry,
-        ],
-        flight_altitude: [
-            QgsWkbTypes.GeometryType.LineGeometry,
-            QgsWkbTypes.GeometryType.PolygonGeometry,
-        ],
-        sensor_coverage: [
-            QgsWkbTypes.GeometryType.LineGeometry,
-            QgsWkbTypes.GeometryType.PolygonGeometry,
-        ],
     }
 
     def __init__(self, iface: QgisInterface):

@@ -52,16 +52,10 @@
 ***************************************************************************/
 """
 import stat
-import typing
-from functools import partial
-from typing import List
 
-from PyQt5.QtCore import QObject
-from PyQt5.QtWidgets import QMenu, QToolButton, QToolBar, QApplication, QWidget
+from PyQt5.QtWidgets import QWidget
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis._core import QgsProject
-from qgis._gui import QgisInterface
 
 # Initialize Qt resources from file resources.py (DON'T DELETE IT)
 from .resources import *
@@ -69,8 +63,6 @@ from .resources import *
 from .grd_2_stream_dialog import Grd2StreamDialog
 import os.path
 
-from .action_module import ActionModule
-from .utils import LayerUtils
 from .flowline_module import FlowlineModule
 
 plugin_instance = None
@@ -82,9 +74,7 @@ def set_recursive_permissions(folder_path, write_permission=False):
             for file in files:
                 file_path = os.path.join(root, file)
                 st = os.stat(file_path)
-                # Add executable permission
                 os.chmod(file_path, st.st_mode | stat.S_IEXEC)
-                # Add write permission if requested
                 if write_permission:
                     os.chmod(file_path, st.st_mode | stat.S_IWRITE)
         print(f"Permissions set for all files in {folder_path}")
@@ -116,7 +106,7 @@ class Grd2Stream:
         self.flowline_module = FlowlineModule(iface)
         self.flowline_action = None
 
-        lib_folder = os.path.join(self.plugin_dir, "lib")
+        lib_folder = os.path.join(self.plugin_dir, "libs")
         set_recursive_permissions(lib_folder)
         bin_folder = os.path.join(self.plugin_dir, "bin")
         set_recursive_permissions(bin_folder, write_permission=True)

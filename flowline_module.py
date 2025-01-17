@@ -1,5 +1,4 @@
 import os
-import stat
 import shutil
 import platform
 import subprocess
@@ -16,7 +15,6 @@ OUTPUT_TXT_FILE = os.path.join(PROJECT_DIR, "bin", "streamline.txt")
 def is_wsl_available():
     return shutil.which("wsl") is not None
 
-
 class FlowlineModule:
     def __init__(self, iface):
         self.iface = iface
@@ -24,7 +22,6 @@ class FlowlineModule:
         self.selected_raster_2 = None
         self.coordinate = None
         self.map_tool = None
-
         self.backward_steps = False
         self.step_size = 200.0
         self.max_integration_time = None
@@ -171,7 +168,6 @@ class FlowlineModule:
             with open(OUTPUT_TXT_FILE, "r") as infile:
                 for line in infile:
                     line = line.strip()
-
                     # Metadata
                     if line.startswith("# @N"):
                         # "name|id"
