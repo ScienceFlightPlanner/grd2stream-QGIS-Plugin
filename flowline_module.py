@@ -31,8 +31,8 @@ class FlowlineModule:
         self.max_steps = None
         self.output_format = None
 
-    def open_geotiff_selection_dialog(self):
-        dialog = GeoTiffSelectionDialog(self.iface)
+    def open_selection_dialog(self):
+        dialog = SelectionDialog(self.iface)
 
         if dialog.exec_():
             self.selected_raster_1 = dialog.selected_raster_1
@@ -214,11 +214,11 @@ class FlowlineModule:
                 "Error", f"Failed to load TXT file as layer: {e}", level=Qgis.Critical, duration=5
             )
 
-class GeoTiffSelectionDialog(QDialog):
+class SelectionDialog(QDialog):
     def __init__(self, iface, parent=None):
         super().__init__(parent)
         self.iface = iface
-        self.setWindowTitle("Select your grids & calc parameters")
+        self.setWindowTitle("Select your GDAL grids (e.g., GMT, NetCDF, GTiFF, etc.)")
         self.setMinimumWidth(400)
 
         self.selected_raster_1 = None
@@ -230,10 +230,10 @@ class GeoTiffSelectionDialog(QDialog):
         self.output_format = None
 
         layout = QVBoxLayout()
-        layout.addWidget(QLabel("Select the first GeoTIFF layer:"))
+        layout.addWidget(QLabel("Select the 1st grid layer:"))
         self.layer_box_1 = QComboBox()
         layout.addWidget(self.layer_box_1)
-        layout.addWidget(QLabel("Select the second GeoTIFF layer:"))
+        layout.addWidget(QLabel("Select the 2nd grid layer:"))
         self.layer_box_2 = QComboBox()
         layout.addWidget(self.layer_box_2)
 
@@ -248,22 +248,22 @@ class GeoTiffSelectionDialog(QDialog):
         self.step_size_input.setDecimals(3)
         self.step_size_input.setSingleStep(1.0)
         self.step_size_input.setValue(200.0)
-        layout.addWidget(QLabel("Step Size (-d inc):"))
+        layout.addWidget(QLabel("Step Size (-d):"))
         layout.addWidget(self.step_size_input)
 
         self.max_time_input = QLineEdit()
-        self.max_time_input.setPlaceholderText("Maximum Integration Time (-T maxtime)")
-        layout.addWidget(QLabel("Maximum Integration Time:"))
+        self.max_time_input.setPlaceholderText("Maximum Integration Time (default: none)")
+        layout.addWidget(QLabel("Maximum Integration Time (-T):"))
         layout.addWidget(self.max_time_input)
 
         self.max_steps_input = QLineEdit()
-        self.max_steps_input.setPlaceholderText("Maximum Number of Steps (-n maxsteps)")
-        layout.addWidget(QLabel("Maximum Number of Steps:"))
+        self.max_steps_input.setPlaceholderText("Maximum Number of Steps (default: 10000)")
+        layout.addWidget(QLabel("Maximum Number of Steps (-n):"))
         layout.addWidget(self.max_steps_input)
 
         layout.addWidget(QLabel("Output Format:"))
         self.output_format_box = QComboBox()
-        self.output_format_box.addItem("Default (x y dist)", None)
+        self.output_format_box.addItem("x y dist (default)", None)
         self.output_format_box.addItem("x y dist v_x v_y (-l)", "-l")
         self.output_format_box.addItem("x y dist v_x v_y time (-t)", "-t")
         layout.addWidget(self.output_format_box)
@@ -294,7 +294,7 @@ class GeoTiffSelectionDialog(QDialog):
         if self.selected_raster_1 == self.selected_raster_2:
             self.iface.messageBar().pushMessage(
                 "Error",
-                "Please select two different GeoTIFF layers.",
+                "Please select two different grid layers.",
                 level=Qgis.Critical,
                 duration=5
             )

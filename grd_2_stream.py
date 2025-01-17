@@ -166,7 +166,7 @@ class Grd2Stream:
         self.flowline_action = self.add_action(
             icon="icon_flowline.png",
             text="Calculate Flowlines",
-            callback=self.flowline_module.open_geotiff_selection_dialog
+            callback=self.flowline_module.open_selection_dialog
         )
 
     def unload(self):
