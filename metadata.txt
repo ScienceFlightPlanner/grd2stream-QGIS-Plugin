@@ -12,8 +12,8 @@ email=scienceflightplanner@gmail.com
 
 about=computes & displys streamlines based on velocity grids (GMT & GDAL compatible)
 
-tracker=http://bugs
-repository=https://github.com/ScienceFlightPlanner/grd2stream-QGIS-Plugin.git
+tracker=https://github.com/tkleiner/grd2stream/issues
+repository=https://github.com/ScienceFlightPlanner/grd2stream-QGIS-Plugin
 # End of mandatory metadata
 
 # Recommended items:
