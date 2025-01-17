@@ -71,9 +71,25 @@ import os.path
 
 from .action_module import ActionModule
 from .utils import LayerUtils
-from .flowline_module import FlowlineModule, set_recursive_permissions
+from .flowline_module import FlowlineModule
 
 plugin_instance = None
+
+def set_recursive_permissions(folder_path, write_permission=False):
+    """Set executable (and optionally write) permissions recursively for all files in the folder."""
+    try:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                st = os.stat(file_path)
+                # Add executable permission
+                os.chmod(file_path, st.st_mode | stat.S_IEXEC)
+                # Add write permission if requested
+                if write_permission:
+                    os.chmod(file_path, st.st_mode | stat.S_IWRITE)
+        print(f"Permissions set for all files in {folder_path}")
+    except Exception as e:
+        print(f"Error setting permissions: {e}")
 
 class Grd2Stream:
     """QGIS Plugin Implementation."""
@@ -102,6 +118,8 @@ class Grd2Stream:
 
         lib_folder = os.path.join(self.plugin_dir, "lib")
         set_recursive_permissions(lib_folder)
+        bin_folder = os.path.join(self.plugin_dir, "bin")
+        set_recursive_permissions(bin_folder, write_permission=True)
 
     def add_action(
         self,
