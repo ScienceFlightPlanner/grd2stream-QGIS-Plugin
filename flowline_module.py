@@ -10,7 +10,7 @@ from qgis.gui import QgsMapToolEmitPoint
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-GRD2STREAM_EXECUTABLE = os.path.join(PROJECT_DIR, "lib", "grd2stream")
+GRD2STREAM_EXECUTABLE = os.path.join(PROJECT_DIR, "libs", "grd2stream", "grd2stream")
 OUTPUT_TXT_FILE = os.path.join(PROJECT_DIR, "bin", "streamline.txt")
 
 def is_wsl_available():

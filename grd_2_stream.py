@@ -51,7 +51,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 """
-
+import stat
 import typing
 from functools import partial
 from typing import List
