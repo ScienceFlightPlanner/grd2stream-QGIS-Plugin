@@ -231,7 +231,7 @@ class SelectionDialog(QDialog):
         self.selected_raster_1 = None
         self.selected_raster_2 = None
         self.backward_steps = False
-        self.step_size = 200.0
+        self.step_size = 0.0  # Default step size
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
@@ -253,8 +253,10 @@ class SelectionDialog(QDialog):
 
         self.step_size_input = QDoubleSpinBox()
         self.step_size_input.setDecimals(3)
+        self.step_size_input.setMinimum(0.0)
+        self.step_size_input.setMaximum(float("inf"))
         self.step_size_input.setSingleStep(1.0)
-        self.step_size_input.setValue(200.0)
+        self.step_size_input.setValue(0.0)
         layout.addWidget(QLabel("Step Size (-d):"))
         layout.addWidget(self.step_size_input)
 
