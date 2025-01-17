@@ -73,7 +73,6 @@ from .action_module import ActionModule
 from .utils import LayerUtils
 from .flowline_module import FlowlineModule
 
-icon_folder_path = os.path.join(":resources", "icons")
 plugin_instance = None
 
 class Grd2Stream:
@@ -95,7 +94,7 @@ class Grd2Stream:
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
-
+        self.icon_dir = os.path.join(self.plugin_dir, "resources", "icons")
         self.toolbar = self.iface.addToolBar("grd2stream Toolbar")
         self.toolbar.setObjectName("grd2stream")
         self.flowline_module = FlowlineModule(iface)
@@ -146,8 +145,16 @@ class Grd2Stream:
             added to self.actions list.
         :rtype: QAction
         """
-        icon_path = os.path.join(icon_folder_path, icon)
-        icon = QIcon(icon_path)
+        icon_path = os.path.join(self.icon_dir, icon)
+        if not os.path.exists(icon_path):
+            self.iface.messageBar().pushWarning(
+                "Warning",
+                f"Icon file not found: {icon_path}. Using a placeholder."
+            )
+            icon = QIcon()
+        else:
+            icon = QIcon(icon_path)
+
         action = QAction(icon, text, self.iface.mainWindow())
         action.triggered.connect(callback)
         action.setEnabled(enabled_flag)

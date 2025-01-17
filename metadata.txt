@@ -3,14 +3,14 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=grd2Stream 
+name=grd2stream
 qgisMinimumVersion=3.0
 description=flowline generation derived from velocity grids
 version=0.1
 author=Thomas Kleiner, Abraham Wondimu
 email=scienceflightplanner@gmail.com
 
-about=computes & displys streamlines based on velocity grids (GMT & GDAL compatible)
+about=computes & displays streamlines based on velocity grids (GMT & GDAL compatible)
 
 tracker=https://github.com/tkleiner/grd2stream/issues
 repository=https://github.com/ScienceFlightPlanner/grd2stream-QGIS-Plugin
