@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 GRD2STREAM_EXECUTABLE = os.path.join(PROJECT_DIR, "lib", "grd2stream")
-OUTPUT_TXT_FILE = os.path.join(PROJECT_DIR, "bin", "streamlines.txt")
+OUTPUT_TXT_FILE = os.path.join(PROJECT_DIR, "bin", "streamline.txt")
 
 
 def is_wsl_available():
@@ -201,7 +201,7 @@ class FlowlineModule:
             )
             uri = f"point?crs={QgsProject.instance().crs().authid()}&{uri_fields}"
 
-            layer_name = "Streamlines"
+            layer_name = "Streamline"
             layer = QgsVectorLayer(uri, layer_name, "memory")
             provider = layer.dataProvider()
 
