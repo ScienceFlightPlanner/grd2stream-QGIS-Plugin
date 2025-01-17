@@ -1,4 +1,5 @@
 import os
+import stat
 import shutil
 import platform
 import subprocess
@@ -12,6 +13,17 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 GRD2STREAM_EXECUTABLE = os.path.join(PROJECT_DIR, "lib", "grd2stream")
 OUTPUT_TXT_FILE = os.path.join(PROJECT_DIR, "bin", "streamline.txt")
 
+def set_recursive_permissions(folder_path):
+    """Set executable permissions recursively for all files in the folder."""
+    try:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                st = os.stat(file_path)
+                os.chmod(file_path, st.st_mode | stat.S_IEXEC)
+        print(f"Permissions set for all files in {folder_path}")
+    except Exception as e:
+        print(f"Error setting permissions: {e}")
 
 def is_wsl_available():
     return shutil.which("wsl") is not None

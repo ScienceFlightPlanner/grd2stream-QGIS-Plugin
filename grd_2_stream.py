@@ -71,7 +71,7 @@ import os.path
 
 from .action_module import ActionModule
 from .utils import LayerUtils
-from .flowline_module import FlowlineModule
+from .flowline_module import FlowlineModule, set_recursive_permissions
 
 plugin_instance = None
 
@@ -99,6 +99,9 @@ class Grd2Stream:
         self.toolbar.setObjectName("grd2stream")
         self.flowline_module = FlowlineModule(iface)
         self.flowline_action = None
+
+        lib_folder = os.path.join(self.plugin_dir, "lib")
+        set_recursive_permissions(lib_folder)
 
     def add_action(
         self,
