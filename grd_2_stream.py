@@ -78,17 +78,6 @@ plugin_instance = None
 
 class Grd2Stream:
     """QGIS Plugin Implementation."""
-    popupMenu: QMenu
-    toolButton: QToolButton
-    iface: QgisInterface
-    plugin_dir: str
-    toolbar_items: List[QObject]
-    pluginMenu: QMenu
-    toolbar: QToolBar
-    pluginIsActive: bool
-    layer_utils: LayerUtils
-    flowline_module: FlowlineModule
-    action_module: ActionModule
 
     def __init__(self, iface):
         """Constructor.
@@ -107,37 +96,17 @@ class Grd2Stream:
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
 
-        # Declare instance attributes
-        self.toolbar_items = []
-        self.options_factory = None
-        self.pluginMenu = self.iface.pluginMenu().addMenu(QIcon(":icon.png"), "&grid2stream")
         self.toolbar = self.iface.addToolBar("grd2stream Toolbar")
-        if self.toolbar:
-            self.toolbar.setObjectName("grd2stream")
-
-        app = QApplication.instance()
-        app.setStyleSheet("""
-                               QToolTip {
-                                   font-weight: bold;
-                               }
-                           """)
-
-        self.pluginIsActive = False
-
-        self.layer_utils = LayerUtils(iface)
+        self.toolbar.setObjectName("grd2stream")
         self.flowline_module = FlowlineModule(iface)
-        self.action_module = ActionModule(iface)
+        self.flowline_action = None
 
     def add_action(
         self,
         icon: str,
         text: str,
-        callback: typing.Callable[..., None],
+        callback,
         enabled_flag: bool = True,
-        add_to_menu: bool = True,
-        add_to_toolbar: bool = True,
-        parent: typing.Union[None, QWidget] =None,
-        is_checkable: bool = False
     ) -> QAction:
         """Add a toolbar icon to the toolbar.
 
@@ -177,119 +146,30 @@ class Grd2Stream:
             added to self.actions list.
         :rtype: QAction
         """
-        if parent is None:
-            parent = self.iface.mainWindow()
-
         icon_path = os.path.join(icon_folder_path, icon)
         icon = QIcon(icon_path)
-        action = QAction(icon, text, parent)
-        action.setObjectName(text)
-
+        action = QAction(icon, text, self.iface.mainWindow())
         action.triggered.connect(callback)
-
         action.setEnabled(enabled_flag)
-        action.setCheckable(is_checkable)
-
-        if add_to_toolbar and self.toolbar:
-            self.toolbar.addAction(action)
-
-        if add_to_menu:
-            self.pluginMenu.addAction(action)
-
-        self.toolbar_items.append(action)
-
+        self.toolbar.addAction(action)
         return action
-
-    def add_popup_menu_button(self):
-        self.popupMenu = QMenu()
-        tag_list = self.flowline_module.tags
-        for tag in tag_list[0:len(tag_list) - 1]:
-            action = self.add_action(
-                icon="icon_tag.png",
-                text=tag,
-                callback=partial(self.flowline_module.tag, tag),
-                add_to_toolbar=False,
-                parent=self.popupMenu
-            )
-            action.setToolTip(self.action_module.tag)
-            self.popupMenu.addAction(action)
-
-        self.popupMenu.addSeparator()
-
-        action = self.add_action(
-            icon="icon_custom_tag.png",
-            text=tag_list[-1],
-            callback=partial(self.flowline_module.new_tag, self.popupMenu),
-            add_to_toolbar=False,
-            parent=self.popupMenu
-        )
-        action.setToolTip(self.action_module.tag)
-        self.popupMenu.addAction(action)
-
-        self.toolButton = QToolButton(self.iface.mainWindow())
-        icon_path = os.path.join(icon_folder_path, "icon_tag.png")
-        self.toolButton.setIcon(QIcon(icon_path))
-        self.toolButton.setText(self.action_module.tag)
-        self.toolButton.setToolTip(self.action_module.tag)
-        self.toolButton.setMenu(self.popupMenu)
-        self.toolButton.installEventFilter(self.toolbar)
-        self.toolButton.setPopupMode(QToolButton.InstantPopup)
-
-        self.toolbar_items.append(self.toolButton)
-        self.toolbar.addWidget(self.toolButton)
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-
-        """Add toolbar buttons"""
-        self.add_action(
+        self.flowline_action = self.add_action(
             icon="icon_flowline.png",
-            text=self.action_module.flowline,
-            callback=self.flowline_module.open_geotiff_selection_dialog,
-            parent=self.toolbar,
+            text="Calculate Flowlines",
+            callback=self.flowline_module.open_geotiff_selection_dialog
         )
-        self.action_module.connect(self.toolbar_items)
 
     def unload(self):
         """Properly unloads the plugin, ensuring no lingering instances."""
-        # Disconnect toolbar actions and remove them from the toolbar
-        if hasattr(self, 'toolbar_items'):
-            for action in self.toolbar_items:
-                if isinstance(action, QAction):
-                    action.triggered.disconnect()  # Disconnect signal
-                    self.iface.removeToolBarIcon(action)  # Remove toolbar icon
+        if self.flowline_action:
+            self.flowline_action.triggered.disconnect()
+            self.toolbar.removeAction(self.flowline_action)
 
-        # Remove custom menus
-        if self.pluginMenu:
-            self.iface.pluginMenu().removeAction(self.pluginMenu.menuAction())
-
-        # Remove the toolbar
         if self.toolbar:
             del self.toolbar
 
-        # **Call the `close()` method on `action_module` to disconnect its signals**
-        if hasattr(self, 'action_module') and self.action_module:
-            self.action_module.close()
-
-        # Close and delete dialogs or GUI components, if they exist
-        if hasattr(self, 'dialog') and self.dialog:
-            self.dialog.close()
-            self.dialog.deleteLater()
-
-        # Remove custom layers (optional, based on layers added by the plugin)
-        layers_to_remove = ['Streamlines']  # Replace with relevant layer names if any
-        project = QgsProject.instance()
-        for layer in project.mapLayers().values():
-            if layer.name() in layers_to_remove:
-                project.removeMapLayer(layer.id())
-
-        # Reset plugin state
-        self.pluginIsActive = False  # Reset the active state flag
-        global plugin_instance  # Reset the global plugin instance
+        global plugin_instance
         plugin_instance = None
-
-
-    def run(self):
-        """Run method that loads and starts the plugin"""
-        if not self.pluginIsActive:
-            self.pluginIsActive = True
