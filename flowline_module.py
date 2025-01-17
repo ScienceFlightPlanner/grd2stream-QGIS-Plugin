@@ -128,13 +128,20 @@ class FlowlineModule:
             command[-1] += f" > {output_txt_file}"
             print(f"Executing Command: {' '.join(command)}")
 
+            startupinfo = None
+            if system == "Windows":
+                startupinfo = subprocess.STARTUPINFO()
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
             result = subprocess.run(
                 command,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                check=False
+                check=False,
+                startupinfo=startupinfo
             )
+
             if result.returncode != 0:
                 raise RuntimeError(f"Command failed: {result.stderr}")
 
