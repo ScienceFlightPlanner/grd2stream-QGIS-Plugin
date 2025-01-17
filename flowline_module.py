@@ -252,7 +252,7 @@ class SelectionDialog(QDialog):
         layout.addWidget(self.backward_checkbox)
 
         self.step_size_input = QDoubleSpinBox()
-        self.step_size_input.setDecimals(3)
+        self.step_size_input.setDecimals(2)
         self.step_size_input.setMinimum(0.0)
         self.step_size_input.setMaximum(float("inf"))
         self.step_size_input.setSingleStep(1.0)
