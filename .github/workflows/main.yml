@@ -1,4 +1,4 @@
-name: Test grd2stream Binary on Linux
+name: Test grd2stream Binary on macOS
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   test-binary:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout Code
@@ -20,8 +20,7 @@ jobs:
     - name: Set up Environment
       run: |
         echo "Installing dependencies..."
-        sudo apt-get update
-        sudo apt-get install -y qgis gmt
+        brew install --cask qgis gmt
 
     - name: Apply Recursive Permissions
       run: |
