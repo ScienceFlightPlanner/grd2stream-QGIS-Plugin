@@ -23,11 +23,16 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y qgis gmt
 
+    - name: Apply Recursive Permissions
+      run: |
+        echo "Setting recursive permissions for the 'grd2stream' folder..."
+        find ./grd2stream -type f -exec chmod +x {} \;
+
     - name: Debug Paths
       run: |
         echo "Current Dir: $(pwd)"
         echo "Files:"
-        ls -lah
+        ls -lah ./grd2stream
 
     - name: Test grd2stream Binary
       run: |
@@ -43,13 +48,10 @@ jobs:
           exit 1
         fi
 
-        echo "Making the binary executable..."
-        chmod +x "$BINARY_PATH"
-
         echo "Running the binary with provided inputs..."
         echo "$COORDINATES" | "$BINARY_PATH" "$RASTER_PATH_1" "$RASTER_PATH_2" || echo "Failed to execute grd2stream"
 
     - name: Check Binary Dependencies
       run: |
         echo "Checking library dependencies for grd2stream..."
-        ldd ./libs/grd2stream/grd2stream
+        ldd ./grd2stream/grd2stream
