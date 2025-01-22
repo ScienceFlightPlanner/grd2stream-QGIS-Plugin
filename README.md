@@ -6,10 +6,12 @@ The `grd2stream` QGIS plugin computes and displays streamlines based on velocity
 ---
 
 ## Requirements for Full Functionality
+- Ensure GMT version 6 is installed.
 
 ### macOS
-- **Install GMT from [GMT Releases](https://github.com/GenericMappingTools/gmt/releases).**
-   - Ensure GMT version 6 is installed.
+```bash
+brew install gmt
+```
 
 ### Windows (via WSL) & Linux
 Ubuntu/Debian:
