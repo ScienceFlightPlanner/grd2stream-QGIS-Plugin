@@ -1,4 +1,4 @@
-name: Test Binary on macOS
+name: Test grd2stream Binary on Linux
 
 on:
   push:
@@ -11,11 +11,17 @@ on:
 
 jobs:
   test-binary:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+
+    - name: Set up Environment
+      run: |
+        echo "Installing dependencies..."
+        sudo apt-get update
+        sudo apt-get install -y qgis gmt
 
     - name: Debug Paths
       run: |
@@ -23,39 +29,27 @@ jobs:
         echo "Files:"
         ls -lah
 
-    - name: Test Wrapper Script (libs/grd2stream)
+    - name: Test grd2stream Binary
       run: |
-        WRAPPER_PATH="./libs/grd2stream"
+        # Define paths
+        BINARY_PATH="./grd2stream/grd2stream"
+        RASTER_PATH_1="./smaller_topleft_vx.tif"
+        RASTER_PATH_2="./smaller_topleft_vy.tif"
+        COORDINATES="-192020.2232552988 -1125747.9813301556"
 
-        echo "Checking if the wrapper script exists at $WRAPPER_PATH..."
-        if [ ! -f "$WRAPPER_PATH" ]; then
-          echo "Wrapper script not found at $WRAPPER_PATH"
-          exit 1
-        fi
-
-        echo "Making the wrapper script executable..."
-        chmod +x "$WRAPPER_PATH"
-
-        echo "Running the wrapper script with --help..."
-        "$WRAPPER_PATH" --help || echo "Failed to execute wrapper script"
-
-    - name: Test Direct Binary (libs/.libs/grd2stream)
-      run: |
-        BINARY_PATH="./libs/.libs/grd2stream"
-
-        echo "Checking if the direct binary exists at $BINARY_PATH..."
+        echo "Checking if the binary exists..."
         if [ ! -f "$BINARY_PATH" ]; then
-          echo "Direct binary not found at $BINARY_PATH"
+          echo "Binary not found at $BINARY_PATH"
           exit 1
         fi
 
-        echo "Making the direct binary executable..."
+        echo "Making the binary executable..."
         chmod +x "$BINARY_PATH"
 
-        echo "Running the direct binary with --help..."
-        "$BINARY_PATH" --help || echo "Failed to execute direct binary"
+        echo "Running the binary with provided inputs..."
+        echo "$COORDINATES" | "$BINARY_PATH" "$RASTER_PATH_1" "$RASTER_PATH_2" || echo "Failed to execute grd2stream"
 
     - name: Check Binary Dependencies
       run: |
-        echo "Checking library dependencies for the binary in libs/.libs..."
-        otool -L ./libs/.libs/grd2stream
+        echo "Checking library dependencies for grd2stream..."
+        ldd ./libs/grd2stream/grd2stream
