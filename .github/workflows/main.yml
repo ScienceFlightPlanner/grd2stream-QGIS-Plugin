@@ -1,0 +1,61 @@
+name: Test Binary on macOS
+
+on:
+  push:
+    branches:
+      - testing-ground
+  pull_request:
+    branches:
+      - testing-ground
+  workflow_dispatch:
+
+jobs:
+  test-binary:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Debug Paths
+      run: |
+        echo "Current Dir: $(pwd)"
+        echo "Files:"
+        ls -lah
+
+    - name: Test Wrapper Script (libs/grd2stream)
+      run: |
+        WRAPPER_PATH="./libs/grd2stream"
+
+        echo "Checking if the wrapper script exists at $WRAPPER_PATH..."
+        if [ ! -f "$WRAPPER_PATH" ]; then
+          echo "Wrapper script not found at $WRAPPER_PATH"
+          exit 1
+        fi
+
+        echo "Making the wrapper script executable..."
+        chmod +x "$WRAPPER_PATH"
+
+        echo "Running the wrapper script with --help..."
+        "$WRAPPER_PATH" --help || echo "Failed to execute wrapper script"
+
+    - name: Test Direct Binary (libs/.libs/grd2stream)
+      run: |
+        BINARY_PATH="./libs/.libs/grd2stream"
+
+        echo "Checking if the direct binary exists at $BINARY_PATH..."
+        if [ ! -f "$BINARY_PATH" ]; then
+          echo "Direct binary not found at $BINARY_PATH"
+          exit 1
+        fi
+
+        echo "Making the direct binary executable..."
+        chmod +x "$BINARY_PATH"
+
+        echo "Running the direct binary with --help..."
+        "$BINARY_PATH" --help || echo "Failed to execute direct binary"
+
+    - name: Check Binary Dependencies
+      run: |
+        echo "Checking library dependencies for the binary in libs/.libs..."
+        otool -L ./libs/.libs/grd2stream
