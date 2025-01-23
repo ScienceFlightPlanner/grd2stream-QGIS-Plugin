@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
       - name: Checkout code
@@ -19,14 +19,14 @@ jobs:
 
       - name: Install MacPorts
         uses: melusina-org/setup-macports@v1
+        id: 'macports'
         with:
-          parameters: 'version=2.9.3'
+          parameters: '.github/parameters/setup-macports.yaml'
 
       - name: Verify MacPorts installation
         run: |
           which port
           port version
-          sudo port -v selfupdate
 
       - name: Install dependencies
         run: |
@@ -41,7 +41,7 @@ jobs:
 
       - name: Configure and build grd2stream
         run: |
-          ./configure --prefix=$HOME  --enable-gmt-api
+          ./configure --prefix=$HOME --enable-gmt-api
           make
 
       - name: Verify the binary
