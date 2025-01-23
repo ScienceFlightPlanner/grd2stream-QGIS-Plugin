@@ -40,9 +40,15 @@ jobs:
         run: |
           git clone https://github.com/tpoechtrager/osxcross.git
           cd osxcross
-          wget -O tarballs/MacOSX11.3.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz
+          wget -O tarballs/MacOSX14.5.tar.xz https://github.com/alexey-lysiuk/macos-sdk/releases/download/14.5/MacOSX14.5.tar.xz
           ./build.sh
-          export PATH="$PATH:$(pwd)/target/bin"
+          echo "Build completed with exit code $?"
+
+      - name: Add osxcross tools to PATH
+        run: |
+          echo "Adding osxcross tools to PATH..."
+          export PATH="$PATH:$(pwd)/osxcross/target/bin"
+          echo "PATH is now: $PATH"
 
       - name: Bootstrap grd2stream
         run: |
