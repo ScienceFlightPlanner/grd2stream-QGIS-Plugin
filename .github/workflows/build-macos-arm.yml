@@ -3,10 +3,10 @@ name: Cross-compile grd2stream for macOS
 on:
   push:
     branches:
-      - main
+      - testing-ground
   pull_request:
     branches:
-      - main
+      - testing-ground
   workflow_dispatch:
 
 jobs:
