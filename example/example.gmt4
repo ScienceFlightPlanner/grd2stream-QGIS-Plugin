@@ -1,0 +1,166 @@
+#!/bin/bash
+##
+## 
+##
+set -efxu 
+
+name=$(basename $0 .gmt4)
+eps=${name}.eps
+tmp_dir=_tmp_$name
+test -d $tmp_dir || mkdir $tmp_dir
+
+dreg=-R-3/3/-3/3
+preg=-R-3.2/3.2/-3.2/3.2
+pro=-JX10c/10c
+
+inc=.01
+dens=50
+
+seed=divopt
+seed=regular
+
+#grd2stream="../src/grd2stream -r -n 200"
+grd2stream="../src/grd2stream"
+
+##
+## create simple topography: z(x,y) = sin(x*y)*cos(x)
+## 
+grdmath $dreg -I$inc X Y MUL SIN = $tmp_dir/z1.grd
+grdmath $dreg -I$inc X COS = $tmp_dir/z2.grd
+grdmath $tmp_dir/z1.grd $tmp_dir/z2.grd MUL = $tmp_dir/z.grd
+
+
+##
+## http://www.wolframalpha.com/input/?i=plot+sin%28x+cos%28y%29%29
+## z(x,y) = sin(x cos(y))
+##
+# grdmath $dreg -I$inc Y COS X MUL SIN = $tmp_dir/z.grd
+
+# ##
+# ## http://www.wolframalpha.com/input/?i=plot+y^2+cos%28x%29%2C+x%3D-6..6%2C+y%3D-6..6
+# ## plot y^2 cos(x)
+# # grdmath $dreg -I$inc X COS = $tmp_dir/z1.grd
+# # grdmath $dreg -I$inc Y Y MUL = $tmp_dir/z2.grd
+# # grdmath $tmp_dir/z1.grd $tmp_dir/z2.grd MUL 9 DIV = $tmp_dir/z.grd
+# rmax=$(gmtmath -Q 3 3 R2 SQRT = )
+# rot=$(gmtmath -Q PI 2 DIV = )
+# grdmath $dreg -I$inc X Y R2 SQRT = $tmp_dir/r.grd
+# ## atan2(y=0,x=0) should be undefined, but is zero in gmt
+# grdmath $dreg -I$inc Y X ATAN2 = $tmp_dir/phi.grd # check mathemtica ok
+# grdmath $tmp_dir/phi.grd $rot ADD 8 MUL COS 1 ADD 2 DIV = $tmp_dir/r2.grd  ## range -1..1
+# grdmath $rmax $tmp_dir/r.grd SUB $tmp_dir/r2.grd SUB $rmax DIV = $tmp_dir/z.grd
+# grdmath 3 $tmp_dir/r.grd SUB $tmp_dir/r2.grd MUL = $tmp_dir/z.grd
+
+
+
+##
+## assume flow goes down the hills
+##
+grdmath $tmp_dir/z.grd DDX -1 MUL = $tmp_dir/u.grd
+grdmath $tmp_dir/z.grd DDY -1 MUL = $tmp_dir/v.grd
+grdmath $tmp_dir/u.grd $tmp_dir/v.grd R2 SQRT = $tmp_dir/mag.grd
+
+## check divergence
+grdmath $tmp_dir/u.grd DDX = $tmp_dir/dudx.grd
+grdmath $tmp_dir/u.grd DDY = $tmp_dir/dudy.grd
+grdmath $tmp_dir/v.grd DDX = $tmp_dir/dvdx.grd
+grdmath $tmp_dir/v.grd DDY = $tmp_dir/dvdy.grd
+## div(velo)
+grdmath $tmp_dir/dudx.grd $tmp_dir/dvdy.grd ADD = $tmp_dir/div.grd
+
+## 
+## create regular seeds on coarse grid
+##
+cinc=$(echo "$inc * $dens" | bc)
+grdsample $tmp_dir/mag.grd $dreg -I$cinc -G$tmp_dir/mag_c.grd
+grdsample $tmp_dir/u.grd $dreg -I$cinc -G$tmp_dir/u_c.grd
+grdsample $tmp_dir/v.grd $dreg -I$cinc -G$tmp_dir/v_c.grd
+grd2xyz $tmp_dir/mag_c.grd | gmtconvert -F0,1 > $tmp_dir/start.d
+cat $tmp_dir/start.d | \
+  $grd2stream -V -r $tmp_dir/u.grd $tmp_dir/v.grd > $tmp_dir/lines_f.d
+
+cat $tmp_dir/start.d | \
+  $grd2stream -b $tmp_dir/u.grd $tmp_dir/v.grd > $tmp_dir/lines_b.d
+
+
+
+##
+## colorscheme
+##
+cpt=$tmp_dir/topo.cpt
+makecpt -CLakeColor.cpt -T-1/1/.2 > $cpt
+
+## similar color scheme
+# makecpt -Cocean -T-3/3/.2 > $cpt
+
+
+########################################################################
+### The figure
+########################################################################
+gmtset PAPER_MEDIA a4+
+gmtset PAGE_ORIENTATION portrait 
+gmtset HEADER_FONT_SIZE	14p
+gmtset HEADER_OFFSET 0c
+gmtset ANNOT_FONT_SIZE 10
+gmtset ANNOT_FONT_PRIMARY  Helvetica
+gmtset ANNOT_OFFSET_PRIMARY 0.2c
+gmtset LABEL_FONT Helvetica
+gmtset LABEL_FONT_SIZE 10
+gmtset LABEL_OFFSET 0.4c
+gmtset OBLIQUE_ANNOTATION 34
+gmtset PLOT_DEGREE_FORMAT ddd:mm:ssF
+blue=49/98/159  ## uniMS polar blue
+red=204/0/0     ## uniMS polar red
+green=0/204/0
+
+psbasemap $preg $pro -B0 -K > $eps
+grdimage $tmp_dir/z.grd -R -J  -C$cpt -O -K >> $eps
+
+## Topography contours
+grdcontour $tmp_dir/z.grd -R -J  -C0.2 -A- -T0.1i/0.05i -O -K >> $eps
+
+## streamlines
+test -f $tmp_dir/lines_b.d && \
+  psxy -m $tmp_dir/lines_b.d -R -J -W1p,$red -O -K >> $eps
+
+test -f $tmp_dir/lines_f.d && \
+  psxy -m $tmp_dir/lines_f.d -R -J -W1p,orange -O -K >> $eps
+
+
+test -f $tmp_dir/lines.d && \
+  psxy -m $tmp_dir/lines.d -R -J -W1p,$green -O -K >> $eps
+
+
+## -E center on grid node 
+## -N do not clip
+vec=-Q0.03i/0.1i/0.09in0.25i
+vec=-Q0.025i/0.08i/0.06in0.25i
+#vec=-Q
+grdvector $tmp_dir/u.grd $tmp_dir/v.grd -I0.5 -R -J $vec \
+  -G0 -S8i -E -N -O -K  >> $eps
+
+psbasemap -R -J -Ba1f0.2/a1f0.2:."z(x,y) = sin(x*y)*cos(x)":WSne -O -K >> $eps
+#psbasemap -R -J -Ba1f0.2/a1f0.2:."":WSne -O -K >> $eps
+
+## second image on the right
+psbasemap $preg $pro -B0 -X12 -O -K >> $eps
+makecpt -Cpanoply -T-10/10/2.5 -D > $cpt
+grdimage $tmp_dir/div.grd -R -J -C$cpt -O -K >> $eps
+grdcontour $tmp_dir/div.grd -R -J -C$cpt  -T0.1i/0.05i -O -K >> $eps
+psbasemap -R -J -Ba1f0.2/a1f0.2:."div(v)":wSne -O -K >> $eps
+
+psbasemap -R -J -B0 -O >> $eps
+echo "%%EOF" >> $eps
+
+pdf=$(basename $eps .eps).pdf
+ps2raster -Tf $eps
+xpdf $pdf
+
+rm -f .gmtcommands4 .gmtdefaults4
+#rm -rf $tmp_dir
+
+
+
+
+
+
