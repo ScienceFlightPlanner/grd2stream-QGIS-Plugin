@@ -19,22 +19,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install autoconf automake libtool
-          ln -s $(which glibtoolize) /usr/local/bin/libtoolize
+          sudo port install autoconf automake libtool
+          sudo port install gdal +netcdf+hdf5
+          sudo port install gmt6 +gdal
 
       - name: Bootstrap grd2stream
         run: |
           chmod +x bootstrap.sh
-          mkdir -p admin
-          libtoolize --force  # ltmain.sh
-          aclocal  # aclocal.m4
-          autoheader  # config.h.in
-          automake --add-missing --copy --force-missing
           ./bootstrap.sh
 
       - name: Configure and build grd2stream
         run: |
-          ./configure --enable-gmt-api
+          ./configure --prefix=$HOME  --enable-gmt-api
           make
 
       - name: Verify the binary
@@ -47,10 +43,9 @@ jobs:
           name: grd2stream-macos
           path: src/grd2stream
 
-      - name: Install QGIS & GMT for testing
+      - name: Install QGIS for testing
         run: |
           brew install --cask qgis
-          brew install gmt
 
       - name: Test grd2stream Binary
         run: |
