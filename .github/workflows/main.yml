@@ -20,6 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install autoconf automake libtool
+          ln -s $(which glibtoolize) /usr/local/bin/libtoolize
           brew install --cask qgis
           brew install gmt
 
