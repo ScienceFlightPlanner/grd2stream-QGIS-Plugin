@@ -26,6 +26,8 @@ jobs:
       - name: Bootstrap grd2stream
         run: |
           chmod +x bootstrap.sh
+          mkdir -p admin
+          automake --add-missing --copy --force-missing
           ./bootstrap.sh
 
       - name: Configure and build grd2stream
