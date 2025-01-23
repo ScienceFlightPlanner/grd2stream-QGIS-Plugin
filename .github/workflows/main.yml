@@ -31,6 +31,7 @@ jobs:
         run: |
           which port
           port version
+          sudo port -v selfupdate
 
       - name: Install dependencies
         run: |
