@@ -15,11 +15,11 @@ AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([tar-pax])
 
 
-dnl canonical host-system: host, host_cpu, host_vendor, and host_os
+dnl canonical host-system: host, host_cpu, host_vendor, and host_os 
 AC_CANONICAL_HOST
 
-dnl Add support for the Dmalloc package.
-dnl If the user runs configure with --with-dmalloc, then define WITH_DMALLOC and add -ldmalloc to LIBS.
+dnl Add support for the Dmalloc package. 
+dnl If the user runs configure with --with-dmalloc, then define WITH_DMALLOC and add -ldmalloc to LIBS. 
 AM_WITH_DMALLOC
 
 dnl
@@ -33,9 +33,9 @@ fi
 AC_MSG_RESULT([$prefix])
 
 
-dnl
+dnl 
 dnl What should I build?
-dnl
+dnl 
 AC_ARG_ENABLE(debug, AS_HELP_STRING([--enable-debug],[Compile in debug mode @<:@default=no@:>@]),
     enable_debug=$enableval,
     enable_debug=no)
@@ -133,7 +133,7 @@ AS_IF([test "x$have_gmt_config" == xyes],
     AC_MSG_RESULT($GMT_CFLAGS)
     CPPFLAGS="$GMT_CFLAGS $CPPFLAGS"
 
-
+    
     gmt_major_version=`gmt-config --version | \
            sed 's/^\([[0-9]]*\).*/\1/'`
     if test "x${gmt_major_version}" = "x" ; then
@@ -169,10 +169,10 @@ if test "x${enable_gmt_api}" = "xyes"; then
    else
       if test "x${gmt_major_version}" = "x" ; then
          AC_MSG_WARN([GMT support disabled (missing/unusable library or header file)])
-      else
+      else 
          CPPFLAGS="$CPPFLAGS -DENABLE_GMT_API=${gmt_major_version}"
       fi
-   fi
+   fi                                    
 fi
 
 dnl

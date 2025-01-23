@@ -34,6 +34,20 @@ jobs:
           sudo port install gdal +netcdf+hdf5
           sudo port install gmt6 +gdal
 
+      - name: Find NetCDF installation path
+        id: netcdf-path
+        run: |
+          if command -v nc-config &> /dev/null; then
+            NETCDF_PREFIX=$(nc-config --prefix)
+          elif command -v pkg-config &> /dev/null; then
+            NETCDF_PREFIX=$(pkg-config --variable=prefix netcdf)
+          else
+            echo "Error: Neither nc-config nor pkg-config is available."
+            exit 1
+          fi
+          echo "NetCDF prefix: $NETCDF_PREFIX"
+          echo "NETCDF_PREFIX=$NETCDF_PREFIX" >> $GITHUB_ENV
+
       - name: Bootstrap grd2stream
         run: |
           chmod +x bootstrap.sh
@@ -41,15 +55,24 @@ jobs:
 
       - name: Configure and build grd2stream
         run: |
-          ./configure --prefix=$HOME --enable-gmt-api
+          CC=clang CFLAGS="-arch x86_64 -arch arm64" ./configure --prefix=$HOME --enable-gmt-api --enable-debug --with-netcdf=$NETCDF_PREFIX
           make
 
       - name: Verify the binary
         run: |
           file src/grd2stream
+          lipo -archs src/grd2stream
+
+      - name: Add build folder to Git
+        run: |
+          git config --global user.name "klairvoyage"
+          git config --global user.email "122225342+klairvoyage@users.noreply.github.com"
+          git add .
+          git commit -m "Add build folder & binary"
+          git push
 
       - name: Upload binary as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: grd2stream-macos
           path: src/grd2stream
