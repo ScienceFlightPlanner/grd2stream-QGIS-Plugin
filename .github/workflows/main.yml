@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo port install autoconf automake libtool
+          sudo port install autoconf autoconf-archive automake libtool
           sudo port install gdal +netcdf+hdf5
           sudo port install gmt6 +gdal
 
