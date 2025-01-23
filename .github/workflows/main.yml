@@ -11,21 +11,16 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Install MacPorts
-        run: |
-          curl -O https://distfiles.macports.org/MacPorts/MacPorts-2.9.3.tar.bz2
-          tar xjvf MacPorts-2.9.3.tar.bz2
-          cd MacPorts-2.9.3
-          ./configure && make && sudo make install
-          cd ..
-          rm -rf MacPorts-2.9.3 MacPorts-2.9.3.tar.bz2
-          export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+        uses: melusina-org/setup-macports@v1
+        with:
+          parameters: 'version=2.9.3'
 
       - name: Verify MacPorts installation
         run: |
