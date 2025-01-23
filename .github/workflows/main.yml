@@ -1,0 +1,57 @@
+name: Test grd2stream Binary on Linux
+
+on:
+  push:
+    branches:
+      - testing-ground
+  pull_request:
+    branches:
+      - testing-ground
+  workflow_dispatch:
+
+jobs:
+  test-binary:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Environment
+      run: |
+        echo "Installing dependencies..."
+        sudo apt-get update
+        sudo apt-get install -y qgis gmt
+
+    - name: Apply Recursive Permissions
+      run: |
+        echo "Setting recursive permissions for the 'grd2stream' folder..."
+        find ./grd2stream -type f -exec chmod +x {} \;
+
+    - name: Debug Paths
+      run: |
+        echo "Current Dir: $(pwd)"
+        echo "Files:"
+        ls -lah ./grd2stream
+
+    - name: Test grd2stream Binary
+      run: |
+        # Define paths
+        BINARY_PATH="./grd2stream/grd2stream"
+        RASTER_PATH_1="./smaller_topleft_vx.tif"
+        RASTER_PATH_2="./smaller_topleft_vy.tif"
+        COORDINATES="-192020.2232552988 -1125747.9813301556"
+
+        echo "Checking if the binary exists..."
+        if [ ! -f "$BINARY_PATH" ]; then
+          echo "Binary not found at $BINARY_PATH"
+          exit 1
+        fi
+
+        echo "Running the binary with provided inputs..."
+        echo "$COORDINATES" | "$BINARY_PATH" "$RASTER_PATH_1" "$RASTER_PATH_2" || echo "Failed to execute grd2stream"
+
+    - name: Check Binary Dependencies
+      run: |
+        echo "Checking library dependencies for grd2stream..."
+        ldd ./grd2stream/grd2stream
