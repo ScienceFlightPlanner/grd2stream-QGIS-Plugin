@@ -1,39 +1,40 @@
-name: Test grd2stream Binary on macOS
+name: Build & Test grd2stream on macOS
 
 on:
-  workflow_run:
-    workflows: ["Cross-Compile grd2stream for macOS"]
-    types:
-      - completed
+  push:
+    branches:
+      - testing-ground
+  pull_request:
+    branches:
+      - testing-ground
   workflow_dispatch:
 
 jobs:
-  test-binary:
+  build:
     runs-on: macos-latest
 
     steps:
-      - name: Download binary artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: grd2stream-macos-arm
-          path: ./src
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set Binary Permissions
+      - name: Install dependencies
         run: |
-          echo "Setting executable permissions for the binary..."
-          chmod +x ./src/grd2stream
-
-      - name: Set up Environment
-        run: |
-          echo "Installing dependencies..."
           brew install --cask qgis
           brew install gmt
 
-      - name: Debug Paths
+      - name: Bootstrap grd2stream
         run: |
-          echo "Current Dir: $(pwd)"
-          echo "Files in src folder:"
-          ls -lah ./src
+          chmod +x bootstrap.sh
+          ./bootstrap.sh
+
+      - name: Configure and build grd2stream
+        run: |
+          ./configure --enable-gmt-api
+          make
+
+      - name: Verify the binary
+        run: |
+          file src/grd2stream
 
       - name: Test grd2stream Binary
         run: |
@@ -52,7 +53,8 @@ jobs:
           echo "Running the binary with provided inputs..."
           echo "$COORDINATES" | "$BINARY_PATH" "$RASTER_PATH_1" "$RASTER_PATH_2" || echo "Failed to execute grd2stream"
 
-      - name: Check Binary Dependencies
-        run: |
-          echo "Checking library dependencies for grd2stream..."
-          otool -L ./src/grd2stream
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: grd2stream-macos
+          path: src/grd2stream
