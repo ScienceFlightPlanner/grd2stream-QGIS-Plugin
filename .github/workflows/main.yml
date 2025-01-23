@@ -27,6 +27,8 @@ jobs:
         run: |
           chmod +x bootstrap.sh
           mkdir -p admin
+          aclocal  # aclocal.m4
+          autoheader  # config.h.in
           automake --add-missing --copy --force-missing
           ./bootstrap.sh
 
