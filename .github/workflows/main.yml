@@ -25,8 +25,12 @@ jobs:
           ./configure && make && sudo make install
           cd ..
           rm -rf MacPorts-2.9.3 MacPorts-2.9.3.tar.bz2
-          echo 'export PATH=/opt/local/bin:/opt/local/sbin:$PATH' >> ~/.bash_profile
-          source ~/.bash_profile
+          export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+
+      - name: Verify MacPorts installation
+        run: |
+          which port
+          port version
 
       - name: Install dependencies
         run: |
