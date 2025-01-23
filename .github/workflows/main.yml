@@ -34,20 +34,6 @@ jobs:
           sudo port install gdal +netcdf+hdf5
           sudo port install gmt6 +gdal
 
-      - name: Find NetCDF installation path
-        id: netcdf-path
-        run: |
-          if command -v nc-config &> /dev/null; then
-            NETCDF_PREFIX=$(nc-config --prefix)
-          elif command -v pkg-config &> /dev/null; then
-            NETCDF_PREFIX=$(pkg-config --variable=prefix netcdf)
-          else
-            echo "Error: Neither nc-config nor pkg-config is available."
-            exit 1
-          fi
-          echo "NetCDF prefix: $NETCDF_PREFIX"
-          echo "NETCDF_PREFIX=$NETCDF_PREFIX" >> $GITHUB_ENV
-
       - name: Bootstrap grd2stream
         run: |
           chmod +x bootstrap.sh
@@ -55,7 +41,9 @@ jobs:
 
       - name: Configure and build grd2stream
         run: |
-          CC=clang CFLAGS="-arch x86_64 -arch arm64" ./configure --prefix=$HOME --enable-gmt-api --enable-debug --with-netcdf=$NETCDF_PREFIX
+          export CPPFLAGS="-I/opt/local/include"
+          export LDFLAGS="-L/opt/local/lib"
+          ./configure --prefix=$HOME --enable-gmt-api --enable-debug
           make
 
       - name: Verify the binary
