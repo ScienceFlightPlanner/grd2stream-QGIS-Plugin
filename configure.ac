@@ -37,6 +37,7 @@ AC_ARG_ENABLE(gmt-api,
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_AR
 AM_PROG_CC_C_O
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
