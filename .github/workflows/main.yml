@@ -21,8 +21,6 @@ jobs:
         run: |
           brew install autoconf automake libtool
           ln -s $(which glibtoolize) /usr/local/bin/libtoolize
-          brew install --cask qgis
-          brew install gmt
 
       - name: Bootstrap grd2stream
         run: |
@@ -43,6 +41,17 @@ jobs:
         run: |
           file src/grd2stream
 
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: grd2stream-macos
+          path: src/grd2stream
+
+      - name: Install QGIS & GMT for testing
+        run: |
+          brew install --cask qgis
+          brew install gmt
+
       - name: Test grd2stream Binary
         run: |
           # Define paths
@@ -59,9 +68,3 @@ jobs:
 
           echo "Running the binary with provided inputs..."
           echo "$COORDINATES" | "$BINARY_PATH" "$RASTER_PATH_1" "$RASTER_PATH_2" || echo "Failed to execute grd2stream"
-
-      - name: Upload binary as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: grd2stream-macos
-          path: src/grd2stream
