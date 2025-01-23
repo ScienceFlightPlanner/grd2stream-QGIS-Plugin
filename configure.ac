@@ -39,7 +39,7 @@ AC_ARG_ENABLE(gmt-api,
 AC_PROG_CC
 AM_PROG_AR
 AM_PROG_CC_C_O
-AC_PROG_LIBTOOL
+LT_INIT
 AC_PROG_INSTALL
 
 # netcdf.h and gmt_resources.h require C99 extensions
