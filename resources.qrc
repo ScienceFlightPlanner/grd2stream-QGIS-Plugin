@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/plugins/grd_2_stream" >
-        <file>icon.png</file>
-    </qresource>
-</RCC>
