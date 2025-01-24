@@ -1,4 +1,4 @@
-name: Build grd2stream on macOS ARM
+name: Build grd2stream on Ubuntu
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-macos-arm:
-    runs-on: macos-latest
+  build-ubuntu:
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -21,11 +21,11 @@ jobs:
           restore-keys: |
             miniconda-${{ runner.os }}-
 
-      - name: Install Miniconda (macOS ARM)
+      - name: Install Miniconda (Linux x86_64)
         if: steps.cache-miniconda.outputs.cache-hit != 'true'
         run: |
           mkdir -p ~/miniconda3
-          curl -s https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
           bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
           rm ~/miniconda3/miniconda.sh
 
