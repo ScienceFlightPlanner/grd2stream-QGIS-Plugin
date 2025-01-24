@@ -40,6 +40,7 @@ jobs:
           curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
           tar xvfz grd2stream-0.2.14.tar.gz
           cd grd2stream-0.2.14
+          export LDFLAGS="-Wl,-rpath,$CONDA_PREFIX/lib"
           ./configure --prefix="$CONDA_PREFIX" --enable-gmt-api
           make && make install
           grd2stream -h
