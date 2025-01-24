@@ -14,30 +14,32 @@ jobs:
         id: cache-miniconda
         uses: actions/cache@v3
         with:
-          path: $USERPROFILE/miniconda3
+          path: $env:USERPROFILE\miniconda3
           key: miniconda-${{ runner.os }}-${{ hashFiles('environment.yml') }}
           restore-keys: |
             miniconda-${{ runner.os }}-
 
       - name: Install Miniconda (Windows x86_64)
         if: steps.cache-miniconda.outputs.cache-hit != 'true'
-        shell: bash
+        shell: powershell
         run: |
-          curl -s https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe -o miniconda.exe
-          start /wait "" .\miniconda.exe /S
-          rm miniconda.exe
+          wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe" -outfile ".\miniconda.exe"
+          Start-Process -FilePath ".\miniconda.exe" -ArgumentList "/S" -Wait
+          del .\miniconda.exe
 
       - name: Initialize Conda
-        shell: bash
+        shell: powershell
         run: |
-          source $USERPROFILE/miniconda3/etc/profile.d/conda.sh
+          $env:Path = "$env:USERPROFILE\miniconda3\Scripts;$env:USERPROFILE\miniconda3\Library\bin;$env:Path"
+          conda init powershell
           conda config --add channels conda-forge
           conda config --set channel_priority strict
           conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4
           conda activate GMT6
-          curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
+          curl.exe -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
           tar xvfz grd2stream-0.2.14.tar.gz
           cd grd2stream-0.2.14
-          ./configure --prefix="$CONDA_PREFIX" --enable-gmt-api
-          make && make install
+          ./configure --prefix="$env:CONDA_PREFIX" --enable-gmt-api
+          make
+          make install
           grd2stream -h
