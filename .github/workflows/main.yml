@@ -33,6 +33,8 @@ jobs:
         shell: bash
         run: |
           source ~/miniconda3/etc/profile.d/conda.sh
+          conda config --add channels conda-forge
+          conda config --set channel_priority strict
           conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4
           conda activate GMT6
           curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
