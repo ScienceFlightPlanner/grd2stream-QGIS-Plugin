@@ -1,0 +1,46 @@
+name: Build grd2stream on macOS ARM
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-macos-arm:
+    runs-on: macos-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Cache Miniconda
+        id: cache-miniconda
+        uses: actions/cache@v3
+        with:
+          path: ~/miniconda3
+          key: miniconda-${{ runner.os }}-${{ hashFiles('environment.yml') }}
+          restore-keys: |
+            miniconda-${{ runner.os }}-
+
+      - name: Install Miniconda (macOS ARM)
+        if: steps.cache-miniconda.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/miniconda3
+          curl -s https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+          bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+          rm ~/miniconda3/miniconda.sh
+
+      - name: Initialize Conda
+        shell: bash
+        run: |
+          source ~/miniconda3/etc/profile.d/conda.sh
+          conda config --add channels conda-forge
+          conda config --set channel_priority strict
+          conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4
+          conda activate GMT6
+          curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
+          tar xvfz grd2stream-0.2.14.tar.gz
+          cd grd2stream-0.2.14
+          export LDFLAGS="-Wl,-rpath,$CONDA_PREFIX/lib"
+          ./configure --prefix="$CONDA_PREFIX" --enable-gmt-api
+          make && make install
+          grd2stream -h
