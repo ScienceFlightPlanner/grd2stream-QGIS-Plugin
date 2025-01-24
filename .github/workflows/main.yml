@@ -1,87 +1,43 @@
-name: Build & Test grd2stream on macOS
+name: Build grd2stream on macOS ARM
 
 on:
   push:
-    branches:
-      - testing-ground
   pull_request:
-    branches:
-      - testing-ground
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: macos-13
-
+  build-macos-arm:
+    runs-on: macos-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Check out repo
+        uses: actions/checkout@v4
 
-      - name: Install MacPorts
-        uses: melusina-org/setup-macports@v1
-        id: 'macports'
+      - name: Cache Miniconda
+        id: cache-miniconda
+        uses: actions/cache@v3
         with:
-          parameters: '.github/parameters/setup-macports.yaml'
+          path: ~/miniconda3
+          key: miniconda-${{ runner.os }}-${{ hashFiles('environment.yml') }}
+          restore-keys: |
+            miniconda-${{ runner.os }}-
 
-      - name: Verify MacPorts installation
+      - name: Install Miniconda (macOS ARM)
+        if: steps.cache-miniconda.outputs.cache-hit != 'true'
         run: |
-          which port
-          port version
+          mkdir -p ~/miniconda3
+          curl -s https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+          bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+          rm ~/miniconda3/miniconda.sh
 
-      - name: Install dependencies
+      - name: Initialize Conda
+        shell: bash
         run: |
-          sudo port install autoconf autoconf-archive automake libtool
-          sudo port install gdal +netcdf+hdf5
-          sudo port install gmt6 +gdal
-
-      - name: Bootstrap grd2stream
-        run: |
-          chmod +x bootstrap.sh
-          ./bootstrap.sh
-
-      - name: Configure and build grd2stream
-        run: |
-          export CPPFLAGS="-I/opt/local/include"
-          export LDFLAGS="-L/opt/local/lib"
-          ./configure --prefix=$HOME --enable-gmt-api --enable-debug
-          make
-
-      - name: Verify the binary
-        run: |
-          file src/grd2stream
-          lipo -archs src/grd2stream
-
-      - name: Add build folder to Git
-        run: |
-          git config --global user.name "klairvoyage"
-          git config --global user.email "122225342+klairvoyage@users.noreply.github.com"
-          git add .
-          git commit -m "Add build folder & binary"
-          git push
-
-      - name: Upload binary as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: grd2stream-macos
-          path: src/grd2stream
-
-      - name: Install QGIS for testing
-        run: |
-          brew install --cask qgis
-
-      - name: Test grd2stream Binary
-        run: |
-          # Define paths
-          BINARY_PATH="./src/grd2stream"
-          RASTER_PATH_1="./smaller_topleft_vx.tif"
-          RASTER_PATH_2="./smaller_topleft_vy.tif"
-          COORDINATES="-192020.2232552988 -1125747.9813301556"
-
-          echo "Checking if the binary exists..."
-          if [ ! -f "$BINARY_PATH" ]; then
-            echo "Binary not found at $BINARY_PATH"
-            exit 1
-          fi
-
-          echo "Running the binary with provided inputs..."
-          echo "$COORDINATES" | "$BINARY_PATH" "$RASTER_PATH_1" "$RASTER_PATH_2" || echo "Failed to execute grd2stream"
+          source ~/miniconda3/etc/profile.d/conda.sh
+          conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4
+          conda activate GMT6
+          curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
+          tar xvfz grd2stream-0.2.14.tar.gz
+          cd grd2stream-0.2.14
+          ./configure --prefix="$CONDA_PREFIX" --enable-gmt-api
+          make && make install
+          grd2stream -h
