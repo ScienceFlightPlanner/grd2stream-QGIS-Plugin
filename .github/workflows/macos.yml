@@ -1,8 +1,6 @@
 name: Build grd2stream on macOS ARM
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 jobs:

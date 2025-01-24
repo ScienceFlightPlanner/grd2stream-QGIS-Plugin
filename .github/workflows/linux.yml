@@ -1,8 +1,6 @@
 name: Build grd2stream on Ubuntu
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
