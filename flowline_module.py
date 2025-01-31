@@ -96,19 +96,22 @@ class FlowlineModule:
         if system in ["Linux", "Darwin"]:
             activate_conda = "source ~/miniconda3/etc/profile.d/conda.sh"
             activate_env = "conda activate GMT6"
+            download_grd2stream = "curl -fsSL https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz"
+            unzip_grd2stream = "tar xvfz grd2stream-0.2.14.tar.gz"
+            navigate = "cd grd2stream-0.2.14"
+            linker_flags = "export LDFLAGS=\"-Wl,-rpath,$CONDA_PREFIX/lib\""
+            build_grd2stream = "./configure --prefix=\"$CONDA_PREFIX\" --enable-gmt-api"
+            install_grd2stream = "make && make install"
             try:
                 subprocess.run(["bash", "-c", f"{activate_conda} && {activate_env}"], check=True)
+                subprocess.run(["bash", "-c", f"{download_grd2stream}"], check=True)
+                subprocess.run(["bash", "-c", f"{unzip_grd2stream}"], check=True)
+                subprocess.run(["bash", "-c", f"{navigate}"], check=True)
+                subprocess.run(["bash", "-c", f"{linker_flags}"], check=True)
+                subprocess.run(["bash", "-c", f"{build_grd2stream}"], check=True)
+                subprocess.run(["bash", "-c", f"{install_grd2stream}"], check=True)
             except subprocess.CalledProcessError as e:
                 print(f"Command failed with error: {e}")
-            build_commands = (
-                "curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz && "
-                "tar xvfz grd2stream-0.2.14.tar.gz && "
-                "cd grd2stream-0.2.14 && "
-                "export LDFLAGS=\"-Wl,-rpath,$CONDA_PREFIX/lib\" && "
-                "./configure --prefix=\"$CONDA_PREFIX\" --enable-gmt-api && "
-                "make && make install"
-            )
-            subprocess.run(["bash", "-c", build_commands], check=True)
         elif system == "Windows":
             conda_init = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
