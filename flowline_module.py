@@ -40,7 +40,7 @@ class FlowlineModule:
         elif system == "Darwin":
             command = (
                 "mkdir -p ~/miniconda3 && "
-                "curl -s https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh && "
+                "curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh -o ~/miniconda3/miniconda.sh && 
                 "bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && "
                 "rm ~/miniconda3/miniconda.sh"
             )
@@ -48,7 +48,7 @@ class FlowlineModule:
         elif system == "Linux":
             command = (
                 "mkdir -p ~/miniconda3 && "
-                "wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh && "
+                "wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh -O ~/miniconda3/miniconda.sh && "
                 "bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && "
                 "rm ~/miniconda3/miniconda.sh"
             )
