@@ -40,11 +40,11 @@ class FlowlineModule:
         elif system == "Darwin":
             command = (
                 "mkdir -p ~/miniconda3 && "
-                "curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh -o ~/miniconda3/miniconda.sh && 
+                "curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh -o ~/miniconda3/miniconda.sh && "
                 "bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && "
                 "rm ~/miniconda3/miniconda.sh"
             )
-            subprocess.run(command, shell=True, executable="/bin/bash", check=True)
+            subprocess.run(["bash", "-c", command], check=True)
         elif system == "Linux":
             command = (
                 "mkdir -p ~/miniconda3 && "
@@ -52,7 +52,7 @@ class FlowlineModule:
                 "bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && "
                 "rm ~/miniconda3/miniconda.sh"
             )
-            subprocess.run(command, shell=True, executable="/bin/bash", check=True)
+            subprocess.run(["bash", "-c", command], check=True)
         print("Miniconda is now installed!")
 
     def setup_conda_environment(self):
@@ -64,13 +64,13 @@ class FlowlineModule:
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
         if system in ["Linux", "Darwin"]:
-            conda_commands = [
-                "source ~/miniconda3/etc/profile.d/conda.sh",
-                "conda config --add channels conda-forge",
-                "conda config --set channel_priority strict",
-                "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4",
-            ]
-            subprocess.run(" && ".join(conda_commands), shell=True, executable="/bin/bash", check=True)
+            conda_commands = (
+                "source ~/miniconda3/etc/profile.d/conda.sh && "
+                "conda config --add channels conda-forge && "
+                "conda config --set channel_priority strict && "
+                "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4"
+            )
+            subprocess.run(["bash", "-c", conda_commands], check=True)
         elif system == "Windows":
             conda_commands = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
@@ -89,13 +89,9 @@ class FlowlineModule:
         if os.path.exists(grd2stream_executable):
             print("grd2stream is already installed!")
             return
-        conda_init = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate GMT6" if system in ["Linux", "Darwin"] else (
-            "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
-            "conda init powershell; "
-            "conda activate GMT6"
-        )
         print("Installing grd2stream...")
         if system in ["Linux", "Darwin"]:
+            conda_init = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate GMT6"
             build_commands = (
                 f"{conda_init} && "
                 "curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz && "
@@ -105,7 +101,12 @@ class FlowlineModule:
                 "./configure --prefix=\"$CONDA_PREFIX\" --enable-gmt-api && "
                 "make && make install"
             )
+            subprocess.run(["bash", "-c", build_commands], check=True)
         elif system == "Windows":
+            conda_init = (
+                "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
+                "conda activate GMT6"
+            )
             build_commands = (
                 f"{conda_init}; "
                 "curl.exe -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz; "
@@ -115,7 +116,7 @@ class FlowlineModule:
                 "make; "
                 "make install"
             )
-        subprocess.run(build_commands, shell=True, executable="/bin/bash" if system in ["Linux", "Darwin"] else None, check=True)
+            subprocess.run(["powershell", "-Command", build_commands], check=True)
         print("grd2stream is now installed!")
 
     def open_selection_dialog(self):
