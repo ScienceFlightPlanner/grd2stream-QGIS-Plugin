@@ -5,32 +5,6 @@ The `grd2stream` QGIS plugin computes and displays streamlines based on velocity
 
 ---
 
-## Requirements for Full Functionality
-
-### Windows & macOS
-- **Install GMT from [GMT Releases](https://github.com/GenericMappingTools/gmt/releases).**
-   - Ensure GMT version 6 is installed.
-
-### Linux
-Ubuntu/Debian:
-```bash
-sudo apt install gmtsudo pacman -S gmt
-```
-Arch/Manjaro:
-```bash
-sudo pacman -S gmt
-```
-
----
-
-## Troubleshooting
-- If you encounter errors related to file format compatibility, ensure:
-  - **GDAL** is installed (`pip install gdal`)
-    - And sometimes `pip install pygmt` also does the trick
-- For detailed logs, check the QGIS Python console!
-
----
-
 ## Authors
 - [**Thomas Kleiner**](https://github.com/tkleiner)
 - [**ScienceFlightPlanner**](https://github.com/ScienceFlightPlanner)

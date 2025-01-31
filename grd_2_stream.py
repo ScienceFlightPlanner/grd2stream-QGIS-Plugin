@@ -67,20 +67,6 @@ from .flowline_module import FlowlineModule
 
 plugin_instance = None
 
-def set_recursive_permissions(folder_path, write_permission=False):
-    """Set executable (and optionally write) permissions recursively for all files in the folder."""
-    try:
-        for root, dirs, files in os.walk(folder_path):
-            for file in files:
-                file_path = os.path.join(root, file)
-                st = os.stat(file_path)
-                os.chmod(file_path, st.st_mode | stat.S_IEXEC)
-                if write_permission:
-                    os.chmod(file_path, st.st_mode | stat.S_IWRITE)
-        print(f"Permissions set for all files in {folder_path}")
-    except Exception as e:
-        print(f"Error setting permissions: {e}")
-
 class Grd2Stream:
     """QGIS Plugin Implementation."""
 
@@ -105,11 +91,12 @@ class Grd2Stream:
         self.toolbar.setObjectName("grd2stream")
         self.flowline_module = FlowlineModule(iface)
         self.flowline_action = None
+        self.ensure_conda_setup()
 
-        lib_folder = os.path.join(self.plugin_dir, "libs")
-        set_recursive_permissions(lib_folder)
-        bin_folder = os.path.join(self.plugin_dir, "bin")
-        set_recursive_permissions(bin_folder, write_permission=True)
+    def ensure_conda_setup(self):
+        """Ensure Miniconda is installed & environment is properly set up."""
+        self.flowline_module.install_miniconda()
+        self.flowline_module.setup_conda_environment()
 
     def add_action(
         self,

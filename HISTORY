@@ -1,0 +1,735 @@
+  505  git add libs/.libs/libgnugetopt.*
+  506  git add libgnugetopt.*
+  507  git commit -m "'LF will be replaced by CRLF' but instead committed via WSL"
+  508  touch .gitkeep
+  509  git add .gitkeep
+  510  sudo apt update
+  511  sudo apt install build-essential gdal-bin libnetcdf-dev libgmt-dev
+  512  python3 -c "import numpy as np; print(np.__version__)"
+  513  pip install numpy==2.2.1
+  514  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/.libs/
+  515  ./grd2stream
+  516  c
+  517  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 100 -T 0 -n 10000 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  518  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 100000 -T 0 -n 10000 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  519  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 0.1 -T 0 -n 10000 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  520  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 199 -T 0 -n 10000 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  521  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 200 -T 0 -n 10000 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  522  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -d 200 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  523  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -d 1000 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  524  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -d 5 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  525  bash -c echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  526  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  527  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -d 5 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  528  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -d 0.1 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  529  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -d 1 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  530  gdalinfo /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif
+  531  gdalinfo /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+  532  ./grd2stream
+  533  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  534  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  535  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 50 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  536  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 201 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  537  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -d 20.5 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  538  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b -l > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  539  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -T 0 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  540  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -T 1 > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  541  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -T 1 -t > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  542  echo "214911.15462164662 -2173685.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -T 100000 -t > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  543  echo "214911.15462164662 -2173685.4811151554", 214911.15462164662 -2173685.4811151554 | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -T 100000 -t > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  544  echo "214911.15462164662 -2173685.4811151554" "214912.15462164662 -2173686.4811151554" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -T 100000 -t > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamliness.txt
+  545  ./grd2stream
+  546  cd /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/
+  547  bash -c echo "81285.28992162831 -2540314.9785774713" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif -b > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  548  bash -c echo "81285.28992162831 -2540314.9785774713" | /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  549  /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream
+  550  /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+  551  /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  552  bash -c "/mnt/c/path/to/grd2stream /mnt/c/path/to/raster1.tif /mnt/c/path/to/raster2.tif > /mnt/c/path/to/output.txt"
+  553  bash -c /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt
+  554  bash -c "/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/libs/grd2stream /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif > /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/ScienceFlightPlanner/bin/streamlines.txt"
+  555  pyrcc5 -o resources.py resources.qrc
+  556  sudo apt install pyqt5-dev-tools
+  557  pyrcc5 -o resources.py resources.qrc
+  558  C:\Users\abrah\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\grd2stream-QGIS-Plugin
+  559  pyrcc5 -o resources.py resources.qrc
+  560  make
+  561  pip install pb_tool
+  562  exit
+  563  pip install pb_tool
+  564  pip install python3-pb_tool
+  565  python3 -m venv myenv
+  566  source myenv/bin/activate
+  567  pip install pb_tool
+  568  pb_tool compile
+  569  deactivate
+  570  pyrcc5 -o resources.py resources.qrc
+  571  ./grid2stream
+  572  ./grd2stream
+  573  ldd libgmt.so
+  574  cd yo
+  575  ldd libgmt.so
+  576  sudo apt-get install cmake gcc g++ make libnetcdf-dev libgdal-dev libproj-dev
+  577  mkdir build
+  578  cd build
+  579  cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
+  580  make -j$(nproc)
+  581  sudo apt-get install mingw-w64 cmake
+  582  mkdir build-windows
+  583  cd build-windows
+  584  cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++
+  585  git clone https://github.com/microsoft/vcpkg.git
+  586  cd vcpkg
+  587  ./bootstrap-vcpkg.sh
+  588  ls
+  589  sudo apt-get install curl zip unzip tar -y
+  590  ./bootstrap-vcpkg.sh
+  591  ./vcpkg install netcdf:x64-windows
+  592  ./vcpkg update
+  593  ./vcpkg search netcdf
+  594  ./vcpkg install gdal[netcdf]:x64-windows
+  595  nano ./vcpkg/triplets/x64-windows.cmake
+  596  /usr/share/cmake*/Modules/Platform/Windows-Mingw.cmake
+  597  find /usr/share -name "Windows-Mingw.cmake"
+  598  sudo apt-get install mingw-w64 cmake -y
+  599  find /usr/share -name "Windows-Mingw.cmake"
+  600  mkdir -p ~/toolchains
+  601  nano ~/toolchains/mingw-toolchain.cmake
+  602  ./vcpkg install gdal[netcdf]:x64-windows --triplet=x64-windows     -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=~/toolchains/mingw-toolchain.cmake
+  603  nano ./vcpkg/triplets/x64-windows.cmake
+  604  ls -ld ./vcpkg/triplets/x64-windows.cmake
+  605  mkdir -p ./vcpkg/triplets
+  606  ls -l ./vcpkg
+  607  mv ./vcpkg ./vcpkg-backup
+  608  mkdir ./vcpkg
+  609  ls -ld ./vcpkg
+  610  nano ./vcpkg/triplets/x64-windows.cmake
+  611  mkdir -p ./vcpkg/triplets
+  612  nano ./vcpkg/triplets/x64-windows.cmake
+  613  ./vcpkg install gdal[netcdf]:x64-windows --triplet=x64-windows
+  614  cd ./vcpkg
+  615  ls -l
+  616  ls -l ./vcpkg
+  617  ls -l ./vcpkg/vcpkg
+  618  ls
+  619  cd triples && ls
+  620  cd /mnt/c/Users/abrah/Downloads/whl/gmt/build/build-windows/
+  621  ls
+  622  cd vcpkg
+  623  ls
+  624  ls -l ./vcpkg-backup
+  625  ls -l ./vcpkg
+  626  mv ./vcpkg-backup ./vcpkg/vcpkg
+  627  ls -l ./vcpkg
+  628  ./vcpkg/bootstrap-vcpkg.sh
+  629  ./vcpkg/vcpkg.sh
+  630  ./vcpkg/vcpkg install gdal[netcdf]:x64-windows --triplet=x64-windows
+  631  ldd libgmt.so
+  632  ls -lh src/libgmt.so
+  633  ls -lh libgmt.so
+  634  cd ~
+  635  pwd
+  636  cd /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/gmt/linux/
+  637  LD_LIBRARY_PATH=libs ldd libs/libgmt.so
+  638  ls
+  639  mkdir -p libs
+  640  ldd libgmt.so | grep -o '/lib.*' | while read lib; do     cp --parents "$lib" libs; done
+  641  ldd libgmt.so | awk '{print $3}' | grep '^/' | while read lib; do     cp --parents "$lib" libs; done
+  642  d gmlibgmt.so
+  643  pyrcc5 -o resources.py resources.qrc
+  644  ./bootsrap.sh
+  645  ./bootstrap.sh
+  646  ./configure --prefix=$HOME --enable-gmt-api
+  647  make
+  648  make dist
+  649  GIT COMMITTER_DATE="Fri 17 Jan 2025 19:28:33 +0100" git commit --amend --no-edit --date "Fri 17 Jan 2025 19:28:33 +0100"
+  650  sudo apt install git
+  651  GIT COMMITTER_DATE="Fri 17 Jan 2025 19:28:33 +0100" git commit --amend --no-edit --date "Fri 17 Jan 2025 19:28:33 +0100"
+  652  git --version
+  653  export PATH=$PATH:/usr/bin
+  654  GIT COMMITTER_DATE="Fri 17 Jan 2025 19:28:33 +0100" git commit --amend --no-edit --date "Fri 17 Jan 2025 19:28:33 +0100"
+  655  GIT_COMMITTER_DATE="Fri 17 Jan 2025 19:28:33 +0100" git commit --amend --no-edit --date "Fri 17 Jan 2025 19:28:33 +0100"
+  656  git branch Development
+  657  git checkout Development
+  658  git checkout main
+  659  tree
+  660  sudo apt  install tree
+  661  tree
+  662  tree -L 2
+  663  tree -L 3
+  664  tree -L 5
+  665  tree -L 4
+  666  cd /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin
+  667  cd
+  668  pwd
+  669  rm -f *.o *.lo
+  670  rm -f *.o *.lo
+  671  sudo apt-get install -y mingw-w64
+  672  ./bootstrap.sh
+  673  sudo apt-get install -y clang
+  674  CC=clang ./configure --target=x86_64-pc-linux-gnu --enable-gmt-api --enable-debug
+  675  CC=clang ./configure --target=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  676  CC=clang ./configure --target=x86_64-apple-darwin --enable-gmt-api --enable-debug
+  677  make clean
+  678  CC=clang ./configure --target=x86_64-pc-linux-gnu --enable-gmt-api --enable-debug
+  679  make && make dist
+  680  make clean
+  681  CC=clang ./configure --target=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  682  make && make dist
+  683  make clean
+  684  CC=clang ./configure --target=x86_64-apple-darwin --enable-gmt-api --enable-debug
+  685  make && make dist
+  686  CC=clang ./configure --target=arm64-apple-darwin --enable-gmt-api --enable-debug
+  687  make && make dist
+  688  make clean
+  689  ls
+  690  ls -R
+  691  ls -laR
+  692  ls -R
+  693  rm -f *.o *.lo
+  694  CC=x86_64-w64-mingw32-gcc ./configure --target=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  695  make && make dist
+  696  ./configure --help
+  697  CC=x86_64-w64-mingw32-gcc ./configure --target=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  698  make
+  699  make dist
+  700  sudo apt-get install libnetcdf-dev mingw-w64 -y
+  701  CC=x86_64-w64-mingw32-gcc ./configure --target=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  702  sudo apt-get install libnetcdf-dev
+  703  ls /usr/local/mingw-netcdf
+  704  wget https://github.com/Unidata/netcdf-c/archive/refs/tags/v4.9.2.tar.gz
+  705  tar -xzf v4.9.2.tar.gz
+  706  cd netcdf-c-4.9.2
+  707  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-netcdf
+  708  ls usr/local/mingw-netcdf
+  709  sudo apt-get install libcurl4-gnutls-dev mingw-w64
+  710  ls usr/local/mingw-libcurl
+  711  ls /usr/local/mingw-libcurl
+  712  wget https://curl.se/download/curl-8.5.0.tar.gz
+  713  tar -xzf curl-8.5.0.tar.gz
+  714  cd curl-8.5.0
+  715  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libcurl
+  716  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-libcurl     --with-schannel
+  717  make
+  718  sudo make install
+  719  ls /usr/local/mingw-libcurl/include
+  720  ls /usr/local/mingw-libcurl/lib
+  721  cd /mnt/c/Users/abrah/Downloads/grd2stream-main/netcdf-c-4.9.2
+  722  export CPPFLAGS="-I/usr/local/mingw-libcurl/include"
+  723  export LDFLAGS="-L/usr/local/mingw-libcurl/lib"
+  724  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl
+  725  cat config.log
+  726  wget https://zlib.net/zlib-1.2.13.tar.gz
+  727  wget https://zlib.net/zlib-1.3.1.tar.gz
+  728  tar -xzf zlib-1.3.1.tar.gz
+  729  cd zlib-1.3.1
+  730  CC=x86_64-w64-mingw32-gcc ./configure --prefix=/usr/local/mingw-zlib
+  731  make
+  732  sudo make install
+  733  make clean
+  734  CC=x86_64-w64-mingw32-gcc ./configure --static --prefix=/usr/local/mingw-zlib
+  735  make
+  736  sudo make install
+  737  ls /usr/local/mingw-zlib/include
+  738  cd /mnt/c/Users/abrah/Downloads/grd2stream-main/netcdf-c-4.9.2/
+  739  export CPPFLAGS="-I/usr/local/mingw-zlib/include -I/usr/local/mingw-libcurl/include"
+  740  export LDFLAGS="-L/usr/local/mingw-zlib/lib -L/usr/local/mingw-libcurl/lib"
+  741  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib
+  742  wget https://github.com/HDFGroup/hdf5/releases/download/hdf5-1_14_5/hdf5-1.14.5.tar.gz
+  743  wget https://github.com/HDFGroup/hdf5/releases/download/hdf5_1.14.5/hdf5-1.14.5.tar.gz
+  744  tar -xzf hdf5-1.14.5.tar.gz
+  745  cd hdf5-1.14.
+  746  cd hdf5-1.14.5
+  747  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-hdf5
+  748  make
+  749  sudo make install
+  750  cd /mnt/c/Users/abrah/Downloads/grd2stream-main/netcdf-c-4.9.2
+  751  export CPPFLAGS="-I/usr/local/mingw-hdf5/include -I/usr/local/mingw-zlib/include -I/usr/local/mingw-libcurl/include"
+  752  ls -I/usr/local/mingw-hdf5/include
+  753  export LDFLAGS="-L/usr/local/mingw-hdf5/lib -L/usr/local/mingw-zlib/lib -L/usr/local/mingw-libcurl/lib"
+  754  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5
+  755  make
+  756  wget https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.13.5/libxml2-v2.13.5.tar.gz
+  757  tar -xzf libxml2-v2.13.5.tar.gz
+  758  history
+  759  ls
+  760  cd libxml2-v2.13.5
+  761  ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2
+  762  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2
+  763  ./autogen.sh --prefix=/usr/local/mingw-libxml2
+  764  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2
+  765  make
+  766  ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2 --without-python
+  767  CC=x86_64-w64-mingw32-gcc ./configure --prefix=/usr/local/mingw-libxml2 --without-python
+  768  make
+  769  dpkg -l | grep mingw-w64
+  770  x86_64-w64-mingw32-gcc -print-sysroot
+  771  x86_64-w64-mingw32-gcc -print-search-dirs
+  772  export LDFLAGS="-L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/ -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/"
+  773  make clean
+  774  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2 --without-python
+  775  make
+  776  sudo make install
+  777  cd :/mnt/c/Users/abrah/Downloads/grd2stream-main/netcdf-c-4.9.2
+  778  cd /mnt/c/Users/abrah/Downloads/grd2stream-main/netcdf-c-4.9.2
+  779  export CPPFLAGS="-I/usr/local/mingw-libxml2/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-zlib/include -I/usr/local/mingw-libcurl/include"
+  780  export LDFLAGS="-L/usr/local/mingw-libxml2/lib -L/usr/local/mingw-hdf5/lib -L/usr/local/mingw-zlib/lib -L/usr/local/mingw-libcurl/lib"
+  781  CC=x86_64-w64-mingw32-gcc ./configure --enable-gmt-api --host=x86_64-w64-mingw32   --prefix=/usr/local/mingw-netcdf   --with-curl=/usr/local/mingw-libcurl   --with-zlib=/usr/local/mingw-zlib   --with-hdf5=/usr/local/mingw-hdf5   --with-libxml2=/usr/local/mingw-libxml2
+  782  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32   --prefix=/usr/local/mingw-netcdf   --with-curl=/usr/local/mingw-libcurl   --with-zlib=/usr/local/mingw-zlib   --with-hdf5=/usr/local/mingw-hdf5   --with-libxml2=/usr/local/mingw-libxml2
+  783  make
+  784  export CPPFLAGS="-I/usr/local/mingw-libxml2/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-zlib/include -I/usr/local/mingw-libcurl/include"
+  785  wget https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz
+  786  tar -xzf libiconv-1.18.tar.gz
+  787  cd libiconv-1.18
+  788  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libiconv
+  789  make
+  790  sudo make install
+  791  v
+  792  export CPPFLAGS="-I/usr/local/mingw-libiconv/include $CPPFLAGS"
+  793  export LDFLAGS="-L/usr/local/mingw-libiconv/lib $LDFLAGS"
+  794  cd /mnt/c/Users/abrah/Downloads/grd2stream-main/netcdf-c-4.9.2
+  795  make clean
+  796  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  797  make
+  798  export CPPFLAGS="-I/usr/local/mingw-libiconv/include -I/usr/local/mingw-libxml2/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-zlib/include -I/usr/local/mingw-libcurl/include"
+  799  export LDFLAGS="-L/usr/local/mingw-libiconv/lib -L/usr/local/mingw-libxml2/lib -L/usr/local/mingw-hdf5/lib -L/usr/local/mingw-zlib/lib -L/usr/local/mingw-libcurl/lib"
+  800  wget https://github.com/unicode-org/icu/releases/download/release-76-1/icu4c-76_1-src.tgz
+  801  tar -xzf icu4c-76_1-src.tgz
+  802  cd icu/source
+  803  CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ ./configure --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-icu
+  804  make
+  805  ls -al ~/.ssh
+  806  cd ~
+  807  ssh-keygen -t ed25519 -C "your_email@example.com"
+  808  ssh-keygen -t rsa -b 4096 -C "yooooooo"
+  809  eval "$(ssh-agent -s)"
+  810  ssh-add ~/.ssh/yo
+  811  ls -al yo*
+  812  mv yo ~/.ssh/yo && mv yo.pub ~/.ssh/yo.pub
+  813  ssh-add ~/.ssh/yo
+  814  ssh-add -l
+  815  cat ~/.ssh/yo.pub
+  816  ssh -T git@github.com
+  817  rm ~/.ssh/yo
+  818  rm ~/.ssh/yo.pub
+  819  GIT_COMMITTER_DATE="Fri 18 Jan 2025 00:02:24 +0100" git commit --amend --no-edit --date "Fri 18 Jan 2025 00:02:24 +0100"
+  820  GIT_COMMITTER_DATE="Tue 21 Jan 2025 19:01:55 +0100" git commit --amend --no-edit --date "Tue 21 Jan 2025 19:01:55 +0100"
+  821  GIT_COMMITTER_DATE="Tue 21 Jan 2025 19:02:34 +0100" git commit --amend --no-edit --date "Tue 21 Jan 2025 19:02:34 +0100"
+  822  git clone https://github.com/klairvoyance/grd2stream.git
+  823  ./bootstrap.sh
+  824  CC=clang ./configure --target=arm64-apple-darwin --enable-gmt-api --enable-debug
+  825  CC=clang ./configure --build=x86_64-pc-linux-gnu --host=arm64-apple-darwin --enable-gmt-api --enable-debug
+  826  clang -target arm64-apple-darwin -v
+  827  ls /home/klair
+  828  cd lib && ls
+  829  ls lib
+  830  ls /home/klair/lib
+  831  ls /home/klair/bin
+  832  make
+  833  make dist
+  834  ldd src/grd2stream
+  835  cd src
+  836  strace ./grd2stream
+  837  cd /mnt/c/Users/abrah/Downloads/grd2stream-main/
+  838  make clean
+  839  make distclean
+  840  make maintainer-clean
+  841  ./bootstrap.sh
+  842  make total-clean
+  843  ./bootstrap.sh
+  844  CC=clang ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  845  ./bootstrap.sh
+  846  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  847  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  848  cd netcdf-c-4.9.2
+  849  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  850  ls
+  851  cd curl-8.5.0
+  852  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libcurl
+  853  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libcurl --with-schannel
+  854  make
+  855  sudo make install
+  856  export CPPFLAGS="-I/usr/local/mingw-libcurl/include $CPPFLAGS"
+  857  export LDFLAGS="-L/usr/local/mingw-libcurl/lib $LDFLAGS"
+  858  cd /mnt/c/Users/abrah/Downloads/2025-01-21/grd2stream-main/netcdf-c-4.9.2
+  859  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  860  ls /usr/local/mingw-zlib/include/zlib.h
+  861  ls /usr/local/mingw-zlib/lib
+  862  export CPPFLAGS="-I/usr/local/mingw-zlib/include $CPPFLAGS"
+  863  export LDFLAGS="-L/usr/local/mingw-zlib/lib $LDFLAGS"
+  864  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  865  ls /usr/local/mingw-hdf5/lib
+  866  ls /usr/local/mingw-hdf5/include
+  867  export CPPFLAGS="-I/usr/local/mingw-hdf5/include $CPPFLAGS"
+  868  export LDFLAGS="-L/usr/local/mingw-hdf5/lib $LDFLAGS"
+  869  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  870  make clean
+  871  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  872  make
+  873  ls /usr/local/mingw-libxml2/include/libxml2
+  874  export CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2 $CPPFLAGS"
+  875  make clean
+  876  make
+  877  ls /usr/local/mingw-libxml2/include/libxml2/libxml/
+  878  export CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2 $CPPFLAGS"
+  879  make clean
+  880  make
+  881  ls /usr/local/mingw-libxml2/include/libxml2/libxml/
+  882  echo $CPPFLAGS
+  883  make clean
+  884  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  885  make clean
+  886  make
+  887  ls /usr/local/mingw-libxml2/include/libxml2/libxml/parser.h
+  888  export CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2"
+  889  export LDFLAGS="-L/usr/local/mingw-libxml2/lib"
+  890  ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  891  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  892  make clean
+  893  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  894  ls /usr/local/mingw-libcurl/include/curl
+  895  ls /usr/local/mingw-libcurl/lib
+  896  export CPPFLAGS="-I/usr/local/mingw-libcurl/include $CPPFLAGS"
+  897  export LDFLAGS="-L/usr/local/mingw-libcurl/lib $LDFLAGS"
+  898  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  899  ls /usr/local/mingw-zlib/include
+  900  ls /usr/local/mingw-zlib/lib
+  901  export CPPFLAGS="-I/usr/local/mingw-zlib/include $CPPFLAGS"
+  902  export LDFLAGS="-L/usr/local/mingw-zlib/lib $LDFLAGS"
+  903  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  904  ls /usr/local/mingw-hdf5/include
+  905  ls /usr/local/mingw-hdf5/lib
+  906  export CPPFLAGS="-I/usr/local/mingw-hdf5/include $CPPFLAGS"
+  907  export LDFLAGS="-L/usr/local/mingw-hdf5/lib $LDFLAGS"
+  908  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  909  make
+  910  echo $CPPFLAGS
+  911  cp -r /usr/local/mingw-libxml2/include/libxml2 /usr/local/mingw-libxml2/include/libxml2_backup
+  912  sudo cp -r /usr/local/mingw-libxml2/include/libxml2 /usr/local/mingw-libxml2/include/libxml2_backup
+  913  cp -r /usr/local/mingw-libxml2/include/libxml2/libxml/* /usr/local/mingw-libxml2/include/libxml2/
+  914  sudo cp -r /usr/local/mingw-libxml2/include/libxml2/libxml/* /usr/local/mingw-libxml2/include/libxml2/
+  915  sudo rm -rf /usr/local/mingw-libxml2/include/libxml2/libxml
+  916  ls /usr/local/mingw-libxml2/include/libxml2/parser.h
+  917  export CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2"
+  918  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  919  ls /usr/local/mingw-hdf5/include/hdf5.h
+  920  ls /usr/local/mingw-hdf5/lib | grep hdf5
+  921  export CPPFLAGS="-I/usr/local/mingw-hdf5/include $CPPFLAGS"
+  922  export LDFLAGS="-L/usr/local/mingw-hdf5/lib $LDFLAGS"
+  923  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  924  make
+  925  export CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2"
+  926  make clean
+  927  export CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2"
+  928  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  929  export CPPFLAGS="-I/usr/local/mingw-hdf5/include $CPPFLAGS"
+  930  export LDFLAGS="-L/usr/local/mingw-hdf5/lib $LDFLAGS"
+  931  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  932  make
+  933  ls
+  934  rm -r libxml2-v2.13.5
+  935  sudo rm -rf /usr/local/mingw-libxml2
+  936  sudo apt-get remove --purge libxml2-dev
+  937  make clean
+  938  ls
+  939  tar -xvzf libxml2-v2.13.5.tar.gz
+  940  cd cd libxml2-*
+  941  cd libxml2-*
+  942  ls
+  943  cd libxml2-v2.13.5
+  944  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2
+  945  cd /mnt/c/Users/abrah/Downloads/2025-01-21/grd2stream-main/netcdf-c-4.9.2
+  946  rm -r libxml2-v2.13.5
+  947  wget https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.9.14/libxml2-v2.9.14.tar.gz
+  948  ls
+  949  tar -xzf libxml2-v2.9.14.tar.gz
+  950  cd libxml2-2.9.14
+  951  ls
+  952  cd libxml2-v2.9.14
+  953  CC=x86_64-w64-mingw32-gcc ./configure --prefix=/usr/local/mingw-libxml2
+  954  cd /mnt/c/Users/abrah/Downloads/2025-01-21/grd2stream-main/netcdf-c-4.9.2/
+  955  rm -r netcdf-c-4.9.2
+  956  rm -r libxml2-v2.9.14
+  957  rm libxml2-v2.9.14.tar.gz
+  958  tar -xzf libxml2-v2.13.5.tar.gz
+  959  cd libxml2-v2.13.5
+  960  autoreconf -i
+  961  CC=x86_64-w64-mingw32-gcc ./configure --prefix=/usr/local/mingw-libxml2
+  962  make
+  963  sudo apt-get install gcc-mingw-w64 libc6-dev-mingw-w64 -y
+  964  ls /usr/x86_64-w64-mingw32/lib/
+  965  export LDFLAGS="-L/usr/x86_64-w64-mingw32/lib $LDFLAGS"
+  966  CC=x86_64-w64-mingw32-gcc ./configure ---build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2
+  967  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2
+  968  make clean
+  969  make
+  970  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --prefix=/usr/local/mingw-libxml2 --without-python
+  971  make clean
+  972  make
+  973  sudo make install
+  974  cd /mnt/c/Users/abrah/Downloads/2025-01-21/grd2stream-main/netcdf-c-4.9.2/
+  975  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  976  /usr/local/mingw-libxml2/bin/xmllint --version
+  977  find /usr/local/mingw-libxml2 -name "xmllint*"
+  978  find /usr/local/mingw-libxml2 -name "xml2-config"
+  979  export PATH=$PATH:/usr/local/mingw-libxml2/bin
+  980  xml2-config --version
+  981  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32     --prefix=/usr/local/mingw-netcdf     --with-curl=/usr/local/mingw-libcurl     --with-zlib=/usr/local/mingw-zlib     --with-hdf5=/usr/local/mingw-hdf5     --with-libxml2=/usr/local/mingw-libxml2
+  982  make
+  983  find /usr/local/mingw-libxml2 -name "parser.h"
+  984  /usr/local/mingw-libxml2/bin/xml2-config --cflags
+  985  make CPPFLAGS="-I/usr/local/mingw-libxml2/include/libxml2"
+  986  export CPPFLAGS="-I/usr/local/mingw-libxml2/include"
+  987  make CPPFLAGS="-I/usr/local/mingw-libxml2/include"
+  988  find /usr/local/mingw-hdf5 -name "hdf5.h"
+  989  make CPPFLAGS="-I/usr/local/mingw-hdf5/include -I/usr/local/mingw-libxml2/include/libxml2"
+  990  make CPPFLAGS="-I/usr/local/mingw-libcurl/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-libxml2/include/libxml2"
+  991  make CPPFLAGS="-I/usr/local/mingw-zlib/include -I/usr/local/mingw-libcurl/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-libxml2/include/libxml2"
+  992  make install
+  993  sudo make install
+  994  cd /mnt/c/Users/abrah/Downloads/2025-01-21/grd2stream-main/
+  995  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+  996  find /path/to/netcdf-install-dir -name "netcdf.h"
+  997  ls /usr/local/mingw-netcdf/include
+  998  export CPPFLAGS="-I/usr/local/mingw-netcdf/include"
+  999  export LDFLAGS="-L/usr/local/mingw-netcdf/lib"
+ 1000  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1001  export CPPFLAGS="-I/usr/local/mingw-zlib/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-libcurl/include -I/usr/local/mingw-libxml2/include/libxml2"
+ 1002  export LDFLAGS="-L/usr/local/mingw-zlib/lib -L/usr/local/mingw-hdf5/lib -L/usr/local/mingw-libcurl/lib -L/usr/local/mingw-libxml2/lib"
+ 1003  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1004  nc-config --cflags
+ 1005  nc-config --libs
+ 1006  sudo apt install libnetcdf-dev -y
+ 1007  nc-config --cflags
+ 1008  nc-config --libs
+ 1009  make distclean
+ 1010  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1011  export CPPFLAGS="-I/usr/include -I/usr/include/hdf5/serial"
+ 1012  export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdf"
+ 1013  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1014  less config.log
+ 1015  make
+ 1016  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1017  history
+ 1018  make distclean
+ 1019  export CPPFLAGS="-I/usr/include -I/usr/include/hdf5/serial"
+ 1020  export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdf"
+ 1021  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1022  x86_64-w64-mingw32-gcc --version
+ 1023  less config.log
+ 1024  export CPPFLAGS="-I/usr/include -I/usr/include/hdf5/serial"
+ 1025  export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdf"
+ 1026  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1027  make distclean
+ 1028  rm -rf autom4te.cache config.log config.status config.h Makefile*
+ 1029  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1030  x86_64-w64-mingw32-gcc -o test.exe test.c
+ 1031  ls
+ 1032  x86_64-w64-mingw32-gcc -o test.exe yo.c
+ 1033  cd /mnt/c/Users/abrah/Downloads/grd2stream-main
+ 1034  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1035  export CPPFLAGS="-I/usr/include -I/usr/include/hdf5/serial"
+ 1036  export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdf"
+ 1037  export CPPFLAGS="-I/usr/include -I/usr/include/hdf5/serial"
+ 1038  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1039  ./configure
+ 1040  CC=x86_64-w64-mingw32-gcc ./configure --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1041  make distclean
+ 1042  ls
+ 1043  rm -r netcdf-c-4.9.2
+ 1044  sudo rm -r netcdf-c-4.9.2
+ 1045  ls -ld netcdf-c-4.9.2
+ 1046  lsattr -d netcdf-c-4.9.2
+ 1047  sudo chattr -i -R netcdf-c-4.9.2
+ 1048  sudo -i
+ 1049  ls
+ 1050  /usr/local/mingw-libxml2/bin/xmllint --version
+ 1051  cd grd2stream-main
+ 1052  ./bootstrap.sh
+ 1053  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1054  history
+ 1055  sudo apt install libnetcdf-dev -y
+ 1056  nc-config --cflags
+ 1057  nc-config --libs
+ 1058  export LDFLAGS="-L/usr/local/mingw-zlib/lib -L/usr/local/mingw-hdf5/lib -L/usr/local/mingw-libcurl/lib -L/usr/local/mingw-libxml2/lib"
+ 1059  export CPPFLAGS="-I/usr/include -I/usr/include/hdf5/serial"
+ 1060  export LDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdf"
+ 1061  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1062  export CPPFLAGS="-I/usr/local/mingw-zlib/include -I/usr/local/mingw-hdf5/include -I/usr/local/mingw-libcurl/include -I/usr/local/mingw-libxml2/include"
+ 1063  export LDFLAGS="-L/usr/local/mingw-zlib/lib -L/usr/local/mingw-hdf5/lib -L/usr/local/mingw-libcurl/lib -L/usr/local/mingw-libxml2/lib"
+ 1064  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1065  find /usr/local/mingw-netcdf/include -name netcdf.h
+ 1066  ls /usr/local/mingw-netcdf/include/netcdf.h
+ 1067  ls /usr/local/mingw-netcdf/lib
+ 1068  export CPPFLAGS="-I/usr/local/mingw-netcdf/include"
+ 1069  export LDFLAGS="-L/usr/local/mingw-netcdf/lib -lnetcdf"
+ 1070  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1071  export CPPFLAGS="$CPPFLAGS -I/usr/local/mingw-hdf5/include"
+ 1072  export LDFLAGS="$LDFLAGS -L/usr/local/mingw-hdf5/lib -lhdf5"
+ 1073  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1074  which nc-config
+ 1075  export NETCDF_CFLAGS="-I/usr/local/mingw-netcdf/include"
+ 1076  export NETCDF_LDFLAGS="-L/usr/local/mingw-netcdf/lib -lnetcdf"
+ 1077  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1078  export CPPFLAGS="-I/usr/local/mingw-netcdf/include"
+ 1079  export LDFLAGS="-L/usr/local/mingw-netcdf/lib -lnetcdf"
+ 1080  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32
+ 1081  ./configure --prefix=$HOME/windows-build --enable-gmt-api   CC=x86_64-w64-mingw32-gcc --build=x86_64-pc-linux-gnu --host=x86_64-w64-mingw32   --with-netcdf=/usr/local/mingw-netcdf
+ 1082  file /usr/local/mingw-netcdf/include/netcdf.h
+ 1083  history
+ 1084  cd /mnt/c/Users/abrah/Downloads/2025-01-21/
+ 1085  ls
+ 1086  ./grd2stream.exe
+ 1087  ls
+ 1088  ./grd2stream.exe --help
+ 1089  gdb ./grd2stream.exe
+ 1090  sudo apt install gdb -y
+ 1091  gdb ./grd2stream.exe
+ 1092  ls -r
+ 1093  ls/lib
+ 1094  ls ./lib
+ 1095  ls ./include
+ 1096  ls ./bin
+ 1097  bash -c echo "-31919.529274631757 -2590376.1025007404" | grd2stream.exe /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+ 1098  bash -c echo "-31919.529274631757 -2590376.1025007404" | g./rd2stream.exe /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+ 1099  bash -c echo "-31919.529274631757 -2590376.1025007404" | ./grd2stream.exe /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif /mnt/c/Users/abrah/Downloads/BP_TpSe/BP-AdvancedScienceFlightPlanner/velocity-field-NSIDC-0725_5-20240812_120108/GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+ 1100  gdal_translate -of netCDF GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.nc
+ 1101  gdal_translate -of netCDF GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.nc
+ 1102  nccopy -k 3
+ 1103  nccopy -k 3 GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.nc GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.nc
+ 1104  nccopy -k 3 GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.nc GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.00.nc
+ 1105  nccopy -k 3 GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.nc GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.00.nc
+ 1106  ncdump -h C:\Users\abrah\Downloads\BP_TpSe\BP-AdvancedScienceFlightPlanner\velocity-field-NSIDC-0725_5-20240812_120108\GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.nc
+ 1107  ./bootstrap.sh
+ 1108  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1109  export CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"
+ 1110  export LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1111  export PATH="/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin:$PATH"
+ 1112  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1113  export CPPFLAGS="-IC:/Program Files/netCDF/include"
+ 1114  ls "C:/Program Files/netCDF/include"
+ 1115  export CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"
+ 1116  export LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1117  export PATH="/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin:$PATH"
+ 1118  CC=x86_64-w64-mingw32-gcc ./configure --host=x86_64-w64-mingw32 --enable-gmt-api --enable-debug
+ 1119  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib
+ 1120  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin
+ 1121  which nc-config
+ 1122  klair@klairvoyage:/mnt/c/Users/abrah/Downloads/grd2stream-main$ which nc-config
+ 1123  /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config
+ 1124  klair@klairvoyage:/mnt/c/Users/abrah/Downloads/grd2stream-main$ which nc-config
+ 1125  /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config --includedir
+ 1126  /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config --libs
+ 1127  CC=x86_64-w64-mingw32-gcc ./configure   --host=x86_64-w64-mingw32   --enable-gmt-api   --enable-debug   CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"   LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1128  make distclean
+ 1129  mv /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config    /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config.backup
+ 1130  CC=x86_64-w64-mingw32-gcc ./configure   --host=x86_64-w64-mingw32   --enable-gmt-api   --enable-debug   --without-nc-config   CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"   LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1131  make
+ 1132  nano src/log.c
+ 1133  cat src/log.c
+ 1134  ./bootstrap
+ 1135  ls
+ 1136  ./bootstrap.sh
+ 1137  CC=x86_64-w64-mingw32-gcc ./configure   --host=x86_64-w64-mingw32   --enable-gmt-api   --enable-debug   --without-nc-config   CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"   LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1138  make
+ 1139  make dist
+ 1140  mv /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config.backup    /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config
+ 1141  make
+ 1142  make dist
+ 1143  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/netcdf.dll
+ 1144  export PATH="/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin:$PATH"
+ 1145  cd src
+ 1146  ./grd2stream.exe
+ 1147  cd /mnt/c/Users/abrah/Downloads/grd2stream-main
+ 1148  make distclean
+ 1149  make clean
+ 1150  CC=x86_64-w64-mingw32-gcc ./configure   --host=x86_64-w64-mingw32   --enable-gmt-api   --enable-debug   --without-nc-config   CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"   LDFLAGS="-static -L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1151  ls /home/klair/
+ 1152  ls /home/klair/include
+ 1153  ls /home/klair/bin
+ 1154  ls /home/klair/lib
+ 1155  make
+ 1156  ldd src/grd2stream.exe
+ 1157  ./grd2stream.exe --help
+ 1158  cd src
+ 1159  ./grd2stream.exe --help
+ 1160  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib
+ 1161  cd /mnt/c/Users/abrah/Downloads/grd2stream-main
+ 1162  CC=x86_64-w64-mingw32-gcc ./configure   --host=x86_64-w64-mingw32   --enable-gmt-api   --enable-debug   CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"   LDFLAGS="-static -L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"
+ 1163  make distclean
+ 1164  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     --enable-static     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1165  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include
+ 1166  make clean
+ 1167  echo $CPPFLAGS
+ 1168  cat config.log
+ 1169  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     --enable-static     CPPFLAGS="-I\"C:/Program Files/netCDF/include\" -I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L\"C:/Program Files/netCDF/lib\" -L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1170  ls /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config
+ 1171  export PATH=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin:$PATH
+ 1172  nc-config --prefix
+ 1173  make distclean
+ 1174  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-static     CPPFLAGS="-I\"C:/Program Files/netCDF/include\" -I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L\"C:/Program Files/netCDF/lib\" -L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1175  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     --enable-static     CPPFLAGS="-I\"C:/Program Files/netCDF/include\" -I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L\"C:/Program Files/netCDF/lib\" -L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1176  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     --enable-static     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1177  make distclean
+ 1178  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-static     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1179  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows
+ 1180  nc-config --prefix
+ 1181  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/bin
+ 1182  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     --enable-static     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/bin
+ 1183  nano /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config
+ 1184  nc-config --prefix
+ 1185  nc-config --libs
+ 1186  nc-config --cflags
+ 1187  nano /mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin/nc-config
+ 1188  nc-config --prefix
+ 1189  nc-config --libs
+ 1190  nc-config --cflags
+ 1191  make clean
+ 1192  make distclean
+ 1193  CC=x86_64-w64-mingw32-gcc ./configure     --host=x86_64-w64-mingw32     --enable-gmt-api     --enable-debug     --enable-shared     --enable-static     CPPFLAGS="-I/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/include"     LDFLAGS="-L/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/lib"     --prefix=/mnt/c/Users/abrah/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins/grd2stream-QGIS-Plugin/libs/windows/netcdf_dap-4.9.2_x64/bin
+ 1194  make
+ 1195  make dist
+ 1196  history
+ 1197  gdalinfo GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif
+ 1198  gdal_translate -srcwin 0 0 3792 6850 GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif topleft_vx.tif
+ 1199  gdalinfo GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+ 1200  gdal_translate -srcwin 0 0 3792 6850 GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif topleft_vy.tif
+ 1201  pyrcc5 resources.qrc -o resources.py
+ 1202  gdalinfo GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif
+ 1203  gdalinfo GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif
+ 1204  gdal_translate -srcwin 0 0 3792 6850 GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif topleft_vy.tif
+ 1205  gdal_translate -srcwin 0 0 2275 411 GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif smaller_topleft_vy.tif
+ 1206  gdal_translate -srcwin 0 0 3000 3000 GL_vel_mosaic_Annual_01Dec21_30Nov22_vy_v05.0.tif smaller_topleft_vy.tif
+ 1207  gdal_translate -srcwin 0 0 3000 3000 GL_vel_mosaic_Annual_01Dec21_30Nov22_vx_v05.0.tif smaller_topleft_vx.tif
+ 1208  file grd2stream
+ 1209  file .libs/grd2stream
+ 1210  file grd2stream
+ 1211  ldd src/grd2stream
+ 1212  file src/grd2stream
+ 1213  ldd src/.libs/grd2stream
+ 1214  file src/.libs/grd2stream
+ 1215  cat grd2stream
+ 1216  ./bootstrap.sh
+ 1217  ./configure --prefix=$HOME --enable-gmt-api
+ 1218  make
+ 1219  ls src
+ 1220  ls src/.libs
+ 1221  ls src/.deps
+ 1222  ldd src/grd2stream
+ 1223  file src/grd2stream
+ 1224  file src/.libs/grd2stream
+ 1225  cat src/grd2stream
+ 1226  ldd src/.libs/grd2stream
+ 1227  script -a session.log
+ 1228  cd src
+ 1229  gcc -static -o grd2stream grd2stream-grdio.o grd2stream-debug_printf.o grd2stream-log.o grd2stream-grd2stream.o grd2stream-getopt.o -L/usr/lib/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdf -lm
+ 1230  ./grd2stream
+ 1231  ./.libs/grd2stream
+ 1232  grd2stream
+ 1233  find /usr -name "libnetcdf.a"
+ 1234  ls /usr/local
+ 1235  ls /usr/local/mingw-netcdf
+ 1236  ls /usr/local/mingw-netcdf/lib
+ 1237  cat libnetcdf.settings
+ 1238  nano libnetcdf.settings
+ 1239  cat /usr/local/mingw-netcdf/lib/libnetcdf.settings

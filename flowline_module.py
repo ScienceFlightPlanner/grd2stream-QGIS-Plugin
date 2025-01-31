@@ -8,13 +8,6 @@ from qgis.core import QgsVectorLayer, QgsProject, Qgis, QgsRasterLayer
 from qgis.gui import QgsMapToolEmitPoint
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox
 
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-GRD2STREAM_EXECUTABLE = os.path.join(PROJECT_DIR, "libs", "grd2stream", "grd2stream")
-OUTPUT_TXT_FILE = os.path.join(PROJECT_DIR, "bin", "streamline.txt")
-
-def is_wsl_available():
-    return shutil.which("wsl") is not None
-
 class FlowlineModule:
     def __init__(self, iface):
         self.iface = iface
@@ -27,6 +20,103 @@ class FlowlineModule:
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
+
+    def install_miniconda(self):
+        system = platform.system()
+        conda_path = os.path.expanduser("~/miniconda3/bin/conda") if system in ["Linux", "Darwin"] else (
+            os.path.expanduser("~/miniconda3/Scripts/conda.exe")
+        )
+        if os.path.exists(conda_path):
+            print("Miniconda is already installed.")
+            return
+        print("Installing Miniconda...")
+        if system == "Windows":
+            command = (
+                "wget \"https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe\" -outfile \".\\miniconda.exe\"; "
+                "Start-Process -FilePath \".\\miniconda.exe\" -ArgumentList \"/S\" -Wait; "
+                "del .\\miniconda.exe"
+            )
+            subprocess.run(["powershell", "-Command", command], check=True)
+        elif system == "Darwin":
+            command = (
+                "mkdir -p ~/miniconda3 && "
+                "curl -s https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh && "
+                "bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && "
+                "rm ~/miniconda3/miniconda.sh"
+            )
+            subprocess.run(command, shell=True, executable="/bin/bash", check=True)
+        elif system == "Linux":
+            command = (
+                "mkdir -p ~/miniconda3 && "
+                "wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh && "
+                "bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && "
+                "rm ~/miniconda3/miniconda.sh"
+            )
+            subprocess.run(command, shell=True, executable="/bin/bash", check=True)
+        print("Miniconda is now installed!")
+
+    def setup_conda_environment(self):
+        system = platform.system()
+        conda_path = os.path.expanduser("~/miniconda3/bin/conda") if system in ["Linux", "Darwin"] else (
+            os.path.expanduser("~/miniconda3/Scripts/conda.exe")
+        )
+        if not os.path.exists(conda_path):
+            raise RuntimeError("Miniconda installation not found!")
+        print("Setting up Conda environment...")
+        if system in ["Linux", "Darwin"]:
+            conda_commands = [
+                "source ~/miniconda3/etc/profile.d/conda.sh",
+                "conda config --add channels conda-forge",
+                "conda config --set channel_priority strict",
+                "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4",
+            ]
+            subprocess.run(" && ".join(conda_commands), shell=True, executable="/bin/bash", check=True)
+        elif system == "Windows":
+            conda_commands = (
+                "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
+                "conda init powershell; "
+                "conda config --add channels conda-forge; "
+                "conda config --set channel_priority strict; "
+                "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4"
+            )
+            subprocess.run(["powershell", "-Command", conda_commands], check=True)
+        print("Conda environment is now set up!")
+
+    def install_grd2stream(self):
+        system = platform.system()
+        grd2stream_executable = os.path.expanduser("~/miniconda3/envs/GMT6/bin/grd2stream") \
+            if system in ["Linux", "Darwin"] else os.path.expanduser("~/miniconda3/envs/GMT6/Library/bin/grd2stream.exe")
+        if os.path.exists(grd2stream_executable):
+            print("grd2stream is already installed!")
+            return
+        conda_init = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate GMT6" if system in ["Linux", "Darwin"] else (
+            "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
+            "conda init powershell; "
+            "conda activate GMT6"
+        )
+        print("Installing grd2stream...")
+        if system in ["Linux", "Darwin"]:
+            build_commands = (
+                f"{conda_init} && "
+                "curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz && "
+                "tar xvfz grd2stream-0.2.14.tar.gz && "
+                "cd grd2stream-0.2.14 && "
+                "export LDFLAGS=\"-Wl,-rpath,$CONDA_PREFIX/lib\" && "
+                "./configure --prefix=\"$CONDA_PREFIX\" --enable-gmt-api && "
+                "make && make install"
+            )
+        elif system == "Windows":
+            build_commands = (
+                f"{conda_init}; "
+                "curl.exe -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz; "
+                "tar xvfz grd2stream-0.2.14.tar.gz; "
+                "cd grd2stream-0.2.14; "
+                "./configure --prefix=\"$env:CONDA_PREFIX\" --enable-gmt-api; "
+                "make; "
+                "make install"
+            )
+        subprocess.run(build_commands, shell=True, executable="/bin/bash" if system in ["Linux", "Darwin"] else None, check=True)
+        print("grd2stream is now installed!")
 
     def open_selection_dialog(self):
         dialog = SelectionDialog(self.iface)
@@ -80,72 +170,53 @@ class FlowlineModule:
     def run_grd2stream(self):
         try:
             system = platform.system()
+            self.install_miniconda()
+            self.setup_conda_environment()
+            self.install_grd2stream()
 
             if not self.selected_raster_1 or not self.selected_raster_2:
                 raise ValueError("Two raster layers must be selected.")
             if not self.coordinate:
                 raise ValueError("A coordinate must be selected.")
 
-            def convert_to_wsl_path(path):
-                return path.replace("\\", "/").replace("C:", "/mnt/c")
-
-            grd2stream_executable = GRD2STREAM_EXECUTABLE
+            x, y = self.coordinate
             raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
             raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
-            output_txt_file = OUTPUT_TXT_FILE
 
-            if system == "Windows":
-                if not is_wsl_available():
-                    raise RuntimeError("WSL is not installed. Please install WSL to use this tool.")
-                grd2stream_executable = convert_to_wsl_path(grd2stream_executable)
-                raster_path_1 = convert_to_wsl_path(raster_path_1)
-                raster_path_2 = convert_to_wsl_path(raster_path_2)
-                output_txt_file = convert_to_wsl_path(output_txt_file)
+            print("Running grd2stream...")
 
-            x, y = self.coordinate
-            command = [
-                "bash", "-c",
-                f'echo "{x} {y}" | {grd2stream_executable} {raster_path_1} {raster_path_2}'
-            ] if system != "Windows" else [
-                "wsl", "bash", "-c",
-                f'echo "{x} {y}" | {grd2stream_executable} {raster_path_1} {raster_path_2}'
-            ]
+            grd2stream_executable = os.path.expanduser("~/miniconda3/envs/GMT6/bin/grd2stream") \
+                if system in ["Linux", "Darwin"] else os.path.expanduser("~/miniconda3/envs/GMT6/Library/bin/grd2stream.exe")
+            command = f'echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
 
             if self.backward_steps:
-                command[-1] += " -b"
+                command += " -b"
             if self.step_size:
-                command[-1] += f" -d {self.step_size}"
+                command += f" -d {self.step_size}"
             if self.max_integration_time:
-                command[-1] += f" -T {self.max_integration_time}"
+                command += f" -T {self.max_integration_time}"
             if self.max_steps:
-                command[-1] += f" -n {self.max_steps}"
+                command += f" -n {self.max_steps}"
             if self.output_format:
-                command[-1] += f" {self.output_format}"
+                command += f" {self.output_format}"
 
-            command[-1] += f" > {output_txt_file}"
-            print(f"Executing Command: {' '.join(command)}")
-
-            startupinfo = None
-            if system == "Windows":
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            print(f"Executing Command: {command}")
 
             result = subprocess.run(
                 command,
+                shell=True,
+                executable="/bin/bash" if system in ["Linux", "Darwin"] else None,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                check=False,
-                startupinfo=startupinfo
+                check=False
             )
 
             if result.returncode != 0:
                 raise RuntimeError(f"Command failed: {result.stderr}")
 
-            if not os.path.exists(OUTPUT_TXT_FILE):
-                raise RuntimeError("The grd2stream command did not produce an output file.")
-
-            self.add_txt_as_layer()
+            print("Raw Output:\n", result.stdout)
+            self.load_streamline_from_output(result.stdout)
 
             self.iface.messageBar().pushMessage(
                 "Success",
@@ -159,52 +230,46 @@ class FlowlineModule:
                 "Error", f"Unexpected error: {e}", level=Qgis.Critical, duration=5
             )
 
-    def add_txt_as_layer(self):
+    def load_streamline_from_output(self, output):
+        """Parses grd2stream output and loads it as a vector layer in QGIS."""
         try:
-            attribute_names = []
-            attribute_types = []
             features = []
 
-            with open(OUTPUT_TXT_FILE, "r") as infile:
-                for line in infile:
-                    line = line.strip()
-                    # Metadata
-                    if line.startswith("# @N"):
-                        # "name|id"
-                        attribute_names = line[4:].split("|")
-                    elif line.startswith("# @T"):
-                        # "string|integer"
-                        attribute_types = line[4:].split("|")
-                    elif line.startswith("# @D"):
-                        # "streamline 1"|1
-                        attribute_values = line[4:].split("|")
-                        attribute_values = [v.strip('"') if '"' in v else v for v in attribute_values]
-                    elif line.startswith("#") or line.startswith(">") or not line:
-                        continue
-                    else:
-                        parts = line.split()
-                        if len(parts) >= 3:
-                            x, y, z = map(float, parts[:3])
-                            feature = QgsFeature()
-                            feature.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(x, y)))
-                            if attribute_names and attribute_values:
-                                feature.setAttributes(attribute_values)
-                            features.append(feature)
+            format_fields = {
+                None: ["longitude", "latitude", "dist"],
+                "-l": ["longitude", "latitude", "dist", "v_x", "v_y"],
+                "-t": ["longitude", "latitude", "dist", "v_x", "v_y", "time"]
+            }
+            field_names = format_fields.get(self.output_format, ["longitude", "latitude", "dist"])
 
-            uri_fields = "&".join(
-                f"field={name}:{'string' if t == 'string' else 'integer' if t == 'integer' else 'double'}"
-                for name, t in zip(attribute_names, attribute_types)
-            )
+            for line in output.splitlines():
+                line = line.strip()
+                if not line or line.startswith("#") or line.startswith(">"):
+                    continue
+
+                parts = list(map(float, line.split()))
+                if len(parts) < len(field_names):
+                    continue
+
+                x, y = parts[:2]
+                attributes = parts
+
+                feature = QgsFeature()
+                feature.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(x, y)))
+                feature.setAttributes(attributes)
+                features.append(feature)
+
+            field_types = ["double"] * len(field_names)
+            uri_fields = "&".join(f"field={name}:{ftype}" for name, ftype in zip(field_names, field_types))
             uri = f"point?crs={QgsProject.instance().crs().authid()}&{uri_fields}"
 
             layer_name = "Streamline"
             layer = QgsVectorLayer(uri, layer_name, "memory")
             provider = layer.dataProvider()
-
             provider.addFeatures(features)
 
             if not layer.isValid():
-                raise RuntimeError("Failed to load TXT as a vector layer.")
+                raise RuntimeError("Failed to load output as a vector layer.")
 
             QgsProject.instance().addMapLayer(layer)
 
@@ -214,7 +279,7 @@ class FlowlineModule:
 
         except Exception as e:
             self.iface.messageBar().pushMessage(
-                "Error", f"Failed to load TXT file as layer: {e}", level=Qgis.Critical, duration=5
+                "Error", f"Failed to load output as layer: {e}", level=Qgis.Critical, duration=5
             )
 
 class SelectionDialog(QDialog):
