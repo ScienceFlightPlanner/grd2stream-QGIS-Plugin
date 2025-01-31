@@ -66,9 +66,9 @@ class FlowlineModule:
         if system in ["Linux", "Darwin"]:
             conda_path = os.path.expanduser("~/miniconda3/bin/conda")
             try:
-            subprocess.run([conda_path, "config", "--add", "channels", "conda-forge"], check=True)
-            subprocess.run([conda_path, "config", "--set", "channel_priority", "strict"], check=True)
-            subprocess.run([conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], check=True)
+                subprocess.run([conda_path, "config", "--add", "channels", "conda-forge"], check=True)
+                subprocess.run([conda_path, "config", "--set", "channel_priority", "strict"], check=True)
+                subprocess.run([conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], check=True)
             except subprocess.CalledProcessError as e:
                 print(f"Command failed with error: {e}")
         elif system == "Windows":
