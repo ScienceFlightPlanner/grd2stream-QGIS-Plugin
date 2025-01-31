@@ -13,17 +13,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Cache Miniconda
-        id: cache-miniconda
-        uses: actions/cache@v3
-        with:
-          path: ~/miniconda3
-          key: miniconda-${{ runner.os }}-${{ hashFiles('flowline_module.py') }}
-          restore-keys: |
-            miniconda-${{ runner.os }}-
-
-      - name: Install Miniconda (if not cached)
-        if: steps.cache-miniconda.outputs.cache-hit != 'true'
+      - name: Install Miniconda
         run: |
           mkdir -p ~/miniconda3
           curl -fsSLo https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh ~/miniconda3/miniconda.sh
