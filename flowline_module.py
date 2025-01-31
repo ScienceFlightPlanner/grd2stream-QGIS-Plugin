@@ -68,9 +68,18 @@ class FlowlineModule:
             try:
                 subprocess.run([conda_path, "config", "--add", "channels", "conda-forge"], check=True)
                 subprocess.run([conda_path, "config", "--set", "channel_priority", "strict"], check=True)
-                subprocess.run([conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], check=True)
+                result = subprocess.run(
+                    [conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], 
+                    capture_output=True, text=True
+                )
             except subprocess.CalledProcessError as e:
                 print(f"Command failed with error: {e}")
+            envs_output = subprocess.run([conda_path, "env", "list"], capture_output=True, text=True)
+            if "GMT6" not in envs_output.stdout:
+                self.iface.messageBar().pushMessage(
+                    "Error", "GMT6 environment creation failed! Check logs.", level=Qgis.Critical, duration=5
+                )
+                print(f"STDOUT: {result.stdout}\nSTDERR: {result.stderr}")
         elif system == "Windows":
             conda_commands = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
