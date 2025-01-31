@@ -64,13 +64,16 @@ class FlowlineModule:
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
         if system in ["Linux", "Darwin"]:
-            conda_commands = (
-                "source ~/miniconda3/etc/profile.d/conda.sh && "
-                "conda config --add channels conda-forge && "
-                "conda config --set channel_priority strict && "
-                "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4"
-            )
-            subprocess.run(["bash", "-c", conda_commands], check=True)
+            activate_conda = "source ~/miniconda3/etc/profile.d/conda.sh"
+            conda_forge = "conda config --add channels conda-forge"
+            channel_priority = "conda config --set channel_priority strict"
+            create_env = "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4"
+            try:
+                subprocess.run(["bash", "-c", f"{activate_conda} && {conda_forge}"], check=True)
+                subprocess.run(["bash", "-c", f"{activate_conda} && {channel_priority}"], check=True)
+                subprocess.run(["bash", "-c", f"{activate_conda} && {create_env}"], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Command failed with error: {e}")
         elif system == "Windows":
             conda_commands = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
