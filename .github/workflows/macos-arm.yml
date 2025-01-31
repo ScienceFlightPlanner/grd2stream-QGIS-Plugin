@@ -2,8 +2,8 @@ name: Test grd2stream on MacOS ARM
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - "install_grd2stream.py"
   workflow_dispatch:
 
 jobs:
@@ -13,37 +13,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install Miniconda
+      - name: Run installation script
         run: |
-          mkdir -p ~/miniconda3
-          curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh -o ~/miniconda3/miniconda.sh
-          bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-          rm ~/miniconda3/miniconda.sh
-
-      - name: Initialize Conda
-        shell: bash
-        run: |
-          source ~/miniconda3/etc/profile.d/conda.sh
-          conda config --add channels conda-forge
-          conda config --set channel_priority strict
-          conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4
-          conda activate GMT6
-
-      - name: Build and Install grd2stream
-        shell: bash
-        run: |
-          source ~/miniconda3/etc/profile.d/conda.sh
-          conda activate GMT6
-          curl -fsSL https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz
-          tar xvfz grd2stream-0.2.14.tar.gz
-          cd grd2stream-0.2.14
-          export LDFLAGS="-Wl,-rpath,$CONDA_PREFIX/lib"
-          ./configure --prefix="$CONDA_PREFIX" --enable-gmt-api
-          make && make install
-
-      - name: Verify grd2stream Installation
-        shell: bash
-        run: |
-          source ~/miniconda3/etc/profile.d/conda.sh
-          conda activate GMT6
-          grd2stream -h
+          python3 test_install_macos.py
