@@ -64,14 +64,11 @@ class FlowlineModule:
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
         if system in ["Linux", "Darwin"]:
-            activate_conda = "source ~/miniconda3/etc/profile.d/conda.sh"
-            conda_forge = "conda config --add channels conda-forge"
-            channel_priority = "conda config --set channel_priority strict"
-            create_env = "conda create -y -n GMT6 gmt=6* gdal hdf5 netcdf4"
+            conda_path = os.path.expanduser("~/miniconda3/bin/conda")
             try:
-                subprocess.run(["bash", "-c", f"{activate_conda} && {conda_forge}"], check=True)
-                subprocess.run(["bash", "-c", f"{activate_conda} && {channel_priority}"], check=True)
-                subprocess.run(["bash", "-c", f"{activate_conda} && {create_env}"], check=True)
+            subprocess.run([conda_path, "config", "--add", "channels", "conda-forge"], check=True)
+            subprocess.run([conda_path, "config", "--set", "channel_priority", "strict"], check=True)
+            subprocess.run([conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], check=True)
             except subprocess.CalledProcessError as e:
                 print(f"Command failed with error: {e}")
         elif system == "Windows":
@@ -94,8 +91,7 @@ class FlowlineModule:
             return
         print("Installing grd2stream...")
         if system in ["Linux", "Darwin"]:
-            activate_conda = "source ~/miniconda3/etc/profile.d/conda.sh"
-            activate_env = "conda activate GMT6"
+            conda_path = os.path.expanduser("~/miniconda3/bin/conda")
             download_grd2stream = "curl -fsSL https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz"
             unzip_grd2stream = "tar xvfz grd2stream-0.2.14.tar.gz"
             navigate = "cd grd2stream-0.2.14"
@@ -103,7 +99,7 @@ class FlowlineModule:
             build_grd2stream = "./configure --prefix=\"$CONDA_PREFIX\" --enable-gmt-api"
             install_grd2stream = "make && make install"
             try:
-                subprocess.run(["bash", "-c", f"{activate_conda} && {activate_env}"], check=True)
+                subprocess.run([conda_path, "activate", "GMT6"], check=True)
                 subprocess.run(["bash", "-c", f"{download_grd2stream}"], check=True)
                 subprocess.run(["bash", "-c", f"{unzip_grd2stream}"], check=True)
                 subprocess.run(["bash", "-c", f"{navigate}"], check=True)
