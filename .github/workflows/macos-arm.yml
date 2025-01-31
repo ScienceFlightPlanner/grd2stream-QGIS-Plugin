@@ -3,7 +3,7 @@ name: Test grd2stream on MacOS ARM
 on:
   push:
     paths:
-      - "install_grd2stream.py"
+      - "test_install_macos.py"
   workflow_dispatch:
 
 jobs:
