@@ -67,13 +67,16 @@ class Grd2StreamInstaller:
     def verify_installation(self):
         conda_activate = f"source {self.miniconda_path}/etc/profile.d/conda.sh && conda activate GMT6"
         grd2stream_path = os.path.join(self.miniconda_path, "envs/GMT6/bin/grd2stream")
+        gmt_lib_path = os.path.join(self.miniconda_path, "envs/GMT6/lib")
         try:
             print(f"Checking if grd2stream exists at {grd2stream_path}...")
             if not os.path.exists(grd2stream_path):
                 print("grd2stream not found in expected path!")
                 sys.exit(1)
+            env = os.environ.copy()
+            env["DYLD_LIBRARY_PATH"] = gmt_lib_path
             print("Running grd2stream -h...")
-            subprocess.run(["bash", "-c", f"{conda_activate} && {grd2stream_path} -h"], check=True)
+            subprocess.run(["bash", "-c", f"{conda_activate} && {grd2stream_path} -h"], check=True, env=env)
             print("grd2stream installation verified successfully!")
         except subprocess.CalledProcessError:
             print("grd2stream verification failed! Debug logs above.")
