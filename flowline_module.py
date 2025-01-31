@@ -94,9 +94,13 @@ class FlowlineModule:
             return
         print("Installing grd2stream...")
         if system in ["Linux", "Darwin"]:
-            conda_init = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate GMT6"
+            activate_conda = "source ~/miniconda3/etc/profile.d/conda.sh"
+            activate_env = "conda activate GMT6"
+            try:
+                subprocess.run(["bash", "-c", f"{activate_conda} && {activate_env}"], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Command failed with error: {e}")
             build_commands = (
-                f"{conda_init} && "
                 "curl -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz && "
                 "tar xvfz grd2stream-0.2.14.tar.gz && "
                 "cd grd2stream-0.2.14 && "
