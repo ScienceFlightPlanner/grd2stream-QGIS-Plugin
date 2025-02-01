@@ -59,33 +59,18 @@ class FlowlineModule:
         print("Setting up Conda environment...")
         if self.system in ["Linux", "Darwin"]:
             try:
-                env = os.environ.copy()
-                env["HOME"] = os.path.expanduser("~")
-                channels = subprocess.run(
-                    [self.conda_path, "config", "--show", "channels"],
-                    capture_output=True,
-                    text=True,
-                    check=True,
-                    env=env
-                ).stdout
-                if "conda-forge" not in channels:
-                    subprocess.run(
-                        [self.conda_path, "config", "--add", "channels", "conda-forge"],
-                        check=True,
-                        env=env
-                    )
-                subprocess.run(
-                    [self.conda_path, "config", "--set", "channel_priority", "strict"],
-                    check=True,
-                    env=env
+                subprocess.run([self.conda_bin, "config", "--add", "channels", "conda-forge"], check=True)
+                subprocess.run([self.conda_bin, "config", "--set", "channel_priority", "strict"], check=True)
+                result = subprocess.run(
+                    [self.conda_bin, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], 
+                    capture_output=True, text=True
                 )
-                subprocess.run(
-                    [self.conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"],
-                    check=True,
-                    env=env
-                )
+                envs_output = subprocess.run([self.conda_bin, "env", "list"], capture_output=True, text=True)
+                if "GMT6" not in envs_output.stdout:
+                    print(f"GMT6 environment creation failed! Check logs.")
+                    print(f"STDOUT: {result.stdout}\nSTDERR: {result.stderr}")
             except subprocess.CalledProcessError as e:
-                print(f"Command failed with error: {e}")
+                print(f"Error setting up Conda environment: {e}")
         elif self.system == "Windows":
             conda_commands = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
