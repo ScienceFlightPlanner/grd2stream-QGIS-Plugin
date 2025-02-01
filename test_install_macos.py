@@ -59,6 +59,9 @@ class Grd2StreamInstaller:
             ]
             for cmd in commands:
                 subprocess.run(["bash", "-c", cmd], check=True)
+            gmt_lib_path = os.path.join(self.miniconda_path, "envs/GMT6/lib")
+            grd2stream_executable = os.path.join(self.miniconda_path, "envs/GMT6/bin/grd2stream")
+            subprocess.run(["install_name_tool", "-add_rpath", gmt_lib_path, grd2stream_executable], check=True)
         except subprocess.CalledProcessError as e:
             print(f"Installation failed: {e}")
             sys.exit(1)
