@@ -1,6 +1,7 @@
 import os
 import platform
 import subprocess
+import sys
 
 from qgis._core import QgsFeature, QgsGeometry, QgsPointXY
 from qgis.core import QgsVectorLayer, QgsProject, Qgis, QgsRasterLayer
