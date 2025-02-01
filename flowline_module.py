@@ -55,6 +55,11 @@ class FlowlineModule:
         print("Miniconda is now installed!")
 
     def setup_conda_environment(self):
+        print(f"Using Python: {sys.executable}")
+        print(f"System PATH: {os.environ.get('PATH', 'Not Set')}")
+        print(f"PYTHONPATH: {os.environ.get('PYTHONPATH', 'Not Set')}")
+        print(f"sys.path: {sys.path}")
+        print(f"Conda path: {self.conda_path}")
         if not os.path.exists(self.conda_path):
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
@@ -176,8 +181,6 @@ class FlowlineModule:
 
     def run_grd2stream(self):
         try:
-            self.install_miniconda()
-            self.setup_conda_environment()
             self.install_grd2stream()
 
             if not self.selected_raster_1 or not self.selected_raster_2:
