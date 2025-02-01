@@ -19,23 +19,26 @@ class FlowlineModule:
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
+        self.system = platform.system()
+        self.miniconda_path = os.path.expanduser("~/miniconda3")
+        if self.system in ["Linux", "Darwin"]:
+            self.conda_path = os.path.join(self.miniconda_path, "bin", "conda")
+        else:
+            self.conda_path = os.path.join(self.miniconda_path, "Scripts", "conda.exe")
 
     def install_miniconda(self):
-        system = platform.system()
-        conda_path = os.path.expanduser("~/miniconda3/bin/conda") if system in ["Linux", "Darwin"] \
-            else os.path.expanduser("~/miniconda3/Scripts/conda.exe")
-        if os.path.exists(conda_path):
+        if os.path.exists(self.conda_path):
             print("Miniconda is already installed.")
             return
         print("Installing Miniconda...")
-        if system == "Windows":
+        if self.system == "Windows":
             command = (
                 "wget \"https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe\" -outfile \".\\miniconda.exe\"; "
                 "Start-Process -FilePath \".\\miniconda.exe\" -ArgumentList \"/S\" -Wait; "
                 "del .\\miniconda.exe"
             )
             subprocess.run(["powershell", "-Command", command], check=True)
-        elif system == "Darwin":
+        elif self.system == "Darwin":
             command = (
                 "mkdir -p ~/miniconda3 && "
                 "curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-$(uname -m).sh -o ~/miniconda3/miniconda.sh && "
@@ -43,7 +46,7 @@ class FlowlineModule:
                 "rm ~/miniconda3/miniconda.sh"
             )
             subprocess.run(["bash", "-c", command], check=True)
-        elif system == "Linux":
+        elif self.system == "Linux":
             command = (
                 "mkdir -p ~/miniconda3 && "
                 "wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh -O ~/miniconda3/miniconda.sh && "
@@ -54,29 +57,26 @@ class FlowlineModule:
         print("Miniconda is now installed!")
 
     def setup_conda_environment(self):
-        system = platform.system()
-        conda_path = os.path.expanduser("~/miniconda3/bin/conda") if system in ["Linux", "Darwin"] \
-            else os.path.expanduser("~/miniconda3/Scripts/conda.exe")
-        if not os.path.exists(conda_path):
+        if not os.path.exists(self.conda_path):
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
-        if system in ["Linux", "Darwin"]:
+        if self.system in ["Linux", "Darwin"]:
             try:
                 subprocess.run(
-                    [conda_path, "config", "--add", "channels", "conda-forge"],
+                    [self.conda_path, "config", "--add", "channels", "conda-forge"],
                     check=True
                 )
                 subprocess.run(
-                    [conda_path, "config", "--set", "channel_priority", "strict"],
+                    [self.conda_path, "config", "--set", "channel_priority", "strict"],
                     check=True
                 )
                 subprocess.run(
-                    [conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], 
+                    [self.conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"],
                     check=True
                 )
             except subprocess.CalledProcessError as e:
                 print(f"Command failed with error: {e}")
-        elif system == "Windows":
+        elif self.system == "Windows":
             conda_commands = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
                 "conda init powershell; "
@@ -88,14 +88,13 @@ class FlowlineModule:
         print("Conda environment is now set up!")
 
     def install_grd2stream(self):
-        system = platform.system()
-        grd2stream_executable = os.path.expanduser("~/miniconda3/envs/GMT6/bin/grd2stream") if system in ["Linux", "Darwin"] \
+        grd2stream_executable = os.path.expanduser("~/miniconda3/envs/GMT6/bin/grd2stream") if self.system in ["Linux", "Darwin"] \
             else os.path.expanduser("~/miniconda3/envs/GMT6/Library/bin/grd2stream.exe")
         if os.path.exists(grd2stream_executable):
             print("grd2stream is already installed!")
             return
         print("Installing grd2stream...")
-        if system in ["Linux", "Darwin"]:
+        if self.system in ["Linux", "Darwin"]:
             download_grd2stream = "curl -fsSL https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz"
             unzip_grd2stream = "tar xvfz grd2stream-0.2.14.tar.gz"
             navigate_to_grd2stream = "cd grd2stream-0.2.14"
@@ -120,7 +119,7 @@ class FlowlineModule:
                     check=True
                 )
                 # Embeds rpath, ensuring GMT library is found system-wide
-                if system == "Darwin":
+                if self.system == "Darwin":
                     gmt_lib_path = os.path.expanduser("~/miniconda3/envs/GMT6/lib")
                     subprocess.run(
                         ["install_name_tool", "-add_rpath", gmt_lib_path, grd2stream_executable],
@@ -128,7 +127,7 @@ class FlowlineModule:
                     )
             except subprocess.CalledProcessError as e:
                 print(f"Command failed with error: {e}")
-        elif system == "Windows":
+        elif self.system == "Windows":
             conda_init = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
                 "conda activate GMT6"
@@ -199,7 +198,6 @@ class FlowlineModule:
 
     def run_grd2stream(self):
         try:
-            system = platform.system()
             self.install_miniconda()
             self.setup_conda_environment()
             self.install_grd2stream()
@@ -215,7 +213,7 @@ class FlowlineModule:
 
             print("Running grd2stream...")
 
-            grd2stream_executable = os.path.expanduser("~/miniconda3/envs/GMT6/bin/grd2stream") if system in ["Linux", "Darwin"] \
+            grd2stream_executable = os.path.expanduser("~/miniconda3/envs/GMT6/bin/grd2stream") if self.system in ["Linux", "Darwin"] \
                 else os.path.expanduser("~/miniconda3/envs/GMT6/Library/bin/grd2stream.exe")
             command = f'echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
 
@@ -235,7 +233,7 @@ class FlowlineModule:
             result = subprocess.run(
                 command,
                 shell=True,
-                executable="/bin/bash" if system in ["Linux", "Darwin"] else None,
+                executable="/bin/bash" if self.system in ["Linux", "Darwin"] else None,
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
