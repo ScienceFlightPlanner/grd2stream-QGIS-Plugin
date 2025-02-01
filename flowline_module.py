@@ -26,6 +26,14 @@ class FlowlineModule:
             self.conda_path = os.path.join(self.miniconda_path, "bin", "conda")
         else:
             self.conda_path = os.path.join(self.miniconda_path, "Scripts", "conda.exe")
+        self.configure_environment()
+
+    def configure_environment(self):
+        os.environ.pop("PYTHONHOME", None)
+        os.environ["CONDA_PREFIX"] = self.miniconda_path
+        os.environ["PATH"] = f"{self.miniconda_path}/bin:" + os.environ["PATH"]
+        print(f"Updated System PATH: {os.environ['PATH']}")
+        print(f"Using Conda from: {self.conda_path}")
 
     def install_miniconda(self):
         if os.path.exists(self.conda_path):
@@ -55,11 +63,6 @@ class FlowlineModule:
         print("Miniconda is now installed!")
 
     def setup_conda_environment(self):
-        print(f"Using Python: {sys.executable}")
-        print(f"System PATH: {os.environ.get('PATH', 'Not Set')}")
-        print(f"PYTHONPATH: {os.environ.get('PYTHONPATH', 'Not Set')}")
-        print(f"sys.path: {sys.path}")
-        print(f"Conda path: {self.conda_path}")
         if not os.path.exists(self.conda_path):
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
@@ -67,14 +70,8 @@ class FlowlineModule:
             try:
                 subprocess.run([self.conda_path, "config", "--add", "channels", "conda-forge"], check=True)
                 subprocess.run([self.conda_path, "config", "--set", "channel_priority", "strict"], check=True)
-                result = subprocess.run(
-                    [self.conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], 
-                    capture_output=True, text=True
-                )
-                envs_output = subprocess.run([self.conda_path, "env", "list"], capture_output=True, text=True)
-                if "GMT6" not in envs_output.stdout:
-                    print(f"GMT6 environment creation failed! Check logs.")
-                    print(f"STDOUT: {result.stdout}\nSTDERR: {result.stderr}")
+                subprocess.run([self.conda_path, "create", "-y", "-n", "GMT6", "gmt=6*", "gdal", "hdf5", "netcdf4"], check=True)
+                print("Conda environment 'GMT6' is now set up!")
             except subprocess.CalledProcessError as e:
                 print(f"Error setting up Conda environment: {e}")
         elif self.system == "Windows":
