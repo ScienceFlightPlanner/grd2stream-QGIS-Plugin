@@ -59,6 +59,8 @@ class FlowlineModule:
         print("Setting up Conda environment...")
         if self.system in ["Linux", "Darwin"]:
             try:
+                env = os.environ.copy()
+                env["HOME"] = os.path.expanduser("~")
                 subprocess.run(
                     [self.conda_path, "config", "--add", "channels", "conda-forge"],
                     check=True
