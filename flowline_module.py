@@ -7,7 +7,7 @@ import sys
 from qgis._core import QgsFeature, QgsGeometry, QgsPointXY
 from qgis.core import QgsVectorLayer, QgsProject, Qgis, QgsRasterLayer
 from qgis.gui import QgsMapToolEmitPoint
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox, QMessageBox
 
 class FlowlineModule:
     def __init__(self, iface):
@@ -21,6 +21,8 @@ class FlowlineModule:
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
+        self.gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)")
+        self.grd2stream_checkbox = QCheckBox("Install grd2stream")
         self.system = platform.system()
         self.miniconda_path = os.path.expanduser("~/miniconda3")
         if self.system in ["Linux", "Darwin"]:
@@ -64,6 +66,7 @@ class FlowlineModule:
         print("Miniconda is now installed!")
 
     def setup_conda_environment(self):
+        self.install_miniconda()
         if not os.path.exists(self.conda_path):
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
@@ -157,7 +160,35 @@ class FlowlineModule:
         except subprocess.CalledProcessError as e:
             print(f"Installation failed: {e}")
 
+    def ensure_conda_setup(self):
+        dialog = QDialog()
+        dialog.setWindowTitle("Installation Required")
+        layout = QVBoxLayout()
+        label = QLabel("Select the components you want to install:")
+        layout.addWidget(label)
+        layout.addWidget(self.gmt6_checkbox)
+        layout.addWidget(self.grd2stream_checkbox)
+        ok_button = QPushButton("Install")
+        cancel_button = QPushButton("Cancel")
+        layout.addWidget(ok_button)
+        layout.addWidget(cancel_button)
+        dialog.setLayout(layout)
+        ok_button.clicked.connect(dialog.accept)
+        cancel_button.clicked.connect(dialog.reject)
+        if dialog.exec_() == QDialog.Accepted:
+            if self.gmt6_checkbox.isChecked():
+                self.setup_conda_environment()
+            if self.grd2stream_checkbox.isChecked():
+                self.install_grd2stream()
+
     def open_selection_dialog(self):
+        gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
+        grd2stream_executable = os.path.join(gmt6_env_path, "bin", "grd2stream")
+        if self.system == "Windows":
+            grd2stream_executable += ".exe"
+        if not os.path.exists(grd2stream_executable):
+            self.ensure_conda_setup()
+
         dialog = SelectionDialog(self.iface)
 
         if dialog.exec_():

@@ -94,11 +94,6 @@ class Grd2Stream:
         self.flowline_action = None
         self.ensure_conda_setup()
 
-    def ensure_conda_setup(self):
-        """Ensure Miniconda is installed & environment is properly set up."""
-        self.flowline_module.install_miniconda()
-        self.flowline_module.setup_conda_environment()
-
     def add_action(
         self,
         icon: str,
