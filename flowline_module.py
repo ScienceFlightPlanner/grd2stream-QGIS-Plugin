@@ -7,7 +7,7 @@ import sys
 from qgis._core import QgsFeature, QgsGeometry, QgsPointXY
 from qgis.core import QgsVectorLayer, QgsProject, Qgis, QgsRasterLayer
 from qgis.gui import QgsMapToolEmitPoint
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox, QMessageBox
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox, QMessageBox, QProgressDialog, QApplication
 from PyQt5.QtCore import Qt
 
 class FlowlineModule:
@@ -30,6 +30,18 @@ class FlowlineModule:
             self.conda_path = os.path.join(self.miniconda_path, "Scripts", "conda.exe")
         self.configure_environment()
 
+    def show_download_popup(self, message="Downloading..."):
+        self.progress_dialog = QProgressDialog(message, None, 0, 0, self.iface.mainWindow())
+        self.progress_dialog.setWindowTitle("Please wait!")
+        self.progress_dialog.setCancelButton(None)
+        self.progress_dialog.setWindowModality(Qt.ApplicationModal)
+        self.progress_dialog.show()
+        QApplication.processEvents()
+
+    def hide_download_popup(self):
+        if hasattr(self, "progress_dialog") and self.progress_dialog:
+            self.progress_dialog.close()
+
     def configure_environment(self):
         os.environ.pop("PYTHONHOME", None)
         os.environ["CONDA_PREFIX"] = self.miniconda_path
@@ -42,6 +54,7 @@ class FlowlineModule:
             print("Miniconda is already installed!")
             return
         print("Installing Miniconda...")
+        self.show_download_popup("Downloading & Installing Miniconda...")
         if self.system == "Windows":
             command = (
                 "wget \"https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe\" -outfile \".\\miniconda.exe\"; "
@@ -63,12 +76,14 @@ class FlowlineModule:
             for cmd in commands:
                 subprocess.run(["bash", "-c", cmd], check=True)
         print("Miniconda is now installed!")
+        self.hide_download_popup()
 
     def setup_conda_environment(self):
         self.install_miniconda()
         if not os.path.exists(self.conda_path):
             raise RuntimeError("Miniconda installation not found!")
         print("Setting up Conda environment...")
+        self.show_download_popup("Setting up Conda environment & installing GMT6...")
         if self.system in ["Linux", "Darwin"]:
             try:
                 subprocess.run([self.conda_path, "config", "--add", "channels", "conda-forge"], check=True)
@@ -87,6 +102,7 @@ class FlowlineModule:
             )
             subprocess.run(["powershell", "-Command", conda_commands], check=True)
         print("Conda environment is now set up!")
+        self.hide_download_popup()
 
     def install_grd2stream(self):
         gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
@@ -98,6 +114,7 @@ class FlowlineModule:
             print("grd2stream is already installed!")
             return
         print("Installing grd2stream...")
+        self.show_download_popup("Building & Installing grd2stream...")
         plugin_root = os.path.dirname(__file__)
         local_tar = os.path.join(plugin_root, "grd2stream-0.2.14.tar.gz")
         try:
@@ -154,6 +171,7 @@ class FlowlineModule:
             print("Verifying grd2stream installation...")
             if os.path.exists(grd2stream_executable):
                 print("grd2stream is now installed!")
+                self.hide_download_popup()
             else:
                 print("grd2stream installation failed!")
         except subprocess.CalledProcessError as e:
