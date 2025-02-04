@@ -126,7 +126,6 @@ class FlowlineModule:
                         cwd=grd2stream_dir,
                         check=True
                     )
-                    # idk if stil needed
                     if self.system == "Darwin":
                         subprocess.run(
                             ["install_name_tool", "-add_rpath",
@@ -224,7 +223,7 @@ class FlowlineModule:
             print("Running grd2stream...")
             command = (
                 f'echo "{x} {y}" | '
-                f'{self.conda_path} run -n GMT6 {grd2stream_executable} '
+                f'{grd2stream_executable} '
                 f'"{raster_path_1}" "{raster_path_2}"'
             )
 
