@@ -21,6 +21,7 @@ class FlowlineModule:
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
+        self.dialog = QDialog()
         self.gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)")
         self.grd2stream_checkbox = QCheckBox("Install grd2stream")
         self.grd2stream_checkbox.setEnabled(False)
@@ -162,26 +163,24 @@ class FlowlineModule:
             print(f"Installation failed: {e}")
 
     def prompt_missing_installation(self):
-        dialog = QDialog()
-        dialog.setWindowTitle("Installation Required")
+        self.dialog.setWindowTitle("Installation Required")
         layout = QVBoxLayout()
         label = QLabel("Some components required for grd2stream are missing.\nSelect what to install:")
         layout.addWidget(label)
-        miniconda_installed = os.path.exists(self.conda_path)
+        self.gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)", self.dialog)
+        self.grd2stream_checkbox = QCheckBox("Install grd2stream", self.dialog)
+        self.grd2stream_checkbox.setEnabled(False)
         layout.addWidget(self.gmt6_checkbox)
         layout.addWidget(self.grd2stream_checkbox)
-        if miniconda_installed:
-            self.gmt6_checkbox.setChecked(True)
-            self.gmt6_checkbox.setEnabled(False)
         self.gmt6_checkbox.stateChanged.connect(self.update_grd2stream_checkbox)
-        ok_button = QPushButton("Install")
-        cancel_button = QPushButton("Cancel")
+        ok_button = QPushButton("Install", self.dialog)
+        cancel_button = QPushButton("Cancel", self.dialog)
         layout.addWidget(ok_button)
         layout.addWidget(cancel_button)
-        dialog.setLayout(layout)
-        ok_button.clicked.connect(dialog.accept)
-        cancel_button.clicked.connect(dialog.reject)
-        if dialog.exec_() == QDialog.Accepted:
+        self.dialog.setLayout(layout)
+        ok_button.clicked.connect(self.dialog.accept)
+        cancel_button.clicked.connect(self.dialog.reject)
+        if self.dialog.exec_() == QDialog.Accepted:
             if self.gmt6_checkbox.isChecked():
                 self.setup_conda_environment()
             if self.grd2stream_checkbox.isChecked():
