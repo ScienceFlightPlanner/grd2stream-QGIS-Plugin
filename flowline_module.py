@@ -216,16 +216,17 @@ class FlowlineModule:
                 raise ValueError("A coordinate must be selected.")
 
             x, y = self.coordinate
-            raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
-            raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
+            with tempfile.NamedTemporaryFile(delete=False, mode='w') as temp_file:
+                seed_file_path = temp_file.name
+                temp_file.write(f"{x} {y}\n")
 
             gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
             grd2stream_path = os.path.join(gmt6_env_path, "bin", "grd2stream")
 
-            cmd = (
-                f'echo "{x} {y}" | {self.conda_path} run -n GMT6 {grd2stream_path} '
-                f'"{raster_path_1}" "{raster_path_2}"'
-            )
+            raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
+            raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
+
+            cmd = f'{self.conda_path} run -n GMT6 {grd2stream_path} {raster_path_1} {raster_path_2} -f {seed_file_path}'
             if self.backward_steps:
                 cmd += " -b"
             if self.step_size:
