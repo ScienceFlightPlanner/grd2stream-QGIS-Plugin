@@ -215,10 +215,26 @@ class FlowlineModule:
             raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
             raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
 
-            conda_activate = f"source {self.miniconda_path}/etc/profile.d/conda.sh && conda activate GMT6"
-            grd2stream_executable = os.path.join(self.miniconda_path, "envs", "GMT6", "bin", "grd2stream")
+            activate_cmd = (
+                f"source {self.miniconda_path}/etc/profile.d/conda.sh && "
+                f"conda activate GMT6 && env"
+            )
+            proc = subprocess.run(
+                ["bash", "-c", activate_cmd],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            env_vars = {}
+            for line in proc.stdout.splitlines():
+                if "=" in line:
+                    key, _, value = line.partition("=")
+                    env_vars[key] = value
 
-            cmd = f'{conda_activate} && echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
+            cmd = (
+                f'echo "{x} {y}" | grd2stream '
+                f'"{raster_path_1}" "{raster_path_2}"'
+            )
             if self.backward_steps:
                 cmd += " -b"
             if self.step_size:
@@ -235,7 +251,8 @@ class FlowlineModule:
                 ["bash", "-c", cmd],
                 text=True,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stderr=subprocess.PIPE,
+                env=env_vars
             )
 
             if result.returncode != 0:
