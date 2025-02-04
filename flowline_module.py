@@ -86,7 +86,8 @@ class FlowlineModule:
         print("Conda environment is now set up!")
 
     def install_grd2stream(self):
-        local_tar = os.path.join(os.path.dirname(__file__), "grd2stream-0.2.14.tar.gz")
+        plugin_root = os.path.dirname(__file__)
+        local_tar = os.path.join(plugin_root, "grd2stream-0.2.14.tar.gz")
         grd2stream_executable = os.path.join(self.miniconda_path, "envs", "GMT6", "bin", "grd2stream") \
             if self.system in ["Linux", "Darwin"] \
             else os.path.join(self.miniconda_path, "envs", "GMT6", "Library", "bin", "grd2stream.exe")
@@ -96,13 +97,14 @@ class FlowlineModule:
         print("Installing grd2stream...")
         if self.system in ["Linux", "Darwin"]:
             try:
-                subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "tar", "xvfz", local_tar],
-                    check=True
+                subprocess.run(["tar", "xvfz", local_tar], cwd=plugin_root, check=True)
+                cmd_config = (
+                    f"cd {os.path.join(plugin_root, 'grd2stream-0.2.14')} && "
+                    "export LDFLAGS='-Wl,-rpath,$CONDA_PREFIX/lib' && "
+                    "./configure --prefix=$CONDA_PREFIX --enable-gmt-api"
                 )
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c",
-                    "cd grd2stream-0.2.14 && export LDFLAGS='-Wl,-rpath,$CONDA_PREFIX/lib' && ./configure --prefix=$CONDA_PREFIX --enable-gmt-api"],
+                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c", cmd_config],
                     check=True
                 )
                 subprocess.run(
@@ -120,13 +122,14 @@ class FlowlineModule:
             except subprocess.CalledProcessError as e:
                 print(f"Installation failed: {e}")
         elif self.system == "Windows":
+            local_tar_windows = local_tar.replace("\\", "/")
             conda_init = (
                 "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
                 "conda activate GMT6"
             )
             build_commands = (
                 f"{conda_init}; "
-                f"tar xvfz \"{local_tar}\"; "
+                f"tar xvfz \"{local_tar_windows}\"; "
                 "cd grd2stream-0.2.14; "
                 "./configure --prefix=\"$env:CONDA_PREFIX\" --enable-gmt-api; "
                 "make; "
