@@ -8,6 +8,7 @@ from qgis._core import QgsFeature, QgsGeometry, QgsPointXY
 from qgis.core import QgsVectorLayer, QgsProject, Qgis, QgsRasterLayer
 from qgis.gui import QgsMapToolEmitPoint
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QComboBox, QPushButton, QLineEdit, QCheckBox, QDoubleSpinBox, QMessageBox
+from PyQt5.QtCore import Qt
 
 class FlowlineModule:
     def __init__(self, iface):
@@ -17,7 +18,7 @@ class FlowlineModule:
         self.coordinate = None
         self.map_tool = None
         self.backward_steps = False
-        self.step_size = 200.0
+        self.step_size = None
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
@@ -404,12 +405,13 @@ class SelectionDialog(QDialog):
         self.selected_raster_1 = None
         self.selected_raster_2 = None
         self.backward_steps = False
-        self.step_size = 0.0  # Default step size
+        self.step_size = None
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
 
         layout = QVBoxLayout()
+
         layout.addWidget(QLabel("Select the 1st grid layer:"))
         self.layer_box_1 = QComboBox()
         layout.addWidget(self.layer_box_1)
@@ -424,14 +426,16 @@ class SelectionDialog(QDialog):
         self.backward_checkbox = QCheckBox("Backward Steps (y/n)")
         layout.addWidget(self.backward_checkbox)
 
-        self.step_size_input = QDoubleSpinBox()
-        self.step_size_input.setDecimals(2)
-        self.step_size_input.setMinimum(0.0)
-        self.step_size_input.setMaximum(float("inf"))
-        self.step_size_input.setSingleStep(1.0)
-        self.step_size_input.setValue(0.0)
-        layout.addWidget(QLabel("Step Size (in m):"))
+        self.manual_step_checkbox = QCheckBox("Manually set Step Size")
+        layout.addWidget(self.manual_step_checkbox)
+        self.step_size_label = QLabel("Δ = min(x_inc, y_inc) / 5")
+        self.step_size_label.setStyleSheet("color: gray;")
+        layout.addWidget(self.step_size_label)
+        self.step_size_input = QLineEdit()
+        self.step_size_input.setPlaceholderText("Enter Step Size (in m)")
+        self.step_size_input.setEnabled(False)
         layout.addWidget(self.step_size_input)
+        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
 
         self.max_time_input = QLineEdit()
         self.max_time_input.setPlaceholderText("default: /")
@@ -459,6 +463,13 @@ class SelectionDialog(QDialog):
 
         self.setLayout(layout)
 
+    def toggle_step_size_input(self, state):
+        if state == Qt.Checked:
+            self.step_size_input.setEnabled(True)
+        else:
+            self.step_size_input.setEnabled(False)
+            self.step_size_input.setValue(self.auto_calculate_step_size())
+
     def populate_layers(self):
         layers = QgsProject.instance().mapLayers().values()
         raster_layers = [layer for layer in layers if isinstance(layer, QgsRasterLayer)]
@@ -483,7 +494,7 @@ class SelectionDialog(QDialog):
             return
 
         self.backward_steps = self.backward_checkbox.isChecked()
-        self.step_size = self.step_size_input.value()
+        self.step_size = self.step_size_input.value() if self.manual_step_size_checkbox.isChecked() else None
         self.max_integration_time = self.max_time_input.text() or None
         self.max_steps = self.max_steps_input.text() or None
         self.output_format = self.output_format_box.currentData()
