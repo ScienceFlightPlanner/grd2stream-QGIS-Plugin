@@ -1,6 +1,7 @@
 import os
 import platform
 import subprocess
+import tempfile
 import sys
 
 from qgis._core import QgsFeature, QgsGeometry, QgsPointXY
@@ -86,77 +87,71 @@ class FlowlineModule:
         print("Conda environment is now set up!")
 
     def install_grd2stream(self):
-        plugin_root = os.path.dirname(__file__)
-        local_tar = os.path.join(plugin_root, "grd2stream-0.2.14.tar.gz")
-        grd2stream_dir = os.path.join(plugin_root, "grd2stream-0.2.14")
-        grd2stream_executable = os.path.join(plugin_root, "bin", "grd2stream") \
-            if self.system in ["Linux", "Darwin"] \
-            else os.path.join(plugin_root, "bin", "grd2stream.exe")
+        conda_env_path = os.environ.get("CONDA_PREFIX")
+        conda_env_bin = os.path.join(conda_env_path, "bin")
+        grd2stream_executable = os.path.join(conda_env_bin, "grd2stream")
+        if self.system == "Windows":
+            grd2stream_executable += ".exe"
         if os.path.exists(grd2stream_executable):
             print("grd2stream is already installed!")
             return
         print("Installing grd2stream...")
-        if self.system in ["Linux", "Darwin"]:
-            try:
-                subprocess.run(["tar", "xvfz", local_tar], cwd=plugin_root, check=True)
-                env = os.environ.copy()
-                env["LDFLAGS"] = "-Wl,-rpath,$CONDA_PREFIX/lib"
-                cmd_config = f'./configure --prefix="{plugin_root}" --enable-gmt-api'
-                res_config = subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c", cmd_config],
-                    cwd=grd2stream_dir,
-                    env=env,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    text=True
-                )
-                print("CONFIG STDOUT:", res_config.stdout)
-                print("CONFIG STDERR:", res_config.stderr)
-                res_config.check_returncode()
-                res_make = subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "make"],
-                    cwd=grd2stream_dir,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    text=True
-                )
-                print("MAKE STDOUT:", res_make.stdout)
-                print("MAKE STDERR:", res_make.stderr)
-                res_make.check_returncode()
+        plugin_root = os.path.dirname(__file__)
+        local_tar = os.path.join(plugin_root, "grd2stream-0.2.14.tar.gz")
+        try:
+            with tempfile.TemporaryDirectory() as build_dir:
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "make", "install"],
-                    cwd=grd2stream_dir,
+                    ["tar", "xvfz", local_tar],
+                    cwd=build_dir,
                     check=True
                 )
-                # idk if stil needed
-                if self.system == "Darwin":
-                    gmt_lib_path = os.path.join(self.miniconda_path, "envs", "GMT6", "lib")
+                grd2stream_dir = os.path.join(build_dir, "grd2stream-0.2.14")
+
+                if self.system in ["Linux", "Darwin"]:
+                    env = os.environ.copy()
+                    env["LDFLAGS"] = "-Wl,-rpath,$CONDA_PREFIX/lib"
                     subprocess.run(
-                        ["install_name_tool", "-add_rpath", gmt_lib_path, grd2stream_executable],
+                        [self.conda_path, "run", "-n", "GMT6", "bash", "-c", f'./configure --prefix="{conda_env_path}" --enable-gmt-api'],
+                        cwd=grd2stream_dir,
+                        env=env,
                         check=True
                     )
-            except subprocess.CalledProcessError as e:
-                print(f"Installation failed: {e}")
-        elif self.system == "Windows":
-            local_tar_windows = local_tar.replace("\\", "/")
-            conda_init = (
-                "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
-                "conda activate GMT6"
-            )
-            build_commands = (
-                f"{conda_init}; "
-                f'tar xvfz "{local_tar_windows}"; '
-                "cd grd2stream-0.2.14; "
-                f'./configure --prefix="{plugin_root}" --enable-gmt-api; '
-                "make; "
-                "make install"
-            )
-            subprocess.run(
-                ["powershell", "-Command", build_commands],
-                cwd=plugin_root,
-                check=True
-            )
-        print("grd2stream is now installed!")
+                    subprocess.run(
+                        [self.conda_path, "run", "-n", "GMT6", "make"],
+                        cwd=grd2stream_dir,
+                        check=True
+                    )
+                    subprocess.run(
+                        [self.conda_path, "run", "-n", "GMT6", "make", "install"],
+                        cwd=grd2stream_dir,
+                        check=True
+                    )
+                    # idk if stil needed
+                    if self.system == "Darwin":
+                        subprocess.run(
+                            ["install_name_tool", "-add_rpath",
+                             os.path.join(conda_env_path, "lib"), grd2stream_executable],
+                            check=True
+                        )
+                elif self.system == "Windows":
+                    conda_init = (
+                        "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;"
+                        "$env:USERPROFILE\\miniconda3\\Library\\bin;$env:Path\"; "
+                        "conda activate GMT6"
+                    )
+                    build_commands = (
+                        f"{conda_init}; "
+                        f'cd "{grd2stream_dir}"; '
+                        f'./configure --prefix="{conda_env_path}" --enable-gmt-api; '
+                        "make; make install"
+                    )
+                    subprocess.run(
+                        ["powershell", "-Command", build_commands],
+                        check=True
+                    )
+            print("grd2stream is now installed!")
+        except subprocess.CalledProcessError as e:
+            print(f"Installation failed: {e}")
 
     def open_selection_dialog(self):
         dialog = SelectionDialog(self.iface)
