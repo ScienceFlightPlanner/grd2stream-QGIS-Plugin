@@ -423,18 +423,18 @@ class SelectionDialog(QDialog):
 
         layout.addWidget(QLabel("Options:"))
 
-        self.backward_checkbox = QCheckBox("Backward Steps (y/n)")
+        self.backward_checkbox = QCheckBox("Backward Steps (yes/no)")
         layout.addWidget(self.backward_checkbox)
 
-        self.manual_step_checkbox = QCheckBox("Manually set Step Size")
-        layout.addWidget(self.manual_step_checkbox)
-        self.step_size_label = QLabel("Δ = min(x_inc, y_inc) / 5")
+        self.step_size_label = QLabel("Enter Step Size (in m)")
         self.step_size_label.setStyleSheet("color: gray;")
         layout.addWidget(self.step_size_label)
         self.step_size_input = QLineEdit()
-        self.step_size_input.setPlaceholderText("Enter Step Size (in m)")
+        self.step_size_input.setPlaceholderText("default: Δ = min(x_inc, y_inc) / 5")
         self.step_size_input.setEnabled(False)
         layout.addWidget(self.step_size_input)
+        self.manual_step_checkbox = QCheckBox("Use manually set Step Size (yes/no)")
+        layout.addWidget(self.manual_step_checkbox)
         self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
 
         self.max_time_input = QLineEdit()
@@ -465,10 +465,14 @@ class SelectionDialog(QDialog):
 
     def toggle_step_size_input(self, state):
         if state == Qt.Checked:
+            self.step_size_label.setStyleSheet("color: black;")
             self.step_size_input.setEnabled(True)
+            self.step_size_input.setStyleSheet("color: black;")
         else:
+            self.step_size_label.setStyleSheet("color: gray;")
             self.step_size_input.setEnabled(False)
-            self.step_size_input.setValue(self.auto_calculate_step_size())
+            self.step_size_input.clear()
+            self.step_size_input.setStyleSheet("color: gray;")
 
     def populate_layers(self):
         layers = QgsProject.instance().mapLayers().values()
