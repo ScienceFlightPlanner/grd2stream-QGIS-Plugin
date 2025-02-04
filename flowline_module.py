@@ -222,7 +222,11 @@ class FlowlineModule:
                 grd2stream_executable += ".exe"
 
             print("Running grd2stream...")
-            command = f'echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
+            command = (
+                f'echo "{x} {y}" | '
+                f'{self.conda_path} run -n GMT6 {grd2stream_executable} '
+                f'"{raster_path_1}" "{raster_path_2}"'
+            )
 
             if self.backward_steps:
                 command += " -b"
