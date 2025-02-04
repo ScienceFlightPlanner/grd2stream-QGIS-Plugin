@@ -421,7 +421,7 @@ class SelectionDialog(QDialog):
 
         layout.addWidget(QLabel("Options:"))
 
-        self.backward_checkbox = QCheckBox("Backward Steps (-b)")
+        self.backward_checkbox = QCheckBox("Backward Steps (y/n)")
         layout.addWidget(self.backward_checkbox)
 
         self.step_size_input = QDoubleSpinBox()
@@ -430,24 +430,24 @@ class SelectionDialog(QDialog):
         self.step_size_input.setMaximum(float("inf"))
         self.step_size_input.setSingleStep(1.0)
         self.step_size_input.setValue(0.0)
-        layout.addWidget(QLabel("Step Size (-d):"))
+        layout.addWidget(QLabel("Step Size (in m):"))
         layout.addWidget(self.step_size_input)
 
         self.max_time_input = QLineEdit()
-        self.max_time_input.setPlaceholderText("Maximum Integration Time (default: none)")
-        layout.addWidget(QLabel("Maximum Integration Time (-T):"))
+        self.max_time_input.setPlaceholderText("default: /")
+        layout.addWidget(QLabel("Maximum Integration Time (in s):"))
         layout.addWidget(self.max_time_input)
 
         self.max_steps_input = QLineEdit()
-        self.max_steps_input.setPlaceholderText("Maximum Number of Steps (default: 10000)")
-        layout.addWidget(QLabel("Maximum Number of Steps (-n):"))
+        self.max_steps_input.setPlaceholderText("default: 10000")
+        layout.addWidget(QLabel("Maximum Number of Steps:"))
         layout.addWidget(self.max_steps_input)
 
         layout.addWidget(QLabel("Output Format:"))
         self.output_format_box = QComboBox()
-        self.output_format_box.addItem("x y dist (default)", None)
-        self.output_format_box.addItem("x y dist v_x v_y (-l)", "-l")
-        self.output_format_box.addItem("x y dist v_x v_y time (-t)", "-t")
+        self.output_format_box.addItem("x  y  dist  (default)", None)
+        self.output_format_box.addItem("x  y  dist  v_x  v_y", "-l")
+        self.output_format_box.addItem("x  y  dist  v_x  v_y  time", "-t")
         layout.addWidget(self.output_format_box)
 
         self.ok_button = QPushButton("OK")
