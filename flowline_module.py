@@ -442,6 +442,13 @@ class SelectionDialog(QDialog):
         self.backward_checkbox = QCheckBox("Backward Steps (yes/no)")
         layout.addWidget(self.backward_checkbox)
 
+        layout.addWidget(QLabel("Output Format:"))
+        self.output_format_box = QComboBox()
+        self.output_format_box.addItem("x  y  dist  (default)", None)
+        self.output_format_box.addItem("x  y  dist  v_x  v_y", "-l")
+        self.output_format_box.addItem("x  y  dist  v_x  v_y  time", "-t")
+        layout.addWidget(self.output_format_box)
+
         layout.addWidget(QLabel("<b>Parameters:</b>"))
 
         self.manual_step_checkbox = QCheckBox("Manually set Step Size (in m)")
@@ -461,13 +468,6 @@ class SelectionDialog(QDialog):
         self.max_time_input.setPlaceholderText("default: /")
         layout.addWidget(QLabel("Maximum Integration Time (in s):"))
         layout.addWidget(self.max_time_input)
-
-        layout.addWidget(QLabel("Output Format:"))
-        self.output_format_box = QComboBox()
-        self.output_format_box.addItem("x  y  dist  (default)", None)
-        self.output_format_box.addItem("x  y  dist  v_x  v_y", "-l")
-        self.output_format_box.addItem("x  y  dist  v_x  v_y  time", "-t")
-        layout.addWidget(self.output_format_box)
 
         self.ok_button = QPushButton("OK")
         self.ok_button.clicked.connect(self.accept)
@@ -511,7 +511,7 @@ class SelectionDialog(QDialog):
             return
 
         self.backward_steps = self.backward_checkbox.isChecked()
-        self.step_size = float(self.step_size_input.value()) if self.manual_step_checkbox.isChecked() and self.step_size_input.text() else None
+        self.step_size = float(self.step_size_input.text()) if self.manual_step_checkbox.isChecked() and self.step_size_input.text() else None
         self.max_steps = int(self.max_steps_input.text()) if self.max_steps_input.text() else None
         self.max_integration_time = float(self.max_time_input.text()) if self.max_time_input.text() else None
         self.output_format = self.output_format_box.currentData()
