@@ -421,31 +421,28 @@ class SelectionDialog(QDialog):
 
         self.populate_layers()
 
-        layout.addWidget(QLabel("Options:"))
-
         self.backward_checkbox = QCheckBox("Backward Steps (yes/no)")
         layout.addWidget(self.backward_checkbox)
 
-        self.step_size_label = QLabel("Enter Step Size (in m)")
-        self.step_size_label.setStyleSheet("color: gray;")
-        layout.addWidget(self.step_size_label)
+        layout.addWidget(QLabel("Parameters:"))
+
+        self.manual_step_checkbox = QCheckBox("Manually set Step Size (in m)")
+        layout.addWidget(self.manual_step_checkbox)
+        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
         self.step_size_input = QLineEdit()
         self.step_size_input.setPlaceholderText("default: Δ = min(x_inc, y_inc) / 5")
         self.step_size_input.setEnabled(False)
         layout.addWidget(self.step_size_input)
-        self.manual_step_checkbox = QCheckBox("Use manually set Step Size (yes/no)")
-        layout.addWidget(self.manual_step_checkbox)
-        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
+
+        self.max_steps_input = QLineEdit()
+        self.max_steps_input.setPlaceholderText("default: 10,000")
+        layout.addWidget(QLabel("Maximum Number of Steps:"))
+        layout.addWidget(self.max_steps_input)
 
         self.max_time_input = QLineEdit()
         self.max_time_input.setPlaceholderText("default: /")
         layout.addWidget(QLabel("Maximum Integration Time (in s):"))
         layout.addWidget(self.max_time_input)
-
-        self.max_steps_input = QLineEdit()
-        self.max_steps_input.setPlaceholderText("default: 10000")
-        layout.addWidget(QLabel("Maximum Number of Steps:"))
-        layout.addWidget(self.max_steps_input)
 
         layout.addWidget(QLabel("Output Format:"))
         self.output_format_box = QComboBox()
@@ -498,7 +495,7 @@ class SelectionDialog(QDialog):
             return
 
         self.backward_steps = self.backward_checkbox.isChecked()
-        self.step_size = self.step_size_input.value() if self.manual_step_size_checkbox.isChecked() else None
+        self.step_size = self.step_size_input.value() if self.manual_step_checkbox.isChecked() else None
         self.max_integration_time = self.max_time_input.text() or None
         self.max_steps = self.max_steps_input.text() or None
         self.output_format = self.output_format_box.currentData()
