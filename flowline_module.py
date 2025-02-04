@@ -88,9 +88,10 @@ class FlowlineModule:
     def install_grd2stream(self):
         plugin_root = os.path.dirname(__file__)
         local_tar = os.path.join(plugin_root, "grd2stream-0.2.14.tar.gz")
-        grd2stream_executable = os.path.join(self.miniconda_path, "envs", "GMT6", "bin", "grd2stream") \
+        grd2stream_dir = os.path.join(plugin_root, "grd2stream-0.2.14")
+        grd2stream_executable = os.path.join(plugin_root, "bin", "grd2stream") \
             if self.system in ["Linux", "Darwin"] \
-            else os.path.join(self.miniconda_path, "envs", "GMT6", "Library", "bin", "grd2stream.exe")
+            else os.path.join(plugin_root, "bin", "grd2stream.exe")
         if os.path.exists(grd2stream_executable):
             print("grd2stream is already installed!")
             return
@@ -98,27 +99,29 @@ class FlowlineModule:
         if self.system in ["Linux", "Darwin"]:
             try:
                 subprocess.run(["tar", "xvfz", local_tar], cwd=plugin_root, check=True)
-                cmd_config = (
-                    f"cd {os.path.join(plugin_root, 'grd2stream-0.2.14')} && "
-                    "export LDFLAGS='-Wl,-rpath,$CONDA_PREFIX/lib' && "
-                    "./configure --prefix=$CONDA_PREFIX --enable-gmt-api"
-                )
+                env = os.environ.copy()
+                env["LDFLAGS"] = "-Wl,-rpath,$CONDA_PREFIX/lib"
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c", cmd_config],
+                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c", f'./configure --prefix="{plugin_root}" --enable-gmt-api'],
+                    cwd=grd2stream_dir,
+                    env=env,
                     check=True
                 )
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "make", "-C", "grd2stream-0.2.14"],
+                    [self.conda_path, "run", "-n", "GMT6", "make", "-C", grd2stream_dir],
                     check=True
                 )
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "make", "-C", "grd2stream-0.2.14", "install"],
+                    [self.conda_path, "run", "-n", "GMT6", "make", "-C", grd2stream_dir, "install"],
                     check=True
                 )
                 # idk if stil needed
                 if self.system == "Darwin":
                     gmt_lib_path = os.path.join(self.miniconda_path, "envs/GMT6/lib")
-                    subprocess.run(["install_name_tool", "-add_rpath", gmt_lib_path, grd2stream_executable], check=True)
+                    subprocess.run(
+                        ["install_name_tool", "-add_rpath", gmt_lib_path, grd2stream_executable],
+                        check=True
+                    )
             except subprocess.CalledProcessError as e:
                 print(f"Installation failed: {e}")
         elif self.system == "Windows":
@@ -131,7 +134,7 @@ class FlowlineModule:
                 f"{conda_init}; "
                 f"tar xvfz \"{local_tar_windows}\"; "
                 "cd grd2stream-0.2.14; "
-                "./configure --prefix=\"$env:CONDA_PREFIX\" --enable-gmt-api; "
+                "./configure --prefix=\"{plugin_root}\" --enable-gmt-api; "
                 "make; "
                 "make install"
             )
