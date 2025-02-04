@@ -215,47 +215,27 @@ class FlowlineModule:
             raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
             raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
 
-            conda_env_path = os.environ.get("CONDA_PREFIX")
-            conda_env_bin = os.path.join(conda_env_path, "bin")
-            grd2stream_executable = os.path.join(conda_env_bin, "grd2stream")
-            if self.system == "Windows":
-                grd2stream_executable += ".exe"
+            conda_activate = f"source {self.miniconda_path}/etc/profile.d/conda.sh && conda activate GMT6"
+            grd2stream_executable = os.path.join(self.miniconda_path, "envs", "GMT6", "bin", "grd2stream")
 
-            print("Running grd2stream...")
-            command = (
-                f'echo "{x} {y}" | '
-                f'{grd2stream_executable} '
-                f'"{raster_path_1}" "{raster_path_2}"'
-            )
-
+            cmd = f'{conda_activate} && echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
             if self.backward_steps:
-                command += " -b"
+                cmd += " -b"
             if self.step_size:
-                command += f" -d {self.step_size}"
+                cmd += f" -d {self.step_size}"
             if self.max_integration_time:
-                command += f" -T {self.max_integration_time}"
+                cmd += f" -T {self.max_integration_time}"
             if self.max_steps:
-                command += f" -n {self.max_steps}"
+                cmd += f" -n {self.max_steps}"
             if self.output_format:
-                command += f" {self.output_format}"
+                cmd += f" {self.output_format}"
 
-            print(f"Executing Command: {command}")
-
-            env = os.environ.copy()
-            if self.system == "Darwin":
-                lib_path = os.path.join(conda_env_path, "lib")
-                env["DYLD_LIBRARY_PATH"] = f"{lib_path}:{env.get('DYLD_LIBRARY_PATH', '')}"
-                env["DYLD_FALLBACK_LIBRARY_PATH"] = f"{lib_path}:{env.get('DYLD_FALLBACK_LIBRARY_PATH', '')}"
-
+            print(f"Executing Command: {cmd}")
             result = subprocess.run(
-                command,
-                shell=True,
-                executable="/bin/bash",
+                ["bash", "-c", cmd],
                 text=True,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=False,
-                env=env
+                stderr=subprocess.PIPE
             )
 
             if result.returncode != 0:
