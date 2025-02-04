@@ -87,9 +87,9 @@ class FlowlineModule:
         print("Conda environment is now set up!")
 
     def install_grd2stream(self):
-        conda_env_path = os.environ.get("CONDA_PREFIX")
-        conda_env_bin = os.path.join(conda_env_path, "bin")
-        grd2stream_executable = os.path.join(conda_env_bin, "grd2stream")
+        gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
+        conda_env_path = os.path.join(gmt6_env_path, "bin")
+        grd2stream_executable = os.path.join(conda_env_path, "grd2stream")
         if self.system == "Windows":
             grd2stream_executable += ".exe"
         if os.path.exists(grd2stream_executable):
@@ -127,12 +127,16 @@ class FlowlineModule:
                         check=True
                     )
                     # idk if stil needed
-                    if self.system == "Darwin":
-                        subprocess.run(
-                            ["install_name_tool", "-add_rpath",
-                             os.path.join(conda_env_path, "lib"), grd2stream_executable],
-                            check=True
-                        )
+                    if self.system == "Darwin" and os.path.exists(grd2stream_executable):
+                        rpath = os.path.join(gmt6_env_path, "lib")
+                        try:
+                            subprocess.run(
+                                ["install_name_tool", "-add_rpath", rpath, grd2stream_executable],
+                                check=True
+                            )
+                            print(f"Added RPATH {rpath} to grd2stream")
+                        except subprocess.CalledProcessError as e:
+                            print(f"Failed to add RPATH: {e}")
                 elif self.system == "Windows":
                     conda_init = (
                         "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;"
@@ -219,24 +223,11 @@ class FlowlineModule:
             raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
             raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
 
-            activate_cmd = (
-                f"source {self.miniconda_path}/etc/profile.d/conda.sh && "
-                f"conda activate GMT6 && env"
-            )
-            proc = subprocess.run(
-                ["bash", "-c", activate_cmd],
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            env_vars = {}
-            for line in proc.stdout.splitlines():
-                if "=" in line:
-                    key, _, value = line.partition("=")
-                    env_vars[key] = value
+            gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
+            grd2stream_path = os.path.join(gmt6_env_path, "bin", "grd2stream")
 
             cmd = (
-                f'echo "{x} {y}" | grd2stream '
+                f'echo "{x} {y}" | {self.conda_path} run -n GMT6 {grd2stream_path} '
                 f'"{raster_path_1}" "{raster_path_2}"'
             )
             if self.backward_steps:
@@ -250,16 +241,13 @@ class FlowlineModule:
             if self.output_format:
                 cmd += f" {self.output_format}"
 
-            env_vars["DYLD_LIBRARY_PATH"] = os.path.join(os.environ.get("CONDA_PREFIX", ""), "lib")
-            print(f"Setting DYLD_LIBRARY_PATH to: {env_vars['DYLD_LIBRARY_PATH']}")
-
             print(f"Executing Command: {cmd}")
             result = subprocess.run(
                 ["bash", "-c", cmd],
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                env=env_vars
+                env=os.environ.copy()
             )
 
             if result.returncode != 0:
