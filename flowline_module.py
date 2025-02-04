@@ -101,17 +101,28 @@ class FlowlineModule:
                 subprocess.run(["tar", "xvfz", local_tar], cwd=plugin_root, check=True)
                 env = os.environ.copy()
                 env["LDFLAGS"] = "-Wl,-rpath,$CONDA_PREFIX/lib"
-                subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c", f'./configure --prefix="{plugin_root}" --enable-gmt-api'],
+                cmd_config = f'./configure --prefix="{plugin_root}" --enable-gmt-api'
+                res_config = subprocess.run(
+                    [self.conda_path, "run", "-n", "GMT6", "bash", "-c", cmd_config],
                     cwd=grd2stream_dir,
                     env=env,
-                    check=True
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True
                 )
-                subprocess.run(
+                print("CONFIG STDOUT:", res_config.stdout)
+                print("CONFIG STDERR:", res_config.stderr)
+                res_config.check_returncode()
+                res_make = subprocess.run(
                     [self.conda_path, "run", "-n", "GMT6", "make"],
                     cwd=grd2stream_dir,
-                    check=True
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True
                 )
+                print("MAKE STDOUT:", res_make.stdout)
+                print("MAKE STDERR:", res_make.stderr)
+                res_make.check_returncode()
                 subprocess.run(
                     [self.conda_path, "run", "-n", "GMT6", "make", "install"],
                     cwd=grd2stream_dir,
@@ -209,11 +220,12 @@ class FlowlineModule:
             raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
             raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
 
-            print("Running grd2stream...")
-
-            grd2stream_executable = os.path.join(self.miniconda_path, "envs", "GMT6", "bin", "grd2stream") \
+            plugin_root = os.path.dirname(__file__)
+            grd2stream_executable = os.path.join(plugin_root, "bin", "grd2stream") \
                 if self.system in ["Linux", "Darwin"] \
-                else os.path.join(self.miniconda_path, "envs", "GMT6", "Library", "bin", "grd2stream.exe")
+                else os.path.join(plugin_root, "bin", "grd2stream.exe")
+
+            print("Running grd2stream...")
             command = f'echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
 
             if self.backward_steps:
