@@ -88,8 +88,8 @@ class FlowlineModule:
 
     def install_grd2stream(self):
         gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
-        conda_env_path = os.path.join(gmt6_env_path, "bin")
-        grd2stream_executable = os.path.join(conda_env_path, "grd2stream")
+        prefix = gmt6_env_path
+        grd2stream_executable = os.path.join(gmt6_env_path, "bin", "grd2stream")
         if self.system == "Windows":
             grd2stream_executable += ".exe"
         if os.path.exists(grd2stream_executable):
@@ -111,7 +111,8 @@ class FlowlineModule:
                     env = os.environ.copy()
                     env["LDFLAGS"] = "-Wl,-rpath,$CONDA_PREFIX/lib"
                     subprocess.run(
-                        [self.conda_path, "run", "-n", "GMT6", "bash", "-c", f'./configure --prefix="{conda_env_path}" --enable-gmt-api'],
+                        [self.conda_path, "run", "-n", "GMT6", "bash", "-c",
+                         f'./configure --prefix="{prefix}" --enable-gmt-api'],
                         cwd=grd2stream_dir,
                         env=env,
                         check=True
@@ -129,14 +130,10 @@ class FlowlineModule:
                     # idk if stil needed
                     if self.system == "Darwin" and os.path.exists(grd2stream_executable):
                         rpath = os.path.join(gmt6_env_path, "lib")
-                        try:
-                            subprocess.run(
-                                ["install_name_tool", "-add_rpath", rpath, grd2stream_executable],
-                                check=True
-                            )
-                            print(f"Added RPATH {rpath} to grd2stream")
-                        except subprocess.CalledProcessError as e:
-                            print(f"Failed to add RPATH: {e}")
+                        subprocess.run(
+                            ["install_name_tool", "-add_rpath", rpath, grd2stream_executable],
+                            check=True
+                        )
                 elif self.system == "Windows":
                     conda_init = (
                         "$env:Path = \"$env:USERPROFILE\\miniconda3\\Scripts;"
@@ -144,9 +141,8 @@ class FlowlineModule:
                         "conda activate GMT6"
                     )
                     build_commands = (
-                        f"{conda_init}; "
-                        f'cd "{grd2stream_dir}"; '
-                        f'./configure --prefix="{conda_env_path}" --enable-gmt-api; '
+                        f"{conda_init}; cd \"{grd2stream_dir}\"; "
+                        f'./configure --prefix="{prefix}" --enable-gmt-api; '
                         "make; make install"
                     )
                     subprocess.run(
