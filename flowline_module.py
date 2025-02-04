@@ -215,10 +215,11 @@ class FlowlineModule:
             raster_path_1 = self.selected_raster_1.dataProvider().dataSourceUri()
             raster_path_2 = self.selected_raster_2.dataProvider().dataSourceUri()
 
-            plugin_root = os.path.dirname(__file__)
-            grd2stream_executable = os.path.join(plugin_root, "bin", "grd2stream") \
-                if self.system in ["Linux", "Darwin"] \
-                else os.path.join(plugin_root, "bin", "grd2stream.exe")
+            conda_env_path = os.environ.get("CONDA_PREFIX")
+            conda_env_bin = os.path.join(conda_env_path, "bin")
+            grd2stream_executable = os.path.join(conda_env_bin, "grd2stream")
+            if self.system == "Windows":
+                grd2stream_executable += ".exe"
 
             print("Running grd2stream...")
             command = f'echo "{x} {y}" | {grd2stream_executable} "{raster_path_1}" "{raster_path_2}"'
