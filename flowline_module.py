@@ -86,6 +86,7 @@ class FlowlineModule:
         print("Conda environment is now set up!")
 
     def install_grd2stream(self):
+        local_tar = os.path.join(os.path.dirname(__file__), "grd2stream-0.2.14.tar.gz")
         grd2stream_executable = os.path.join(self.miniconda_path, "envs", "GMT6", "bin", "grd2stream") \
             if self.system in ["Linux", "Darwin"] \
             else os.path.join(self.miniconda_path, "envs", "GMT6", "Library", "bin", "grd2stream.exe")
@@ -96,13 +97,7 @@ class FlowlineModule:
         if self.system in ["Linux", "Darwin"]:
             try:
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "curl", "-fsSL",
-                     "https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz",
-                     "-o", "grd2stream-0.2.14.tar.gz"],
-                    check=True
-                )
-                subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "tar", "xvfz", "grd2stream-0.2.14.tar.gz"],
+                    [self.conda_path, "run", "-n", "GMT6", "tar", "xvfz", local_tar],
                     check=True
                 )
                 subprocess.run(
@@ -131,8 +126,7 @@ class FlowlineModule:
             )
             build_commands = (
                 f"{conda_init}; "
-                "curl.exe -L https://github.com/tkleiner/grd2stream/releases/download/v0.2.14/grd2stream-0.2.14.tar.gz -o grd2stream-0.2.14.tar.gz; "
-                "tar xvfz grd2stream-0.2.14.tar.gz; "
+                f"tar xvfz \"{local_tar}\"; "
                 "cd grd2stream-0.2.14; "
                 "./configure --prefix=\"$env:CONDA_PREFIX\" --enable-gmt-api; "
                 "make; "
