@@ -92,7 +92,6 @@ class Grd2Stream:
         self.toolbar.setObjectName("grd2stream")
         self.flowline_module = FlowlineModule(iface)
         self.flowline_action = None
-        self.ensure_conda_setup()
 
     def add_action(
         self,
