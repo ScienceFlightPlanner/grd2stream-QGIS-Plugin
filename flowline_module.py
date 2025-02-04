@@ -126,6 +126,7 @@ class FlowlineModule:
                         cwd=grd2stream_dir,
                         check=True
                     )
+                    # idk if stil needed
                     if self.system == "Darwin":
                         subprocess.run(
                             ["install_name_tool", "-add_rpath",
@@ -239,6 +240,11 @@ class FlowlineModule:
                 command += f" {self.output_format}"
 
             print(f"Executing Command: {command}")
+
+            env = os.environ.copy()
+            if self.system == "Darwin":
+                lib_path = os.path.join(conda_env_path, "lib")
+                env["DYLD_LIBRARY_PATH"] = lib_path + ":" + env.get("DYLD_LIBRARY_PATH", "")
 
             result = subprocess.run(
                 command,
