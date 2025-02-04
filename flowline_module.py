@@ -21,10 +21,6 @@ class FlowlineModule:
         self.max_integration_time = None
         self.max_steps = None
         self.output_format = None
-        self.dialog = QDialog()
-        self.gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)")
-        self.grd2stream_checkbox = QCheckBox("Install grd2stream")
-        self.grd2stream_checkbox.setEnabled(False)
         self.system = platform.system()
         self.miniconda_path = os.path.expanduser("~/miniconda3")
         if self.system in ["Linux", "Darwin"]:
@@ -163,35 +159,30 @@ class FlowlineModule:
             print(f"Installation failed: {e}")
 
     def prompt_missing_installation(self):
-        self.dialog.setWindowTitle("Installation Required")
-        layout = QVBoxLayout()
-        label = QLabel("Some components required for grd2stream are missing.\nSelect what to install:")
-        layout.addWidget(label)
-        self.gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)", self.dialog)
-        self.grd2stream_checkbox = QCheckBox("Install grd2stream", self.dialog)
-        self.grd2stream_checkbox.setEnabled(False)
-        layout.addWidget(self.gmt6_checkbox)
-        layout.addWidget(self.grd2stream_checkbox)
-        self.gmt6_checkbox.stateChanged.connect(self.update_grd2stream_checkbox)
-        ok_button = QPushButton("Install", self.dialog)
-        cancel_button = QPushButton("Cancel", self.dialog)
-        layout.addWidget(ok_button)
+        dialog = QDialog()
+        dialog.setWindowTitle("Installation Required")
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel("Some components required for grd2stream are missing.\nSelect what to install:"))
+        gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)", dialog)
+        grd2stream_checkbox = QCheckBox("Install grd2stream", dialog)
+        grd2stream_checkbox.setEnabled(False)
+        layout.addWidget(gmt6_checkbox)
+        layout.addWidget(grd2stream_checkbox)
+        def update_checkbox():
+            grd2stream_checkbox.setEnabled(gmt6_checkbox.isChecked())
+        gmt6_checkbox.stateChanged.connect(update_checkbox)
+        install_button = QPushButton("Install", dialog)
+        cancel_button = QPushButton("Cancel", dialog)
+        layout.addWidget(install_button)
         layout.addWidget(cancel_button)
-        self.dialog.setLayout(layout)
-        ok_button.clicked.connect(self.dialog.accept)
-        cancel_button.clicked.connect(self.dialog.reject)
-        if self.dialog.exec_() == QDialog.Accepted:
-            if self.gmt6_checkbox.isChecked():
+        install_button.clicked.connect(dialog.accept)
+        cancel_button.clicked.connect(dialog.reject)
+        dialog.setLayout(layout)
+        if dialog.exec_() == QDialog.Accepted:
+            if gmt6_checkbox.isChecked():
                 self.setup_conda_environment()
-            if self.grd2stream_checkbox.isChecked():
+            if grd2stream_checkbox.isChecked():
                 self.install_grd2stream()
-
-    def update_grd2stream_checkbox(self):
-        if self.gmt6_checkbox.isChecked():
-            self.grd2stream_checkbox.setEnabled(True)
-        else:
-            self.grd2stream_checkbox.setChecked(False)
-            self.grd2stream_checkbox.setEnabled(False)
 
     def open_selection_dialog(self):
         gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
@@ -251,20 +242,40 @@ class FlowlineModule:
 
     def run_grd2stream(self):
         try:
-            gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
-            grd2stream_executable = os.path.join(gmt6_env_path, "bin", "grd2stream")
-            if self.system == "Windows":
-                grd2stream_executable += ".exe"
-            if not os.path.exists(grd2stream_executable):
-                self.prompt_missing_installation()
-            if not os.path.exists(grd2stream_executable):
+            try:
+                gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
+                grd2stream_executable = os.path.join(gmt6_env_path, "bin", "grd2stream")
+                if self.system == "Windows":
+                    grd2stream_executable += ".exe"
+                while not os.path.exists(grd2stream_executable):
+                    self.prompt_missing_installation()
+                    if not os.path.exists(grd2stream_executable):
+                        reply = QMessageBox.question(
+                            None, "Installation Required",
+                            "grd2stream is not installed! Would you like to retry?",
+                            QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
+                        )
+                        if reply == QMessageBox.No:
+                            self.iface.messageBar().pushMessage(
+                                "Error",
+                                "grd2stream installation was canceled...",
+                                level=Qgis.Critical,
+                                duration=5
+                            )
+                            return
+                self.iface.messageBar().pushMessage(
+                    "Success",
+                    "grd2stream is installed!",
+                    level=Qgis.Info,
+                    duration=5
+                )
+            except Exception as e:
                 self.iface.messageBar().pushMessage(
                     "Error",
-                    "grd2stream is not installed!",
+                    f"Unexpected error: {e}",
                     level=Qgis.Critical,
                     duration=5
                 )
-                return
 
             if not self.selected_raster_1 or not self.selected_raster_2:
                 raise ValueError("Two raster layers must be selected.")
