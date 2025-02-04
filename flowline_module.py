@@ -158,28 +158,38 @@ class FlowlineModule:
         except subprocess.CalledProcessError as e:
             print(f"Installation failed: {e}")
 
+    def is_gmt6_installed(self):
+        gmt6_env_path = os.path.join(self.miniconda_path, "envs", "GMT6")
+        return os.path.exists(gmt6_env_path)
+
     def prompt_missing_installation(self):
         dialog = QDialog()
         dialog.setWindowTitle("Installation Required")
         layout = QVBoxLayout(dialog)
         layout.addWidget(QLabel("Some components required for grd2stream are missing.\nSelect what to install:"))
-        gmt6_checkbox = QCheckBox("Install GMT6 (via Miniconda)", dialog)
-        grd2stream_checkbox = QCheckBox("Install grd2stream", dialog)
-        grd2stream_checkbox.setEnabled(False)
-        layout.addWidget(gmt6_checkbox)
-        layout.addWidget(grd2stream_checkbox)
+        gmt6_checkbox = QCheckBox("Auto-Install GMT6 (via Miniconda)", dialog)
+        grd2stream_checkbox = QCheckBox("Auto-Install grd2stream", dialog)
+        gmt6_installed = self.is_gmt6_installed()
+        if gmt6_installed:
+            gmt6_checkbox.setEnabled(False)
+            gmt6_checkbox.setChecked(True)
+            grd2stream_checkbox.setEnabled(True)
+        else:
+            grd2stream_checkbox.setEnabled(False)
         def update_checkbox():
             grd2stream_checkbox.setEnabled(gmt6_checkbox.isChecked())
         gmt6_checkbox.stateChanged.connect(update_checkbox)
         install_button = QPushButton("Install", dialog)
         cancel_button = QPushButton("Cancel", dialog)
+        layout.addWidget(gmt6_checkbox)
+        layout.addWidget(grd2stream_checkbox)
         layout.addWidget(install_button)
         layout.addWidget(cancel_button)
         install_button.clicked.connect(dialog.accept)
         cancel_button.clicked.connect(dialog.reject)
         dialog.setLayout(layout)
         if dialog.exec_() == QDialog.Accepted:
-            if gmt6_checkbox.isChecked():
+            if not gmt6_installed and gmt6_checkbox.isChecked():
                 self.setup_conda_environment()
             if grd2stream_checkbox.isChecked():
                 self.install_grd2stream()
