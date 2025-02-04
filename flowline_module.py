@@ -444,13 +444,13 @@ class SelectionDialog(QDialog):
 
         layout.addWidget(QLabel("Parameters:"))
 
-        self.manual_step_checkbox = QCheckBox("Manually set Step Size (in m)")
-        layout.addWidget(self.manual_step_checkbox)
-        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
         self.step_size_input = QLineEdit()
         self.step_size_input.setPlaceholderText("default: Δ = min(x_inc, y_inc) / 5")
         self.step_size_input.setEnabled(False)
         layout.addWidget(self.step_size_input)
+        self.manual_step_checkbox = QCheckBox("Manually set Step Size (in m)")
+        layout.addWidget(self.manual_step_checkbox)
+        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
 
         self.max_steps_input = QLineEdit()
         self.max_steps_input.setPlaceholderText("default: 10,000")
@@ -480,11 +480,9 @@ class SelectionDialog(QDialog):
 
     def toggle_step_size_input(self, state):
         if state == Qt.Checked:
-            self.step_size_label.setStyleSheet("color: black;")
             self.step_size_input.setEnabled(True)
             self.step_size_input.setStyleSheet("color: black;")
         else:
-            self.step_size_label.setStyleSheet("color: gray;")
             self.step_size_input.setEnabled(False)
             self.step_size_input.clear()
             self.step_size_input.setStyleSheet("color: gray;")
