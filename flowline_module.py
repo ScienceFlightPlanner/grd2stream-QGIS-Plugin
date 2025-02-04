@@ -442,15 +442,15 @@ class SelectionDialog(QDialog):
         self.backward_checkbox = QCheckBox("Backward Steps (yes/no)")
         layout.addWidget(self.backward_checkbox)
 
-        layout.addWidget(QLabel("Parameters:"))
+        layout.addWidget(QLabel("<b>Parameters:</b>"))
 
+        self.manual_step_checkbox = QCheckBox("Manually set Step Size (in m)")
+        layout.addWidget(self.manual_step_checkbox)
+        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
         self.step_size_input = QLineEdit()
         self.step_size_input.setPlaceholderText("default: Δ = min(x_inc, y_inc) / 5")
         self.step_size_input.setEnabled(False)
         layout.addWidget(self.step_size_input)
-        self.manual_step_checkbox = QCheckBox("Manually set Step Size (in m)")
-        layout.addWidget(self.manual_step_checkbox)
-        self.manual_step_checkbox.stateChanged.connect(self.toggle_step_size_input)
 
         self.max_steps_input = QLineEdit()
         self.max_steps_input.setPlaceholderText("default: 10,000")
@@ -511,9 +511,9 @@ class SelectionDialog(QDialog):
             return
 
         self.backward_steps = self.backward_checkbox.isChecked()
-        self.step_size = self.step_size_input.value() if self.manual_step_checkbox.isChecked() else None
-        self.max_integration_time = self.max_time_input.text() or None
-        self.max_steps = self.max_steps_input.text() or None
+        self.step_size = float(self.step_size_input.value()) if self.manual_step_checkbox.isChecked() and self.step_size_input.text() else None
+        self.max_steps = int(self.max_steps_input.text()) if self.max_steps_input.text() else None
+        self.max_integration_time = float(self.max_time_input.text()) if self.max_time_input.text() else None
         self.output_format = self.output_format_box.currentData()
 
         super().accept()
