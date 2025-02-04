@@ -149,7 +149,11 @@ class FlowlineModule:
                         ["powershell", "-Command", build_commands],
                         check=True
                     )
-            print("grd2stream is now installed!")
+            print("Verifying grd2stream installation...")
+            if os.path.exists(grd2stream_executable):
+                print("grd2stream is now installed!")
+            else:
+                print("grd2stream installation failed!")
         except subprocess.CalledProcessError as e:
             print(f"Installation failed: {e}")
 
@@ -245,6 +249,9 @@ class FlowlineModule:
                 cmd += f" -n {self.max_steps}"
             if self.output_format:
                 cmd += f" {self.output_format}"
+
+            env_vars["DYLD_LIBRARY_PATH"] = os.path.join(os.environ.get("CONDA_PREFIX", ""), "lib")
+            print(f"Setting DYLD_LIBRARY_PATH to: {env_vars['DYLD_LIBRARY_PATH']}")
 
             print(f"Executing Command: {cmd}")
             result = subprocess.run(
