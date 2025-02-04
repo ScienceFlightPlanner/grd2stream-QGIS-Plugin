@@ -108,16 +108,18 @@ class FlowlineModule:
                     check=True
                 )
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "make", "-C", grd2stream_dir],
+                    [self.conda_path, "run", "-n", "GMT6", "make"],
+                    cwd=grd2stream_dir,
                     check=True
                 )
                 subprocess.run(
-                    [self.conda_path, "run", "-n", "GMT6", "make", "-C", grd2stream_dir, "install"],
+                    [self.conda_path, "run", "-n", "GMT6", "make", "install"],
+                    cwd=grd2stream_dir,
                     check=True
                 )
                 # idk if stil needed
                 if self.system == "Darwin":
-                    gmt_lib_path = os.path.join(self.miniconda_path, "envs/GMT6/lib")
+                    gmt_lib_path = os.path.join(self.miniconda_path, "envs", "GMT6", "lib")
                     subprocess.run(
                         ["install_name_tool", "-add_rpath", gmt_lib_path, grd2stream_executable],
                         check=True
@@ -132,14 +134,15 @@ class FlowlineModule:
             )
             build_commands = (
                 f"{conda_init}; "
-                f"tar xvfz \"{local_tar_windows}\"; "
+                f'tar xvfz "{local_tar_windows}"; '
                 "cd grd2stream-0.2.14; "
-                "./configure --prefix=\"{plugin_root}\" --enable-gmt-api; "
+                f'./configure --prefix="{plugin_root}" --enable-gmt-api; '
                 "make; "
                 "make install"
             )
             subprocess.run(
                 ["powershell", "-Command", build_commands],
+                cwd=plugin_root,
                 check=True
             )
         print("grd2stream is now installed!")
