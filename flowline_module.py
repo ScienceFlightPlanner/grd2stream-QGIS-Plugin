@@ -244,16 +244,18 @@ class FlowlineModule:
             env = os.environ.copy()
             if self.system == "Darwin":
                 lib_path = os.path.join(conda_env_path, "lib")
-                env["DYLD_LIBRARY_PATH"] = lib_path + ":" + env.get("DYLD_LIBRARY_PATH", "")
+                env["DYLD_LIBRARY_PATH"] = f"{lib_path}:{env.get('DYLD_LIBRARY_PATH', '')}"
+                env["DYLD_FALLBACK_LIBRARY_PATH"] = f"{lib_path}:{env.get('DYLD_FALLBACK_LIBRARY_PATH', '')}"
 
             result = subprocess.run(
                 command,
                 shell=True,
-                executable="/bin/bash" if self.system in ["Linux", "Darwin"] else None,
+                executable="/bin/bash",
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                check=False
+                check=False,
+                env=env
             )
 
             if result.returncode != 0:
